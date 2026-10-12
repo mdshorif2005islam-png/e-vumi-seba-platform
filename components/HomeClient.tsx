@@ -214,10 +214,10 @@ export default function HomeClient() {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{ background: '#047857', color: '#fff', padding: '10px 18px', borderRadius: 30, display: 'inline-flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 15, width: 'fit-content', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
-                <Phone size={18} /> হটলাইন: ১৬১২২
+                <Phone size={18} /> হটলাইন: 01332052506
               </div>
               <div style={{ border: '1px solid #475569', color: '#e2e8f0', padding: '8px 16px', borderRadius: 30, display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 600, fontSize: 13, width: 'fit-content' }}>
-                <Phone size={14} /> +৮৮ ০৯৬১২৩১৬১২২
+                <Phone size={14} /> +88 01332052506
               </div>
             </div>
           </div>
@@ -256,11 +256,11 @@ export default function HomeClient() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 13, marginBottom: 24, color: '#94a3b8' }}>
               <div style={{ display: 'flex', gap: 10 }}>
                 <MapPin size={18} style={{ color: '#38bdf8', flexShrink: 0 }} />
-                <span>ভূমি সেবা সহায়তা কেন্দ্র, পৌরসভা এলাকা</span>
+                <span>ভূমি সেবা সহায়তা কেন্দ্র</span>
               </div>
               <div style={{ display: 'flex', gap: 10 }}>
                 <Phone size={16} style={{ color: '#38bdf8', flexShrink: 0 }} />
-                <span>০১৭৫০৩৬৪৫৭১</span>
+                <span>01332052506</span>
               </div>
               <div style={{ display: 'flex', gap: 10 }}>
                 <Clock size={16} style={{ color: '#38bdf8', flexShrink: 0 }} />
@@ -272,7 +272,7 @@ export default function HomeClient() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 13 }}>
               {[
                 { name: 'land.gov.bd', url: 'https://land.gov.bd' },
-                { name: 'আর.এস খতিয়ান ব্যবস্থাপনা', url: '#' },
+                { name: 'আর.এস খতিয়ান ব্যবস্থাপনা', url: 'https://dlrms-stg.land.gov.bd' },
                 { name: 'mutation.land.gov.bd', url: 'https://mutation.land.gov.bd' },
                 { name: 'dlrms.land.gov.bd', url: 'https://dlrms.land.gov.bd' },
                 { name: 'ldtax.gov.bd', url: 'https://ldtax.gov.bd' }
