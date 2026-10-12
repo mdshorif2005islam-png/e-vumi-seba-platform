@@ -224,7 +224,7 @@ export default function ProfilePage() {
     setProfile({ ...profile, avatar_url: data.publicUrl });
   }
 
- if (loading) return <div className="p-8 text-center text-gray-600">তথ্য লোড হচ্ছে...</div>
+if (loading) return <div className="p-8 text-center text-gray-600">Loading...</div>;
 
   return (
     <div className="max-w-4xl mx-auto p-6">
