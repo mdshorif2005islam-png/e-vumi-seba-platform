@@ -190,4 +190,116 @@ export default function HomeClient() {
         <section style={{ background: '#fff', borderTop: '1px solid #e2e8f0', padding: '60px 20px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <h2 style={{ textAlign: 'center', fontSize: 28, fontWeight: 800, color: '#0f172a', marginBottom: 40 }}>কীভাবে কাজ করে?</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 20
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 20 }}>
+              {[
+                { num: '1', title: 'Agent-এর কাছে আবেদন', desc: 'অনুমোদিত এজেন্টের মাধ্যমে সেবার আবেদন জমা দিন' },
+                { num: '2', title: 'তথ্য ও ডকুমেন্ট জমা', desc: 'প্রয়োজনীয় কাগজপত্র আপলোড ও যাচাইকরণ' },
+                { num: '3', title: 'E-Vumi Seba Processing', desc: 'আমাদের টিম ফাইল প্রসেসিং সম্পন্ন করবে' },
+                { num: '4', title: 'অগ্রগতি Tracking', desc: 'অনলাইনে লাইভ আপডেট দেখুন' },
+                { num: '5', title: 'সেবা/ডকুমেন্ট গ্রহণ', desc: 'চূড়ান্ত নথি বা সেবা গ্রহণ করুন' }
+              ].map((step, idx) => (
+                <div key={idx} style={{ padding: 20, borderRadius: 16, background: '#f8fafc', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                  <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#0f766e', color: '#fff', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
+                    {step.num}
+                  </div>
+                  <h4 style={{ fontSize: 15, fontWeight: 700, color: '#0f172a', marginBottom: 6 }}>{step.title}</h4>
+                  <p style={{ fontSize: 12, color: '#64748b', lineHeight: 1.4 }}>{step.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Professional Dark Navy Rich Footer */}
+      <footer style={{ background: '#0f172a', color: '#cbd5e1', padding: '60px 20px 20px', borderTop: '4px solid #0f766e' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 40, paddingBottom: 40, borderBottom: '1px solid #334155' }}>
+          
+          {/* Column 1: Info & Hotline */}
+          <div>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: '#38bdf8', marginBottom: 16 }}>ভূমি সেবা সহায়তা কেন্দ্র</h3>
+            <p style={{ fontSize: 13, lineHeight: 1.7, color: '#94a3b8', marginBottom: 20 }}>
+              বাংলাদেশের ভূমি সংক্রান্ত সকল সেবা এক প্ল্যাটফর্মে। নামজারি, ভূমি উন্নয়ন কর, পর্চা, খতিয়ান এবং আরও অনেক সেবা পান ঝামেলাহীনভাবে।
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ background: '#047857', color: '#fff', padding: '10px 18px', borderRadius: 30, display: 'inline-flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 15, width: 'fit-content', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
+                <Phone size={18} /> হটলাইন: ১৬১২২
+              </div>
+              <div style={{ border: '1px solid #475569', color: '#e2e8f0', padding: '8px 16px', borderRadius: 30, display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 600, fontSize: 13, width: 'fit-content' }}>
+                <Phone size={14} /> +৮৮ ০৯৬১২৩১৬১২২
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Quick Links */}
+          <div>
+            <h4 style={{ fontSize: 16, fontWeight: 700, color: '#38bdf8', marginBottom: 18 }}>দ্রুত লিংক</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
+              {['হোম', 'সেবা সমূহ', 'ব্লগ', 'সংবাদ', 'ইভেন্ট', 'ফোরাম', 'সহায়তাকারী খুঁজুন', 'আমাদের সম্পর্কে', 'যোগাযোগ'].map((item, idx) => (
+                <li key={idx}>
+                  <a href="#services" style={{ color: '#cbd5e1', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <ChevronRight size={14} style={{ color: '#38bdf8' }} /> {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Main Services */}
+          <div>
+            <h4 style={{ fontSize: 16, fontWeight: 700, color: '#38bdf8', marginBottom: 18 }}>প্রধান সেবা সমূহ</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
+              {['ই-নামজারি', 'ভূমি উন্নয়ন কর', 'ভূমি রেকর্ড ও পর্চা', 'মৌজা ম্যাপ', 'দলিল সেবা', 'উত্তরাধিকার ক্যালকুলেটর', 'মৌজা রেট'].map((item, idx) => (
+                <li key={idx}>
+                  <a href="#services" style={{ color: '#cbd5e1', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <ChevronRight size={14} style={{ color: '#38bdf8' }} /> {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Contact & Govt Links */}
+          <div>
+            <h4 style={{ fontSize: 16, fontWeight: 700, color: '#38bdf8', marginBottom: 18 }}>যোগাযোগ</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 13, marginBottom: 24, color: '#94a3b8' }}>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <MapPin size={18} style={{ color: '#38bdf8', flexShrink: 0 }} />
+                <span>ভূমি সেবা সহায়তা কেন্দ্র, পৌরসভা এলাকা</span>
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <Phone size={16} style={{ color: '#38bdf8', flexShrink: 0 }} />
+                <span>০১৭৫০৩৬৪৫৭১</span>
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <Clock size={16} style={{ color: '#38bdf8', flexShrink: 0 }} />
+                <span>রবিবার - বৃহস্পতিবার, সকাল ৯:০০ - বিকাল ৫:০০</span>
+              </div>
+            </div>
+
+            <h5 style={{ fontSize: 14, fontWeight: 700, color: '#38bdf8', marginBottom: 10 }}>গুরুত্বপূর্ণ লিংক</h5>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 13 }}>
+              {[
+                { name: 'land.gov.bd', url: 'https://land.gov.bd' },
+                { name: 'আর.এস খতিয়ান ব্যবস্থাপনা', url: '#' },
+                { name: 'mutation.land.gov.bd', url: 'https://mutation.land.gov.bd' },
+                { name: 'dlrms.land.gov.bd', url: 'https://dlrms.land.gov.bd' },
+                { name: 'ldtax.gov.bd', url: 'https://ldtax.gov.bd' }
+              ].map((link, idx) => (
+                <a key={idx} href={link.url} target="_blank" rel="noreferrer" style={{ color: '#cbd5e1', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <ExternalLink size={13} style={{ color: '#38bdf8' }} /> {link.name}
+                </a>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Copyright */}
+        <div style={{ maxWidth: 1200, margin: '20px auto 0', textAlign: 'center', fontSize: 13, color: '#64748b' }}>
+          © ২০২৬ E-Vumi Seba | সমস্ত অধিকার সংরক্ষিত।
+        </div>
+      </footer>
+    </div>
+  )
+}
