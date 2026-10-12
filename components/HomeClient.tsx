@@ -98,7 +98,7 @@ export default function HomeClient() {
           ) : (
             <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill, minmax(280px, 1fr))',gap:20}}>
               {filteredServices.map((service) => (
-                <div key={service.id || service.slug} className="card service-card" style={{padding:24,borderRadius:16,display:'flex',flexDirection:'column',justify:'space-between',background:'#fff',border:'1px solid var(--border)'}}>
+                <div key={service.id || service.slug} className="card service-card" style={{padding:24,borderRadius:16,display:'flex',flexDirection:'column',justifyContent:'space-between',background:'#fff',border:'1px solid var(--border)'}}>
                   <div>
                     <div style={{width:44,height:44,borderRadius:12,background:'#e6f4f1',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--brand)',marginBottom:16}}>
                       <FileCheck2 size={24} />
