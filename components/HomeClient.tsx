@@ -139,15 +139,4 @@ export default function HomeClient() {
               <p style={{ color: '#0f766e', fontWeight: 800, fontSize: 13, letterSpacing: '1px' }}>অনলাইন ভূমিসেবা ব্যবস্থা</p>
               <h2 style={{ fontSize: 30, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>সকল সেবাসমূহ</h2>
             </div>
-            <span style={{ padding: '6px 14px', borderRadius: 20, background: '#f1f5f9', color: '#475569', fontWeight: 700, fontSize: 13 }}>
-              মোট সেবা: {filteredServices.length} টি
-            </span>
-          </div>
-
-          {loading ? (
-            <div style={{ textAlign: 'center', padding: '60px 0', color: '#64748b' }}>
-              <p style={{ fontSize: 16, fontWeight: 600 }}>ডাটাবেজ থেকে সেবাসমূহ লোড হচ্ছে...</p>
-            </div>
-          ) : filteredServices.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '60px 0', background: '#fff', borderRadius: 20, border: '1px solid #e2e8f0' }}>
-              <p
+            <span style={{ padding: '6px 14px', borderRadius: 20, background: '#f1f5f9', color: '#475569', fontWeight: 700
