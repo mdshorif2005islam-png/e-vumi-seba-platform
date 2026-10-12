@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Search, ArrowRight, ShieldCheck, FileCheck2, Map, CheckCircle2, MapPinned, LogIn, UserPlus } from 'lucide-react'
+import { Search, ArrowRight, ShieldCheck, FileCheck2, LogIn, UserPlus } from 'lucide-react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
@@ -96,11 +96,11 @@ export default function HomeClient() {
           {loading ? (
             <p style={{color:'var(--muted)'}}>সেবাসমূহ লোড হচ্ছে...</p>
           ) : (
-            <div className="grid-2x2">
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill, minmax(280px, 1fr))',gap:20}}>
               {filteredServices.map((service) => (
-                <div key={service.id || service.slug} className="card service-card" style={{padding:24,borderRadius:16,display:'flex',flexDirection:'column',justify:'space-between'}}>
+                <div key={service.id || service.slug} className="card service-card" style={{padding:24,borderRadius:16,display:'flex',flexDirection:'column',justifyContent:'space-between',background:'#fff',border:'1px solid var(--border)'}}>
                   <div>
-                    <div className="icon-box" style={{width:44,height:44,borderRadius:12,background:'#e6f4f1',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--brand)',marginBottom:16}}>
+                    <div style={{width:44,height:44,borderRadius:12,background:'#e6f4f1',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--brand)',marginBottom:16}}>
                       <FileCheck2 size={24} />
                     </div>
                     <h3 style={{fontSize:18,fontWeight:700,marginBottom:8}}>{service.name_bn}</h3>
@@ -108,8 +108,7 @@ export default function HomeClient() {
                   </div>
                   <Link 
                     href={`/dashboard/applications/new?service=${service.slug}`} 
-                    className="link-btn" 
-                    style={{fontWeight:700,color:'var(--brand)',display:'flex',alignItems:'center',gap:6}}
+                    style={{fontWeight:700,color:'var(--brand)',display:'flex',alignItems:'center',gap:6,textDecoration:'none'}}
                   >
                     আবেদন করুন →
                   </Link>
