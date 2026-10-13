@@ -1,16 +1,92 @@
-import { createClient } from '@/lib/supabase/server'
-import Link from 'next/link'
-import { ArrowRight, Clock3, FilePlus2, Users, WalletCards } from 'lucide-react'
+"use client";
 
-export default async function DashboardPage(){
- const supabase=await createClient();const {data:{user}}=await supabase.auth.getUser();
- const {data:profile}=await supabase.from('profiles').select('role,full_name').eq('id',user!.id).single();
- let query=supabase.from('applications').select('id,application_no,applicant_name,status,customer_total,created_at,services(name_bn)',{count:'exact'}).order('created_at',{ascending:false}).limit(8)
- if(profile?.role==='agent')query=query.eq('agent_id',user!.id);else if(profile?.role==='customer')query=query.eq('customer_id',user!.id)
- const {data:apps,count}=await query
- const {count:processing}=profile?.role==='agent'?await supabase.from('applications').select('*',{count:'exact',head:true}).eq('agent_id',user!.id).eq('status','PROCESSING'):profile?.role==='customer'?await supabase.from('applications').select('*',{count:'exact',head:true}).eq('customer_id',user!.id).eq('status','PROCESSING'):await supabase.from('applications').select('*',{count:'exact',head:true}).eq('status','PROCESSING')
- const {count:customers}=profile?.role==='agent'?await supabase.from('applications').select('customer_id',{count:'exact',head:true}).eq('agent_id',user!.id):{count:null}
- return <><div className="page-head"><div><p className="muted">{profile?.role==='agent'?'Agent Dashboard':profile?.role==='customer'?'Customer Dashboard':'Operations Dashboard'}</p><h1 style={{fontSize:28}}>আসসালামু আলাইকুম, {profile?.full_name||'User'}</h1></div><Link href="/dashboard/applications/new" className="btn btn-primary"><FilePlus2 size={17}/> নতুন আবেদন</Link></div>
- <div className="grid-4"><div className="card stat"><FilePlus2 color="var(--brand)"/><p className="muted" style={{fontSize:13,marginTop:10}}>মোট আবেদন</p><div className="stat-number">{count||0}</div></div><div className="card stat"><Users color="var(--brand)"/><p className="muted" style={{fontSize:13,marginTop:10}}>Customer</p><div className="stat-number">{customers??'—'}</div></div><div className="card stat"><Clock3 color="var(--brand)"/><p className="muted" style={{fontSize:13,marginTop:10}}>Processing</p><div className="stat-number">{processing||0}</div></div><div className="card stat"><WalletCards color="var(--brand)"/><p className="muted" style={{fontSize:13,marginTop:10}}>Role</p><div className="stat-number" style={{fontSize:18}}>{profile?.role}</div></div></div>
- <div className="card" style={{padding:22,marginTop:22}}><div className="page-head" style={{marginBottom:10}}><h2 style={{fontSize:21}}>সাম্প্রতিক আবেদন</h2><Link href="/dashboard/applications" style={{color:'var(--brand)',fontWeight:700}}>সব দেখুন <ArrowRight size={15} style={{verticalAlign:'middle'}}/></Link></div><div className="table-wrap"><table><thead><tr><th>Application</th><th>Customer</th><th>Service</th><th>Status</th><th>Amount</th></tr></thead><tbody>{(apps||[]).map((a:any)=><tr key={a.id}><td><Link href={`/dashboard/applications/${a.id}`} style={{fontWeight:700,color:'var(--brand)'}}>{a.application_no}</Link></td><td>{a.applicant_name}</td><td>{a.services?.name_bn}</td><td><span className="badge badge-teal">{a.status}</span></td><td>৳{Number(a.customer_total||0).toLocaleString('bn-BD')}</td></tr>)}{!apps?.length&&<tr><td colSpan={5} className="muted">এখনও কোনো আবেদন নেই।</td></tr>}</tbody></table></div></div></>
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import type { Profile, Stats } from "@/types/profile";
+import CustomerProfile from "@/components/profile/CustomerProfile";
+import AgentProfile from "@/components/profile/AgentProfile";
+import AdminProfile from "@/components/profile/AdminProfile";
+import s from "@/components/profile/profile.module.css";
+
+type Loaded = { profile: Profile; stats: Stats };
+
+export default function ProfilePage() {
+  const [data, setData] = useState<Loaded | null>(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function load() {
+    try {
+      const supabase = createClient();
+      const { data: auth } = await supabase.auth.getUser();
+      const user = auth.user;
+      if (!user) {
+        window.location.href = "/auth/login";
+        return;
+      }
+
+      const { data: row } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
+
+      const profile: Profile = {
+        id: user.id,
+        email: user.email ?? null,
+        role: "customer",
+        full_name: null, phone: null, avatar_url: null, address: null, district: null,
+        territory: null, nid_number: null, agent_code: null, bio: null,
+        ...(row ?? {}),
+      };
+
+      // টেবিল/কলামের নাম আলাদা হলে নিচের .from() ও .eq() বদলে নিন
+      const count = async (q: PromiseLike<{ count: number | null }>) => (await q).count ?? 0;
+      const apps = () => supabase.from("applications").select("id", { count: "exact", head: true });
+      const isManager = profile.role === "owner" || profile.role === "staff";
+      let stats: Stats = {};
+
+      if (isManager) {
+        const [users, agents, applications, pending] = await Promise.all([
+          count(supabase.from("profiles").select("id", { count: "exact", head: true })),
+          count(supabase.from("profiles").select("id", { count: "exact", head: true }).eq("role", "agent")),
+          count(apps()),
+          count(apps().eq("status", "pending")),
+        ]);
+        stats = { users, agents, applications, pending };
+      } else if (profile.role === "agent") {
+        const [total, pending, completed] = await Promise.all([
+          count(apps().eq("agent_id", user.id)),
+          count(apps().eq("agent_id", user.id).eq("status", "pending")),
+          count(apps().eq("agent_id", user.id).eq("status", "completed")),
+        ]);
+        stats = { total, pending, completed };
+      } else {
+        const [total, completed] = await Promise.all([
+          count(apps().eq("customer_id", user.id)),
+          count(apps().eq("customer_id", user.id).eq("status", "completed")),
+        ]);
+        stats = { total, completed, inProgress: Math.max(total - completed, 0) };
+      }
+
+      setData({ profile, stats });
+    } catch (e) {
+      console.error("Profile load failed", e);
+      setError("প্রোফাইল লোড করা যায়নি। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।");
+    }
+  }
+
+  if (error) return <main className={s.page}><p style={{ color: "#b42318" }}>{error}</p></main>;
+  if (!data) return <main className={s.page}><p style={{ color: "#5b6b7f" }}>লোড হচ্ছে…</p></main>;
+
+  const { profile, stats } = data;
+  const isManager = profile.role === "owner" || profile.role === "staff";
+
+  return (
+    <main className={s.page}>
+      {isManager && <AdminProfile profile={profile} stats={stats} />}
+      {profile.role === "agent" && <AgentProfile profile={profile} stats={stats} />}
+      {!isManager && profile.role !== "agent" && <CustomerProfile profile={profile} stats={stats} />}
+    </main>
+  );
 }
