@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
 import type { Profile, Stats } from "@/types/profile";
-import { Card, ChangePassword, Field, MetaItem, ProfileHero, SaveBar, StatGrid, useProfileForm } from "./shared";
+import { Card, ChangePassword, Field, MetaItem, ProfileHero, SaveBar, useProfileForm } from "./shared";
 import s from "./profile.module.css";
 
 // owner ও staff — দুজনের জন্যই এই পেজ
-export default function AdminProfile({ profile, stats }: { profile: Profile; stats: Stats }) {
+export default function AdminProfile({ profile }: { profile: Profile; stats?: Stats }) {
   const { values, set, save, saving, msg, setValues } = useProfileForm(profile);
   return (
     <>
@@ -18,15 +17,7 @@ export default function AdminProfile({ profile, stats }: { profile: Profile; sta
           {profile.email && <MetaItem icon={<Mail size={14} />} text={profile.email} />}
           {values.phone && <MetaItem icon={<Phone size={14} />} text={values.phone} />}
         </>}
-      >
-        <StatGrid items={[
-          { label: "মোট ব্যবহারকারী", value: stats.users ?? 0 },
-          { label: "এজেন্ট", value: stats.agents ?? 0 },
-          { label: "মোট আবেদন", value: stats.applications ?? 0 },
-          { label: "পেন্ডিং আবেদন", value: stats.pending ?? 0 },
-        ]} />
-        <Link href="/dashboard" className={s.heroLink}>ড্যাশবোর্ডে যান →</Link>
-      </ProfileHero>
+      />
 
       <Card title="অ্যাকাউন্টের তথ্য">
         <div className={s.grid}>
