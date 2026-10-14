@@ -52,12 +52,57 @@ export default function HomeClient() {
             </div>
           </Link>
 
-          <nav className="nav-hide-mobile" style={{ display: 'flex', gap: 28, fontWeight: 600, color: '#334155', fontSize: 15 }}>
-            <a href="#home" style={{ color: '#0f766e', textDecoration: 'none' }}>হোম</a>
-            <a href="#services" style={{ color: '#334155', textDecoration: 'none' }}>সেবাসমূহ</a>
-            <Link href="/track" style={{ color: '#334155', textDecoration: 'none' }}>আবেদন ট্র্যাক</Link>
-            <Link href="/dashboard" style={{ color: '#334155', textDecoration: 'none' }}>Dashboard</Link>
-          </nav>
+          
+<nav
+  className="nav-hide-mobile"
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 28,
+    fontWeight: 600,
+    fontSize: 15,
+  }}
+>
+  <a
+    href="#home"
+    style={{ color: '#334155', textDecoration: 'none' }}
+  >
+    হোম
+  </a>
+
+  <a
+    href="#services"
+    style={{ color: '#334155', textDecoration: 'none' }}
+  >
+    সেবাসমূহ
+  </a>
+
+  <Link
+    href="/track"
+    style={{
+      color: '#087f5b',
+      textDecoration: 'none',
+      fontWeight: 900,
+      background: '#dcfce7',
+      padding: '11px 16px',
+      borderRadius: 10,
+      border: '1px solid #86efac',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 8,
+    }}
+  >
+    <Search size={17} strokeWidth={2.8} />
+    আবেদন ট্র্যাকিং
+  </Link>
+
+  <Link
+    href="/dashboard"
+    style={{ color: '#334155', textDecoration: 'none' }}
+  >
+    Dashboard
+  </Link>
+</nav>
 
           <div style={{ display: 'flex', gap: 10 }}>
             <Link href="/auth/login" className="btn" style={{ padding: '9px 18px', borderRadius: 10, border: '1px solid #cbd5e1', background: '#fff', color: '#334155', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
