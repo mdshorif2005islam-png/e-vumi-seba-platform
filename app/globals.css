@@ -468,3 +468,65 @@ table {
   }
 }
 
+/* ===== E-Vumi Seba Home Page Layout Fix ===== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+@media (min-width: 1200px) {
+  main,
+  .home-container,
+  .home-content,
+  .container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Service cards */
+.services-grid,
+.service-grid,
+.services-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.services-grid > *,
+.service-grid > *,
+.services-list > * {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1000px) {
+  .services-grid,
+  .service-grid,
+  .services-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .services-grid,
+  .service-grid,
+  .services-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
