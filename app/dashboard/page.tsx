@@ -1,55 +1,105 @@
 import React from 'react';
-import Link from 'next/link';
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-teal-800 to-teal-900 rounded-xl p-6 text-white shadow-md">
-        <h1 className="text-2xl font-bold">E-Vumi Seba Platform-e Shagotom!</h1>
-        <p className="text-teal-100 mt-1">Apnar bhumi abedon ebong onanno sheba gulo ekhane khub shohojei parichalona korte paren.</p>
+    <div style={{ padding: '24px', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+      {/* Banner */}
+      <div style={{
+        backgroundColor: '#0f766e',
+        color: '#ffffff',
+        padding: '24px',
+        borderRadius: '12px',
+        marginBottom: '24px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+      }}>
+        <h1 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0 0 8px 0' }}>E-Vumi Seba Platform-e Shagotom!</h1>
+        <p style={{ margin: 0, opacity: 0.9 }}>Apnar bhumi abedon ebong onanno sheba gulo ekhane khub shohojei parichalona korte paren.</p>
       </div>
 
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="text-gray-500 text-sm font-medium">Mot Abedon (Total Applications)</div>
-          <div className="text-3xl font-bold text-gray-800 mt-2">০৪</div>
-          <div className="text-teal-600 text-xs mt-2 flex items-center">Shorboshesh update kora hoyeche</div>
-        </div>
-        
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="text-gray-500 text-sm font-medium">Pending Abedon</div>
-          <div className="text-3xl font-bold text-amber-600 mt-2">০২</div>
-          <div className="text-amber-600 text-xs mt-2">Prokriyadhin ache</div>
+      {/* Stats Cards Grid */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '20px',
+        marginBottom: '24px'
+      }}>
+        {/* Card 1 */}
+        <div style={{
+          backgroundColor: '#ffffff',
+          padding: '20px',
+          borderRadius: '12px',
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+        }}>
+          <div style={{ color: '#64748b', fontSize: '14px', fontWeight: '600' }}>Mot Abedon (Total Applications)</div>
+          <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#1e293b', margin: '12px 0 4px 0' }}>০৪</div>
+          <div style={{ color: '#0d9488', fontSize: '12px' }}>Shorboshesh update kora hoyeche</div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="text-gray-500 text-sm font-medium">Approved Abedon</div>
-          <div className="text-3xl font-bold text-emerald-600 mt-2">০২</div>
-          <div className="text-emerald-600 text-xs mt-2">Somponno hoyeche</div>
+        {/* Card 2 */}
+        <div style={{
+          backgroundColor: '#ffffff',
+          padding: '20px',
+          borderRadius: '12px',
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+        }}>
+          <div style={{ color: '#64748b', fontSize: '14px', fontWeight: '600' }}>Pending Abedon</div>
+          <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#d97706', margin: '12px 0 4px 0' }}>০২</div>
+          <div style={{ color: '#d97706', fontSize: '12px' }}>Prokriyadhin ache</div>
+        </div>
+
+        {/* Card 3 */}
+        <div style={{
+          backgroundColor: '#ffffff',
+          padding: '20px',
+          borderRadius: '12px',
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+        }}>
+          <div style={{ color: '#64748b', fontSize: '14px', fontWeight: '600' }}>Approved Abedon</div>
+          <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#16a34a', margin: '12px 0 4px 0' }}>০২</div>
+          <div style={{ color: '#16a34a', fontSize: '12px' }}>Somponno hoyeche</div>
         </div>
       </div>
 
-      {/* Quick Actions / Recent Activity Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Druto Kaj (Quick Actions)</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Link href="/dashboard/applications" className="p-4 rounded-lg border border-gray-200 hover:border-teal-600 hover:bg-teal-50 transition flex items-center justify-between">
-            <div>
-              <h3 className="font-medium text-gray-800">Notun Abedon Korun</h3>
-              <p className="text-sm text-gray-500">Bhumi ba namjari abedon submit korun</p>
-            </div>
-            <span className="text-teal-600 font-bold">&rarr;</span>
-          </Link>
+      {/* Quick Actions */}
+      <div style={{
+        backgroundColor: '#ffffff',
+        padding: '24px',
+        borderRadius: '12px',
+        border: '1px solid #e2e8f0',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+      }}>
+        <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#1e293b', marginTop: 0, marginBottom: '16px' }}>Druto Kaj (Quick Actions)</h2>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '16px'
+        }}>
+          <a href="/dashboard/applications" style={{
+            textDecoration: 'none',
+            padding: '16px',
+            borderRadius: '8px',
+            border: '1px solid #cbd5e1',
+            backgroundColor: '#f8fafc',
+            display: 'block'
+          }}>
+            <div style={{ fontWeight: '600', color: '#0f766e', marginBottom: '4px' }}>Notun Abedon Korun &rarr;</div>
+            <div style={{ fontSize: '13px', color: '#64748b' }}>Bhumi ba namjari abedon submit korun</div>
+          </a>
 
-          <Link href="/dashboard/profile" className="p-4 rounded-lg border border-gray-200 hover:border-teal-600 hover:bg-teal-50 transition flex items-center justify-between">
-            <div>
-              <h3 className="font-medium text-gray-800">Profile Update</h3>
-              <p className="text-sm text-gray-500">Apnar byokthigoto tottho poriborton korun</p>
-            </div>
-            <span className="text-teal-600 font-bold">&rarr;</span>
-          </Link>
+          <a href="/dashboard/profile" style={{
+            textDecoration: 'none',
+            padding: '16px',
+            borderRadius: '8px',
+            border: '1px solid #cbd5e1',
+            backgroundColor: '#f8fafc',
+            display: 'block'
+          }}>
+            <div style={{ fontWeight: '600', color: '#0f766e', marginBottom: '4px' }}>Profile Update &rarr;</div>
+            <div style={{ fontSize: '13px', color: '#64748b' }}>Apnar byokthigoto tottho poriborton korun</div>
+          </a>
         </div>
       </div>
     </div>
