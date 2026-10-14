@@ -35,6 +35,30 @@ export default function TrackPage() {
     setError('');
     setApplications([]);
     setSearched(false);
+    
+  {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.rpc(
+    'track_applications_by_phone',
+    { p_phone: phone.trim() }
+  );
+
+  if (error) {
+    setError('আবেদন খুঁজতে সমস্যা হয়েছে।');
+    console.error(error);
+    return;
+  }
+
+  setApplications(data ?? []);
+  setSearched(true);
+} catch (err) {
+  console.error(err);
+  setError('সার্ভারের সঙ্গে যোগাযোগ করা যাচ্ছে না।');
+} finally {
+  setLoading(false);
+}
+
 
     try {
       const supabase = createClient();
