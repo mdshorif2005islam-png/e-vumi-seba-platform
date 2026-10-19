@@ -66,16 +66,16 @@ export default function TrackPage() {
 
   return (
     <div className="min-h-screen bg-slate-50/50 text-slate-800 flex flex-col font-sans">
-      {/* ===== Header / Navbar ===== */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+      {/* ===== Header / Navbar (Home Page Matching) ===== */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-2xl bg-[#0A2920] flex items-center justify-center text-white shadow-md transition group-hover:scale-105">
-              <Building2 size={22} />
+            <div className="w-10 h-10 rounded-xl bg-[#0A2920] flex items-center justify-center text-white shadow-md transition group-hover:scale-105">
+              <Building2 size={20} />
             </div>
             <div>
-              <h1 className="font-black text-xl leading-none text-[#0A2920] tracking-tight">
+              <h1 className="font-extrabold text-lg leading-none text-[#0A2920] tracking-tight">
                 E-Vumi Seba
               </h1>
               <p className="text-[10px] text-emerald-700 font-semibold mt-0.5">
@@ -85,7 +85,7 @@ export default function TrackPage() {
           </Link>
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-2">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
 
@@ -99,7 +99,9 @@ export default function TrackPage() {
                       : 'text-gray-600 hover:text-[#0A2920] hover:bg-gray-100/80'
                   }`}
                 >
-                  {link.name === 'আবেদন ট্র্যাকিং' && <Search size={14} className="inline mr-1.5 -mt-0.5" />}
+                  {link.name === 'আবেদন ট্র্যাকিং' && (
+                    <Search size={14} className="inline mr-1.5 -mt-0.5" />
+                  )}
                   {link.name}
                 </Link>
               );
@@ -129,7 +131,6 @@ export default function TrackPage() {
       {/* ===== Hero Section ===== */}
       <section className="bg-emerald-50/40 border-b border-emerald-100/60 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          
           {/* Left Hero Intro */}
           <div className="lg:col-span-7 space-y-5">
             <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-[#0A2920] text-xs font-bold tracking-wide uppercase">
@@ -145,10 +146,16 @@ export default function TrackPage() {
               নিবন্ধিত মোবাইল নম্বর দিয়ে আপনার আবেদনের অগ্রগতি সহজেই দেখে নিতে পারেন।
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 pt-2 text-xs sm:text-sm font-semibold text-emerald-800">
-              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">✓ সহজ অনুসন্ধান</span>
-              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">✓ স্ট্যাটাস আপডেট</span>
-              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">✓ দ্রুত ফলাফল</span>
+            <div className="flex flex-wrap items-center gap-3 pt-2 text-xs sm:text-sm font-semibold text-emerald-800">
+              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">
+                ✓ সহজ অনুসন্ধান
+              </span>
+              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">
+                ✓ স্ট্যাটাস আপডেট
+              </span>
+              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">
+                ✓ দ্রুত ফলাফল
+              </span>
             </div>
           </div>
 
@@ -195,7 +202,10 @@ export default function TrackPage() {
               </form>
 
               {error && (
-                <div className="mt-4 p-3.5 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs font-medium" role="alert">
+                <div
+                  className="mt-4 p-3.5 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs font-medium"
+                  role="alert"
+                >
                   {error}
                 </div>
               )}
@@ -207,7 +217,6 @@ export default function TrackPage() {
               )}
             </div>
           </div>
-
         </div>
       </section>
 
