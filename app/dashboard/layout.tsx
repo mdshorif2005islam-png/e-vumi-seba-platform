@@ -11,22 +11,22 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
 
-  // মেনু অপশনসমূহ
+  // মেনু তালিকা (সেটিংস পরিবর্তন করে প্রোফাইল করা হয়েছে)
   const menuItems = [
     { name: "ড্যাশবোর্ড", href: "/dashboard", icon: "🏠" },
     { name: "আবেদনসমূহ", href: "/dashboard/applications", icon: "📄" },
     { name: "কাস্টমার", href: "/dashboard/customers", icon: "👤" },
-    { name: "এজেন্ট", href: "/dashboard/admin", icon: "👥" },
-    { name: "পেমент", href: "/dashboard/admin", icon: "৳" },
+    { name: "এজেন্ট", href: "/dashboard/agent", icon: "👥" },
+    { name: "পেমেন্ট", href: "/dashboard/payment", icon: "৳" },
     { name: "সাপোর্ট", href: "/dashboard/support", icon: "💬" },
-    { name: "সেটিংস", href: "/dashboard/profile", icon: "⚙️" },
+    { name: "প্রোফাইল", href: "/dashboard/profile", icon: "🛡️" },
   ];
 
   return (
     <div className="flex min-h-screen bg-slate-50">
-      {/* বাম পাশের সাইডবার (Sidebar) */}
+      {/* বাম পাশের সাইডবার */}
       <aside className="w-64 bg-[#0A2920] text-white flex flex-col shrink-0 min-h-screen">
-        {/* লোগো সেকশন */}
+        {/* লোগো ও হেডার */}
         <div className="p-5 border-b border-emerald-900/50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-[#D9A353] text-gray-900 font-black flex items-center justify-center text-xl shadow-sm">
@@ -43,7 +43,7 @@ export default function DashboardLayout({
           </div>
         </div>
 
-        {/* মেনু লিস্ট */}
+        {/* সাইডবার মেনু */}
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           <p className="px-3 text-[10px] font-semibold text-emerald-300 uppercase tracking-wider mb-2">
             MAIN MENU
