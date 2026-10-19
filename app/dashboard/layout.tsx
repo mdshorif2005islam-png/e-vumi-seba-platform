@@ -11,7 +11,7 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
 
-  // মেনু তালিকা (সেটিংস পরিবর্তন করে প্রোফাইল করা হয়েছে)
+  // Menu List (Profile link shoh)
   const menuItems = [
     { name: "ড্যাশবোর্ড", href: "/dashboard", icon: "🏠" },
     { name: "আবেদনসমূহ", href: "/dashboard/applications", icon: "📄" },
@@ -24,9 +24,9 @@ export default function DashboardLayout({
 
   return (
     <div className="flex min-h-screen bg-slate-50">
-      {/* বাম পাশের সাইডবার */}
-      <aside className="w-64 bg-[#0A2920] text-white flex flex-col shrink-0 min-h-screen">
-        {/* লোগো ও হেডার */}
+      {/* Left Sidebar */}
+      <aside className="w-64 bg-[#0A2920] text-white flex flex-col shrink-0 min-h-screen border-r border-emerald-900/40 shadow-xl">
+        {/* Logo Section */}
         <div className="p-5 border-b border-emerald-900/50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-[#D9A353] text-gray-900 font-black flex items-center justify-center text-xl shadow-sm">
@@ -43,9 +43,38 @@ export default function DashboardLayout({
           </div>
         </div>
 
-        {/* সাইডবার মেনু */}
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          <p className="px-3 text-[10px] font-semibold text-emerald-300 uppercase tracking-wider mb-2">
+        {/* Home Navigation Button with Animation */}
+        <div className="p-4 pb-2">
+          <Link
+            href="/"
+            className="group relative flex items-center justify-between px-4 py-2.5 rounded-xl bg-emerald-900/60 border border-emerald-500/30 text-emerald-100 font-medium text-sm transition-all duration-300 hover:bg-[#D9A353] hover:text-gray-900 hover:border-[#D9A353] hover:shadow-lg hover:-translate-y-0.5 active:scale-95 overflow-hidden"
+          >
+            <div className="flex items-center gap-3 relative z-10">
+              <span className="text-base transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">
+                🌐
+              </span>
+              <span className="font-semibold">ওয়েবসাইট হোম</span>
+            </div>
+            
+            {/* Animated Pulse & Indicator */}
+            <div className="flex items-center gap-1.5 relative z-10">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 group-hover:bg-gray-900 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 group-hover:bg-gray-900"></span>
+              </span>
+              <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </div>
+
+            {/* Glowing background effect on hover */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+          </Link>
+        </div>
+
+        {/* Sidebar Menu */}
+        <nav className="flex-1 p-4 pt-2 space-y-1 overflow-y-auto">
+          <p className="px-3 text-[10px] font-semibold text-emerald-300/80 uppercase tracking-wider mb-2">
             MAIN MENU
           </p>
           {menuItems.map((item) => {
@@ -69,7 +98,7 @@ export default function DashboardLayout({
         </nav>
       </aside>
 
-      {/* ডানপাশের মূল ড্যাশবোর্ড কনটেন্ট */}
+      {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto">
         {children}
       </main>
