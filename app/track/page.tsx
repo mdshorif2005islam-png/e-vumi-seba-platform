@@ -1,9 +1,9 @@
-
 'use client';
 
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
-import { MapPinned, Search, FileText, ShieldCheck } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Search, FileText, ShieldCheck, Building2, LogIn, UserPlus } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 type Application = {
@@ -23,6 +23,7 @@ const statusNames: Record<string, string> = {
 };
 
 export default function TrackPage() {
+  const pathname = usePathname();
   const [phone, setPhone] = useState('');
   const [applications, setApplications] = useState<Application[]>([]);
   const [error, setError] = useState('');
@@ -56,162 +57,236 @@ export default function TrackPage() {
     }
   }
 
+  const navLinks = [
+    { name: 'হোম', href: '/' },
+    { name: 'সেবাসমূহ', href: '/#services' },
+    { name: 'আবেদন ট্র্যাকিং', href: '/track' },
+    { name: 'Dashboard', href: '/dashboard' },
+  ];
+
   return (
-    <main className="tracking-page">
-      <header className="tracking-header">
-        <Link href="/" className="tracking-logo">
-          <MapPinned size={26} />
-          <span>
-            E-Vumi Seba
-            <small>জমি সংক্রান্ত সেবার সহায়তা</small>
-          </span>
-        </Link>
-
-        <nav>
-          <Link href="/">হোম</Link>
-          <Link href="/#services">সেবাসমূহ</Link>
-          <Link href="/track" className="active">
-            আবেদন ট্র্যাকিং
+    <div className="min-h-screen bg-slate-50/50 text-slate-800 flex flex-col font-sans">
+      {/* ===== Header / Navbar ===== */}
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-11 h-11 rounded-2xl bg-[#0A2920] flex items-center justify-center text-white shadow-md transition group-hover:scale-105">
+              <Building2 size={22} />
+            </div>
+            <div>
+              <h1 className="font-black text-xl leading-none text-[#0A2920] tracking-tight">
+                E-Vumi Seba
+              </h1>
+              <p className="text-[10px] text-emerald-700 font-semibold mt-0.5">
+                Private Land Service Assistance
+              </p>
+            </div>
           </Link>
-          <Link href="/#contact">যোগাযোগ</Link>
-        </nav>
-      </header>
 
-      <section className="tracking-hero">
-        <div className="tracking-intro">
-          <span className="tracking-label">
-            <Search size={16} /> আবেদন ট্র্যাকিং
-          </span>
+          {/* Navigation Links */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
 
-          <h1>
-            আপনার আবেদনের
-            <br />
-            সর্বশেষ অবস্থা জানুন
-          </h1>
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                    isActive
+                      ? 'bg-emerald-100/80 text-[#0A2920] shadow-sm'
+                      : 'text-gray-600 hover:text-[#0A2920] hover:bg-gray-100/80'
+                  }`}
+                >
+                  {link.name === 'আবেদন ট্র্যাকিং' && <Search size={14} className="inline mr-1.5 -mt-0.5" />}
+                  {link.name}
+                </Link>
+              );
+            })}
+          </nav>
 
-          <p>
-            নিবন্ধিত মোবাইল নম্বর দিয়ে আপনার আবেদনের অগ্রগতি
-            সহজেই দেখুন।
-          </p>
-
-          <div className="tracking-points">
-            <span>✓ সহজ অনুসন্ধান</span>
-            <span>✓ স্ট্যাটাস আপডেট</span>
-            <span>✓ দ্রুত ফলাফল</span>
+          {/* Auth Action Buttons */}
+          <div className="flex items-center gap-2.5">
+            <Link
+              href="/auth/login"
+              className="px-4 py-2 rounded-xl border border-gray-200 text-gray-700 font-semibold text-sm hover:bg-gray-50 transition flex items-center gap-1.5 shadow-sm"
+            >
+              <LogIn size={16} />
+              <span>লগইন</span>
+            </Link>
+            <Link
+              href="/auth/register"
+              className="px-4 py-2 rounded-xl bg-[#0A2920] hover:bg-[#123b35] text-white font-semibold text-sm transition flex items-center gap-1.5 shadow-md"
+            >
+              <UserPlus size={16} />
+              <span>রেজিস্টার</span>
+            </Link>
           </div>
         </div>
+      </header>
 
-        <div className="tracking-form-card">
-          <div className="tracking-icon">
-            <Search size={30} />
+      {/* ===== Hero Section ===== */}
+      <section className="bg-emerald-50/40 border-b border-emerald-100/60 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          {/* Left Hero Intro */}
+          <div className="lg:col-span-7 space-y-5">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-[#0A2920] text-xs font-bold tracking-wide uppercase">
+              <Search size={14} /> আবেদন ট্র্যাকিং
+            </span>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A2920] leading-tight">
+              আপনার আবেদনের <br />
+              <span className="text-emerald-700">সর্বশেষ অবস্থা</span> জানুন
+            </h1>
+
+            <p className="text-gray-600 text-base sm:text-lg max-w-xl leading-relaxed">
+              নিবন্ধিত মোবাইল নম্বর দিয়ে আপনার আবেদনের অগ্রগতি
+              সহজেই দেখে নিতে পারেন।
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 pt-2 text-xs sm:text-sm font-semibold text-emerald-800">
+              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">✓ সহজ অনুসন্ধান</span>
+              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">✓ স্ট্যাটাস আপডেট</span>
+              <span className="bg-white px-3.5 py-2 rounded-xl border border-emerald-100 shadow-sm">✓ দ্রুত ফলাফল</span>
+            </div>
           </div>
 
-          <h2>আবেদন খুঁজুন</h2>
-          <p>আবেদন করার সময় ব্যবহৃত মোবাইল নম্বরটি লিখুন।</p>
+          {/* Right Hero Form Card */}
+          <div className="lg:col-span-5">
+            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-xl relative overflow-hidden">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-4">
+                <Search size={24} />
+              </div>
 
-          <form onSubmit={track}>
-            <label htmlFor="phone">নিবন্ধিত মোবাইল নম্বর</label>
+              <h2 className="text-2xl font-bold text-gray-900">আবেদন খুঁজুন</h2>
+              <p className="text-xs text-gray-500 mt-1 mb-6">
+                আবেদন করার সময় ব্যবহৃত মোবাইল নম্বরটি লিখুন।
+              </p>
 
-            <input
-              id="phone"
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              placeholder="01XXXXXXXXX"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              minLength={8}
-              maxLength={20}
-            />
+              <form onSubmit={track} className="space-y-4">
+                <div>
+                  <label htmlFor="phone" className="block text-xs font-semibold text-gray-700 mb-2">
+                    নিবন্ধিত মোবাইল নম্বর
+                  </label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    placeholder="01XXXXXXXXX"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    minLength={8}
+                    maxLength={20}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 bg-slate-50/50"
+                  />
+                </div>
 
-            <button type="submit" disabled={loading}>
-              <Search size={19} />
-              {loading ? 'খোঁজা হচ্ছে...' : 'আবেদন খুঁজুন'}
-            </button>
-          </form>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3.5 px-6 bg-[#0A2920] hover:bg-[#123b35] text-white rounded-xl font-bold text-sm transition shadow-md hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-70"
+                >
+                  <Search size={18} />
+                  <span>{loading ? 'খোঁজা হচ্ছে...' : 'আবেদন খুঁজুন'}</span>
+                </button>
+              </form>
 
-          {error && (
-            <p className="tracking-error" role="alert">
-              {error}
-            </p>
-          )}
+              {error && (
+                <div className="mt-4 p-3.5 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs font-medium" role="alert">
+                  {error}
+                </div>
+              )}
 
-          {searched && applications.length === 0 && !error && (
-            <p className="tracking-empty">
-              এই নম্বরের সঙ্গে কোনো আবেদন পাওয়া যায়নি।
-              মোবাইল নম্বরটি যাচাই করে আবার চেষ্টা করুন।
-            </p>
-          )}
+              {searched && applications.length === 0 && !error && (
+                <div className="mt-4 p-3.5 rounded-xl bg-amber-50 border border-amber-100 text-amber-800 text-xs leading-relaxed">
+                  এই নম্বরের সঙ্গে কোনো আবেদন পাওয়া যায়নি।
+                  মোবাইল নম্বরটি যাচাই করে আবার চেষ্টা করুন।
+                </div>
+              )}
+            </div>
+          </div>
+
         </div>
       </section>
 
-      <section className="tracking-status-section">
-        <h2>আবেদনের অবস্থা</h2>
-        <p>আপনার আবেদনের বর্তমান অগ্রগতি এখানে দেখুন।</p>
+      {/* ===== Application Status Steps Section ===== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 w-full">
+        <div className="text-center max-w-xl mx-auto mb-10">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0A2920]">আবেদনের অবস্থা</h2>
+          <p className="text-gray-500 text-sm mt-1">আপনার আবেদনের বর্তমান অগ্রগতি ধাপ অনুযায়ী দেখে নিন।</p>
+        </div>
 
-        <div className="tracking-status-grid">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             ['01', 'আবেদন জমা', 'আপনার আবেদন সিস্টেমে জমা হয়েছে।'],
             ['02', 'যাচাই চলছে', 'আবেদনের তথ্য যাচাই করা হচ্ছে।'],
             ['03', 'অনুমোদন', 'প্রয়োজনীয় অনুমোদনের অপেক্ষায়।'],
             ['04', 'সম্পন্ন', 'আবেদনের কাজ সম্পন্ন হয়েছে।'],
           ].map(([number, title, description]) => (
-            <article className="tracking-status-card" key={number}>
-              <span>{number}</span>
-              <h3>{title}</h3>
-              <p>{description}</p>
+            <article
+              className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition group"
+              key={number}
+            >
+              <span className="inline-block px-3 py-1 rounded-xl bg-emerald-50 text-emerald-700 font-black text-xs mb-3 group-hover:bg-[#0A2920] group-hover:text-white transition">
+                {number}
+              </span>
+              <h3 className="font-bold text-gray-800 text-base mb-1.5">{title}</h3>
+              <p className="text-xs text-gray-500 leading-relaxed">{description}</p>
             </article>
           ))}
         </div>
 
+        {/* Results Container */}
         {applications.length > 0 && (
-          <div className="tracking-results">
-            <h2>আপনার আবেদনসমূহ ({applications.length})</h2>
+          <div className="mt-12 bg-white rounded-3xl border border-gray-100 p-6 sm:p-8 shadow-sm">
+            <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+              <span>আপনার আবেদনসমূহ</span>
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs">
+                {applications.length}
+              </span>
+            </h2>
 
-            {applications.map((app, index) => (
-              <article
-                className="tracking-result-card"
-                key={`${app.application_no}-${index}`}
-              >
-                <FileText size={24} />
+            <div className="space-y-4">
+              {applications.map((app, index) => (
+                <article
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-slate-50 border border-gray-100 hover:border-emerald-200 transition"
+                  key={`${app.application_no}-${index}`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-white border border-gray-100 text-emerald-700 flex items-center justify-center shrink-0 shadow-sm">
+                      <FileText size={22} />
+                    </div>
+                    <div>
+                      <strong className="block text-base font-bold text-gray-900">
+                        {app.service_name}
+                      </strong>
+                      <p className="text-xs text-gray-500 font-mono mt-0.5">
+                        আবেদন নম্বর: {app.application_no}
+                      </p>
+                      <p className="text-[11px] text-gray-400 mt-1">
+                        সর্বশেষ আপডেট:{' '}
+                        {app.updated_at
+                          ? new Date(app.updated_at).toLocaleString('bn-BD')
+                          : 'তথ্য নেই'}
+                      </p>
+                    </div>
+                  </div>
 
-                <div className="tracking-result-info">
-                  <strong>{app.service_name}</strong>
-                  <p>আবেদন নম্বর: {app.application_no}</p>
-                  <p>
-                    সর্বশেষ আপডেট:{' '}
-                    {app.updated_at
-                      ? new Date(app.updated_at).toLocaleString('bn-BD')
-                      : 'তথ্য নেই'}
-                  </p>
-                </div>
-
-                <span className="tracking-result-badge">
-                  {statusNames[app.status?.toLowerCase()] ?? app.status}
-                </span>
-              </article>
-            ))}
+                  <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 self-start sm:self-center">
+                    {statusNames[app.status?.toLowerCase()] ?? app.status}
+                  </span>
+                </article>
+              ))}
+            </div>
           </div>
         )}
       </section>
 
-      <section className="tracking-security">
-        <ShieldCheck size={35} />
-
-        <div>
-          <h3>আপনার তথ্যের নিরাপত্তা আমাদের অগ্রাধিকার</h3>
-          <p>
-            আপনার আবেদন-সংক্রান্ত তথ্য সুরক্ষিত রাখতে আমরা সচেষ্ট।
-          </p>
-        </div>
-      </section>
-
-      <footer className="tracking-footer">
-        <strong>E-Vumi Seba</strong>
-        <p>জমি সংক্রান্ত সেবার সহায়তা</p>
-        <small>© 2026 E-Vumi Seba. সর্বস্বত্ব সংরক্ষিত।</small>
-      </footer>
-    </main>
-  );
-}
+      {/* ===== Security Guarantee Section ===== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
+        <div className="bg-emerald-50/60 rounded-3xl p-6 sm:p-8 border border-emerald-100 flex items-center gap-5">
+          <div className="w-14 h-14 rounded-2xl
