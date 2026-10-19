@@ -29,7 +29,34 @@ export default function TrackPage() {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
+  
   async function track(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setApplications([]);
+    setSearched(false);
+
+    try {
+      const supabase = createClient();
+
+      const { data, error } = await supabase.rpc(
+        'track_applications_by_phone',
+        { p_phone: phone.trim() }
+      );
+
+      if (error) throw error;
+
+      setApplications((data ?? []) as Application[]);
+      setSearched(true);
+    } catch (err) {
+      console.error(err);
+      setError('আবেদন খুঁজতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+    } finally {
+      setLoading(false);
+    }
+  }
+
     e.preventDefault();
     setLoading(true);
     setError('');
