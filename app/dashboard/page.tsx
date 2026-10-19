@@ -485,3 +485,213 @@ export default function DashboardPage() {
     </div>
   );
 }
+import React from 'react';
+import Link from 'next/link';
+
+export default function DashboardPage() {
+  return (
+    <div className="p-6 bg-slate-50 min-h-screen">
+      {/* Top Banner / Hero Section */}
+      <div className="bg-[#0A2920] rounded-2xl p-6 text-white mb-8 relative overflow-hidden shadow-md">
+        <span className="inline-block px-3 py-1 bg-emerald-800/80 text-emerald-200 rounded-full text-xs font-semibold mb-3 tracking-wide uppercase">
+          ADMIN CONTROL CENTER
+        </span>
+        <h1 className="text-2xl font-bold mb-2">স্বাগতম, Administrator!</h1>
+        <p className="text-emerald-100/80 text-sm max-w-xl mb-5 leading-relaxed">
+          Evumi Seba-এর সকল আবেদন, গ্রাহক এবং সেবার কার্যক্রম এক জায়গা থেকে পরিচালনা করুন।
+        </p>
+        <Link
+          href="/dashboard/applications"
+          className="inline-flex items-center gap-2 bg-[#D9A353] hover:bg-[#c28e43] text-gray-900 px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-sm"
+        >
+          আবেদন পরিচালনা করুন →
+        </Link>
+      </div>
+
+      {/* Sarbik Porishongkhan / Stats Overview */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-lg font-bold text-gray-800">সার্বিক পরিসংখ্যান</h2>
+            <p className="text-xs text-gray-500">আপনার সেবা কার্যক্রমের সংক্ষিপ্ত চিত্র</p>
+          </div>
+          <span className="text-xs text-gray-400 bg-white px-3 py-1 rounded-full border border-gray-100 shadow-sm">
+            Overview
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Card 1 */}
+          <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-gray-500">মোট আবেদন</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">4</p>
+              <p className="text-[11px] text-gray-400 mt-1">সিস্টেমে প্রক্রিয়াকৃত আবেদন</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+              📄
+            </div>
+          </div>
+
+          {/* Card 2 */}
+          <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-gray-500">অপেক্ষমাণ আবেদন</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">2</p>
+              <p className="text-[11px] text-gray-400 mt-1">পর্যালোচনা প্রয়োজন</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+              ⏳
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-gray-500">সম্পন্ন আবেদন</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">1</p>
+              <p className="text-[11px] text-gray-400 mt-1">সফলভাবে প্রসেসড</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+              ✓
+            </div>
+          </div>
+
+          {/* Card 4 */}
+          <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-gray-500">মোট কাস্টমার</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">—</p>
+              <p className="text-[11px] text-gray-400 mt-1">ডেটাবেসে সংযুক্ত সদস্য</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg">
+              👤
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Action Navigation Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <Link
+          href="/dashboard/applications"
+          className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition group"
+        >
+          <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-xl mb-4 group-hover:bg-emerald-50 transition">
+            📋
+          </div>
+          <h3 className="font-bold text-gray-800 mb-1">আবেদন যাচাই</h3>
+          <p className="text-xs text-gray-500 mb-4">নতুন আবেদন দেখুন ও স্ট্যাটাস পরিবর্তন করুন।</p>
+          <span className="text-xs font-semibold text-emerald-700 group-hover:translate-x-1 transition inline-block">
+            বিস্তারিত দেখুন →
+          </span>
+        </Link>
+
+        <Link
+          href="/dashboard/customers"
+          className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition group"
+        >
+          <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-xl mb-4 group-hover:bg-emerald-50 transition">
+            👤
+          </div>
+          <h3 className="font-bold text-gray-800 mb-1">কাস্টমার ম্যানেজমেন্ট</h3>
+          <p className="text-xs text-gray-500 mb-4">গ্রাহকদের তথ্য ও সেবা কার্যক্রম পরিচালনা করুন।</p>
+          <span className="text-xs font-semibold text-emerald-700 group-hover:translate-x-1 transition inline-block">
+            বিস্তারিত দেখুন →
+          </span>
+        </Link>
+
+        <Link
+          href="/dashboard/support"
+          className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition group"
+        >
+          <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-xl mb-4 group-hover:bg-emerald-50 transition">
+            💬
+          </div>
+          <h3 className="font-bold text-gray-800 mb-1">সাপোর্ট সেন্টার</h3>
+          <p className="text-xs text-gray-500 mb-4">গ্রাহকের প্রশ্ন ও সমস্যার সমাধান করুন।</p>
+          <span className="text-xs font-semibold text-emerald-700 group-hover:translate-x-1 transition inline-block">
+            বিস্তারিত দেখুন →
+          </span>
+        </Link>
+      </div>
+
+      {/* Recent Applications Table */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+          <div>
+            <h2 className="text-lg font-bold text-gray-800">সাম্প্রতিক আবেদনসমূহ</h2>
+            <p className="text-xs text-gray-500">আবেদন খুঁজুন, স্ট্যাটাস দেখুন এবং আপডেট করুন।</p>
+          </div>
+        </div>
+
+        <div className="p-4 border-b border-gray-100 bg-slate-50/50 flex flex-wrap gap-4 items-center justify-between">
+          <input
+            type="text"
+            placeholder="আবেদন ID, কাস্টমার বা সেবা খুঁজুন..."
+            className="px-4 py-2 bg-white border border-gray-200 rounded-xl text-xs w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+          />
+          <select className="px-4 py-2 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
+            <option>সকল স্ট্যাটাস</option>
+            <option>অপেক্ষমাণ</option>
+            <option>চলমান</option>
+            <option>সম্পন্ন</option>
+          </select>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-gray-50/50 border-b border-gray-100 text-[11px] font-semibold text-gray-500 uppercase">
+                <th className="py-3 px-6">আবেদন ID</th>
+                <th className="py-3 px-6">কাস্টমার</th>
+                <th className="py-3 px-6">সেবার নাম</th>
+                <th className="py-3 px-6">তারিখ</th>
+                <th className="py-3 px-6">স্ট্যাটাস</th>
+                <th className="py-3 px-6 text-right">আপডেট</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 text-xs">
+              <tr className="hover:bg-gray-50/50 transition">
+                <td className="py-4 px-6 font-semibold text-gray-900">EV-1001</td>
+                <td className="py-4 px-6 text-gray-700">রহিম উদ্দিন</td>
+                <td className="py-4 px-6 text-gray-600">জমির খতিয়ান সংক্রান্ত সেবা</td>
+                <td className="py-4 px-6 text-gray-500">১৪ অক্টোবর ২০২৬</td>
+                <td className="py-4 px-6">
+                  <span className="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-full font-medium">
+                    অপেক্ষমাণ
+                  </span>
+                </td>
+                <td className="py-4 px-6 text-right">
+                  <select className="px-2 py-1 bg-gray-50 border border-gray-200 rounded text-xs">
+                    <option>অপেক্ষমাণ</option>
+                    <option>চলমান</option>
+                    <option>সম্পন্ন</option>
+                  </select>
+                </td>
+              </tr>
+              <tr className="hover:bg-gray-50/50 transition">
+                <td className="py-4 px-6 font-semibold text-gray-900">EV-1002</td>
+                <td className="py-4 px-6 text-gray-700">করিম মিয়া</td>
+                <td className="py-4 px-6 text-gray-600">নামজারি আবেদন সহায়তা</td>
+                <td className="py-4 px-6 text-gray-500">১৫ অক্টোবর ২০২৬</td>
+                <td className="py-4 px-6">
+                  <span className="px-2.5 py-1 bg-blue-100 text-blue-800 rounded-full font-medium">
+                    চলমান
+                  </span>
+                </td>
+                <td className="py-4 px-6 text-right">
+                  <select className="px-2 py-1 bg-gray-50 border border-gray-200 rounded text-xs">
+                    <option>চলমান</option>
+                    <option>সম্পন্ন</option>
+                    <option>অপেক্ষমাণ</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
