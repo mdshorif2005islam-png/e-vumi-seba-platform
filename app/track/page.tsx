@@ -29,7 +29,6 @@ export default function TrackPage() {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
-  
   async function track(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -50,55 +49,7 @@ export default function TrackPage() {
       setApplications((data ?? []) as Application[]);
       setSearched(true);
     } catch (err) {
-      console.error(err);
-      setError('আবেদন খুঁজতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
-    } finally {
-      setLoading(false);
-    }
-  }
-
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setApplications([]);
-    setSearched(false);
-    
-  {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.rpc(
-    'track_applications_by_phone',
-    { p_phone: phone.trim() }
-  );
-
-  if (error) {
-    setError('আবেদন খুঁজতে সমস্যা হয়েছে।');
-    console.error(error);
-    return;
-  }
-
-  setApplications(data ?? []);
-  setSearched(true);
-} catch (err) {
-  console.error(err);
-  setError('সার্ভারের সঙ্গে যোগাযোগ করা যাচ্ছে না।');
-} finally {
-  setLoading(false);
-}
-
-
-    try {
-      const supabase = createClient();
-      const { data, error } = await supabase.rpc(
-        'track_applications_by_phone',
-        { p_phone: phone.trim() }
-      );
-
-      if (error) throw error;
-
-      setApplications((data ?? []) as Application[]);
-      setSearched(true);
-    } catch {
+      console.error('Application tracking error:', err);
       setError('আবেদন খুঁজতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
     } finally {
       setLoading(false);
@@ -110,13 +61,18 @@ export default function TrackPage() {
       <header className="tracking-header">
         <Link href="/" className="tracking-logo">
           <MapPinned size={26} />
-          <span>E-Vumi Seba<small>জমি সংক্রান্ত সেবার সহায়তা</small></span>
+          <span>
+            E-Vumi Seba
+            <small>জমি সংক্রান্ত সেবার সহায়তা</small>
+          </span>
         </Link>
 
         <nav>
           <Link href="/">হোম</Link>
           <Link href="/#services">সেবাসমূহ</Link>
-          <Link href="/track" className="active">আবেদন ট্র্যাকিং</Link>
+          <Link href="/track" className="active">
+            আবেদন ট্র্যাকিং
+          </Link>
           <Link href="/#contact">যোগাযোগ</Link>
         </nav>
       </header>
@@ -126,11 +82,18 @@ export default function TrackPage() {
           <span className="tracking-label">
             <Search size={16} /> আবেদন ট্র্যাকিং
           </span>
-          <h1>আপনার আবেদনের<br />সর্বশেষ অবস্থা জানুন</h1>
+
+          <h1>
+            আপনার আবেদনের
+            <br />
+            সর্বশেষ অবস্থা জানুন
+          </h1>
+
           <p>
             নিবন্ধিত মোবাইল নম্বর দিয়ে আপনার আবেদনের অগ্রগতি
             সহজেই দেখুন।
           </p>
+
           <div className="tracking-points">
             <span>✓ সহজ অনুসন্ধান</span>
             <span>✓ স্ট্যাটাস আপডেট</span>
@@ -139,12 +102,16 @@ export default function TrackPage() {
         </div>
 
         <div className="tracking-form-card">
-          <div className="tracking-icon"><Search size={30} /></div>
+          <div className="tracking-icon">
+            <Search size={30} />
+          </div>
+
           <h2>আবেদন খুঁজুন</h2>
           <p>আবেদন করার সময় ব্যবহৃত মোবাইল নম্বরটি লিখুন।</p>
 
           <form onSubmit={track}>
             <label htmlFor="phone">নিবন্ধিত মোবাইল নম্বর</label>
+
             <input
               id="phone"
               type="tel"
@@ -157,15 +124,20 @@ export default function TrackPage() {
               minLength={8}
               maxLength={20}
             />
+
             <button type="submit" disabled={loading}>
               <Search size={19} />
               {loading ? 'খোঁজা হচ্ছে...' : 'আবেদন খুঁজুন'}
             </button>
           </form>
 
-          {error && <p className="tracking-error">{error}</p>}
+          {error && (
+            <p className="tracking-error" role="alert">
+              {error}
+            </p>
+          )}
 
-          {searched && applications.length === 0 && (
+          {searched && applications.length === 0 && !error && (
             <p className="tracking-empty">
               এই নম্বরের সঙ্গে কোনো আবেদন পাওয়া যায়নি।
               মোবাইল নম্বরটি যাচাই করে আবার চেষ্টা করুন।
@@ -196,10 +168,14 @@ export default function TrackPage() {
         {applications.length > 0 && (
           <div className="tracking-results">
             <h2>আপনার আবেদনসমূহ ({applications.length})</h2>
+
             {applications.map((app, index) => (
-              <article className="tracking-result-card"
-                key={`${app.application_no}-${index}`}>
+              <article
+                className="tracking-result-card"
+                key={`${app.application_no}-${index}`}
+              >
                 <FileText size={24} />
+
                 <div className="tracking-result-info">
                   <strong>{app.service_name}</strong>
                   <p>আবেদন নম্বর: {app.application_no}</p>
@@ -210,8 +186,9 @@ export default function TrackPage() {
                       : 'তথ্য নেই'}
                   </p>
                 </div>
+
                 <span className="tracking-result-badge">
-                  {statusNames[app.status] ?? app.status}
+                  {statusNames[app.status?.toLowerCase()] ?? app.status}
                 </span>
               </article>
             ))}
@@ -221,9 +198,12 @@ export default function TrackPage() {
 
       <section className="tracking-security">
         <ShieldCheck size={35} />
+
         <div>
           <h3>আপনার তথ্যের নিরাপত্তা আমাদের অগ্রাধিকার</h3>
-          <p>আপনার আবেদন-সংক্রান্ত তথ্য সুরক্ষিত রাখতে আমরা সচেষ্ট।</p>
+          <p>
+            আপনার আবেদন-সংক্রান্ত তথ্য সুরক্ষিত রাখতে আমরা সচেষ্ট।
+          </p>
         </div>
       </section>
 
