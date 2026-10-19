@@ -142,8 +142,7 @@ export default function TrackPage() {
             </h1>
 
             <p className="text-gray-600 text-base sm:text-lg max-w-xl leading-relaxed">
-              নিবন্ধিত মোবাইল নম্বর দিয়ে আপনার আবেদনের অগ্রগতি
-              সহজেই দেখে নিতে পারেন।
+              নিবন্ধিত মোবাইল নম্বর দিয়ে আপনার আবেদনের অগ্রগতি সহজেই দেখে নিতে পারেন।
             </p>
 
             <div className="flex flex-wrap items-center gap-4 pt-2 text-xs sm:text-sm font-semibold text-emerald-800">
@@ -203,8 +202,7 @@ export default function TrackPage() {
 
               {searched && applications.length === 0 && !error && (
                 <div className="mt-4 p-3.5 rounded-xl bg-amber-50 border border-amber-100 text-amber-800 text-xs leading-relaxed">
-                  এই নম্বরের সঙ্গে কোনো আবেদন পাওয়া যায়নি।
-                  মোবাইল নম্বরটি যাচাই করে আবার চেষ্টা করুন।
+                  এই নম্বরের সঙ্গে কোনো আবেদন পাওয়া যায়নি। মোবাইল নম্বরটি যাচাই করে আবার চেষ্টা করুন।
                 </div>
               )}
             </div>
@@ -217,7 +215,7 @@ export default function TrackPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 w-full">
         <div className="text-center max-w-xl mx-auto mb-10">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0A2920]">আবেদনের অবস্থা</h2>
-          <p className="text-gray-500 text-sm mt-1">আপনার আবেদনের বর্তমান অগ্রগতি ধাপ অনুযায়ী দেখে নিন।</p>
+          <p className="text-gray-500 text-sm mt-1">আপনার আবেদনের বর্তমান অগ্রগতি ধাপ অনুযায়ী দেখে নিন।</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -289,4 +287,28 @@ export default function TrackPage() {
       {/* ===== Security Guarantee Section ===== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
         <div className="bg-emerald-50/60 rounded-3xl p-6 sm:p-8 border border-emerald-100 flex items-center gap-5">
-          <div className="w-14 h-14 rounded-2xl
+          <div className="w-14 h-14 rounded-2xl bg-white text-emerald-700 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100">
+            <ShieldCheck size={32} />
+          </div>
+          <div>
+            <h3 className="font-bold text-base sm:text-lg text-[#0A2920]">
+              আপনার তথ্যের নিরাপত্তা আমাদের অগ্রাধিকার
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
+              আপনার আবেদন-সংক্রান্ত সকল তথ্য সুরক্ষিত রাখতে আমরা সর্বদা সচেষ্ট।
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Footer ===== */}
+      <footer className="mt-auto bg-[#0A2920] text-white py-8 border-t border-emerald-900/50 text-center text-xs">
+        <div className="max-w-7xl mx-auto px-4 space-y-2">
+          <strong className="block text-sm font-bold text-emerald-300">E-Vumi Seba</strong>
+          <p className="text-emerald-100/70">জমি সংক্রান্ত সেবার সহায়তা</p>
+          <p className="text-emerald-100/40 pt-2">© 2026 E-Vumi Seba. সর্বস্বত্ব সংরক্ষিত।</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
