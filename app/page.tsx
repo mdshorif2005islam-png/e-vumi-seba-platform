@@ -20,7 +20,6 @@ import {
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // সেবাসমূহের তালিকা
   const services = [
     {
       id: 1,
@@ -58,14 +57,13 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-slate-50/50 text-slate-800 flex flex-col font-sans">
-      {/* 1. Header / Navbar (Dynamic Auth Status) */}
+      {/* Dynamic Header */}
       <Navbar />
 
-      {/* 2. Hero Section */}
+      {/* Hero Section */}
       <section className="bg-emerald-50/40 border-b border-emerald-100/60 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
-          {/* Left Hero Content */}
           <div className="lg:col-span-7 space-y-6">
             <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-[#0A2920] text-xs font-bold tracking-wide uppercase">
               ✨ বাংলাদেশের ডিজিটাল ভূমি সহায়তা প্ল্যাটফর্ম
@@ -104,7 +102,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right Hero Card */}
           <div className="lg:col-span-5">
             <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-xl space-y-6">
               <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
@@ -138,7 +135,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Search Bar Section */}
+      {/* Search Bar Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 z-20 w-full">
         <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-lg flex items-center gap-3">
           <Search size={22} className="text-gray-400 ml-2" />
@@ -155,7 +152,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. All Services Section */}
+      {/* Services Section */}
       <section id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -193,7 +190,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Contact & Support Section */}
+      {/* Contact Section */}
       <section id="contact" className="bg-emerald-50/50 border-t border-b border-emerald-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
@@ -233,7 +230,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Footer */}
+      {/* Footer */}
       <footer className="mt-auto bg-[#0A2920] text-white py-8 text-center text-xs">
         <div className="max-w-7xl mx-auto px-4 space-y-2">
           <strong className="block text-sm font-bold text-emerald-300">E-Vumi Seba</strong>
