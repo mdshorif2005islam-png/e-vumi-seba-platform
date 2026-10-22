@@ -11,7 +11,7 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
 
-  // Menu List (Profile link shoh)
+  // Menu List (Profile-er niche Approval Option jog kora hoyeche)
   const menuItems = [
     { name: "ড্যাশবোর্ড", href: "/dashboard", icon: "🏠" },
     { name: "আবেদনসমূহ", href: "/dashboard/applications", icon: "📄" },
@@ -20,6 +20,7 @@ export default function DashboardLayout({
     { name: "পেমেন্ট", href: "/dashboard/payment", icon: "৳" },
     { name: "সাপোর্ট", href: "/dashboard/support", icon: "💬" },
     { name: "প্রোফাইল", href: "/dashboard/profile", icon: "🛡️" },
+    { name: "অনুমোদন অনুরোধ", href: "/dashboard/approvals", icon: "⏳" },
   ];
 
   return (
@@ -43,7 +44,7 @@ export default function DashboardLayout({
           </div>
         </div>
 
-        {/* Home Navigation Button with Animation */}
+        {/* Home Navigation Button */}
         <div className="p-4 pb-2">
           <Link
             href="/"
@@ -56,7 +57,6 @@ export default function DashboardLayout({
               <span className="font-semibold">ওয়েবসাইট হোম</span>
             </div>
             
-            {/* Animated Pulse & Indicator */}
             <div className="flex items-center gap-1.5 relative z-10">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 group-hover:bg-gray-900 opacity-75"></span>
@@ -66,13 +66,10 @@ export default function DashboardLayout({
                 →
               </span>
             </div>
-
-            {/* Glowing background effect on hover */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
           </Link>
         </div>
 
-        {/* Sidebar Menu */}
+        {/* Sidebar Menu Navigation */}
         <nav className="flex-1 p-4 pt-2 space-y-1 overflow-y-auto">
           <p className="px-3 text-[10px] font-semibold text-emerald-300/80 uppercase tracking-wider mb-2">
             MAIN MENU
