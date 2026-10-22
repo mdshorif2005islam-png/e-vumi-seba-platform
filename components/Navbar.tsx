@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Building2, LogIn, UserPlus, LogOut, LayoutDashboard } from 'lucide-react';
+import { Building2, LogIn, UserPlus, LogOut, LayoutDashboard, Search } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 export default function Navbar() {
@@ -15,7 +15,6 @@ export default function Navbar() {
   useEffect(() => {
     const supabase = createClient();
 
-    // Check current user login status
     async function getUser() {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
@@ -24,7 +23,6 @@ export default function Navbar() {
 
     getUser();
 
-    // Listen for auth state changes
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
@@ -67,10 +65,14 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Navigation Links */}
+        {/* Navigation Links with Strict Active State */}
         <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            // Strict active condition to fix the unwanted highlight
+            const isActive =
+              link.href === '/'
+                ? pathname === '/'
+                : pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
 
             return (
               <Link
@@ -82,13 +84,16 @@ export default function Navbar() {
                     : 'text-gray-600 hover:text-[#0A2920] hover:bg-gray-100/80'
                 }`}
               >
+                {link.name === 'আবেদন ট্র্যাকিং' && (
+                  <Search size={14} className="inline mr-1.5 -mt-0.5" />
+                )}
                 {link.name}
               </Link>
             );
           })}
         </nav>
 
-        {/* Dynamic Auth Action Buttons */}
+        {/* Auth Action Buttons */}
         <div className="flex items-center gap-2.5">
           {loading ? (
             <div className="h-9 w-24 bg-gray-100 animate-pulse rounded-xl" />
