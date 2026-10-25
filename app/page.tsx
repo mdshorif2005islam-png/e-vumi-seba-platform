@@ -148,15 +148,13 @@ export default function HomePage() {
       {/* ================= ১. TOP NAVBAR (হুবহু ছবির ডার্ক পার্পল হেডার) ================= */}
       <header className="sticky top-0 z-50 bg-[#4a154b] text-white shadow-md border-b border-white/10">
         <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-white/15 border border-white/30 flex items-center justify-center text-white font-bold text-lg">
-              🏠
-            </div>
-            <div className="leading-tight">
-              <span className="font-bold text-base tracking-wide block">E-Vumi Seba</span>
-              <span className="text-[10px] text-purple-200 block">ভূমি সেবা সহায়তা কেন্দ্র</span>
-            </div>
+          {/* Logo — target screenshot style */}
+          <Link href="/" className="flex items-center shrink-0" aria-label="E-Vumi Seba">
+            <img
+              src="/logo-mark.png"
+              alt="E-Vumi Seba"
+              className="w-9 h-9 object-contain"
+            />
           </Link>
 
           {/* Menu Items */}
@@ -171,13 +169,14 @@ export default function HomePage() {
             <Link href="/dashboard/support" className="hover:text-amber-300 transition">সাপোর্ট</Link>
           </nav>
 
-          {/* White Pill Login Button */}
-          <div className="flex items-center gap-2">
+          {/* White Pill Login Button — target screenshot style */}
+          <div className="flex items-center">
             <Link
               href="/track"
-              className="bg-white text-[#4a154b] hover:bg-purple-50 font-bold text-xs px-4 py-2 rounded-full shadow flex items-center gap-1.5 transition"
+              className="bg-white text-[#6b1d57] hover:bg-purple-50 font-bold text-xs px-4 py-2 rounded-full shadow-sm flex items-center justify-center gap-1.5 min-w-[92px] transition"
             >
-              <span>👤</span> লগইন / ট্র্যাকিং
+              <span className="text-[11px]">◉</span>
+              লগইন
             </Link>
           </div>
         </div>
@@ -233,27 +232,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right Column: Hero Banner Card */}
+          {/* Right Column: Exact hero image from target screenshot */}
           <div className="lg:col-span-6">
-            <div className="relative rounded-2xl overflow-hidden border-2 border-white/30 shadow-2xl bg-[#381030]">
-              {/* Simulated Office Illustration matching screenshot */}
-              <div className="h-64 sm:h-72 bg-gradient-to-tr from-stone-800 via-stone-700 to-amber-900/60 flex flex-col justify-between p-6 relative">
-                <div className="bg-white/90 text-slate-900 px-4 py-1.5 rounded shadow self-start border-l-4 border-[#6b1d57]">
-                  <p className="font-extrabold text-sm sm:text-base tracking-wide">ভূমি সেবা সহায়তা কেন্দ্র</p>
-                </div>
-
-                <div className="my-auto flex items-center justify-center gap-6 text-5xl sm:text-6xl opacity-90">
-                  <span>👨‍💼</span>
-                  <span>🖥️</span>
-                  <span>👴</span>
-                </div>
-
-                <div className="bg-black/65 backdrop-blur-sm -mx-6 -mb-6 p-4 text-center border-t border-white/20">
-                  <p className="text-white font-extrabold text-lg sm:text-2xl tracking-wide">
-                    ই-নামজারি ও ভূমি রেকর্ড এখন সহজেই
-                  </p>
-                </div>
-              </div>
+            <div className="relative rounded-lg overflow-hidden border-2 border-white/70 shadow-2xl bg-white">
+              <img
+                src="/hero-banner.png"
+                alt="ভূমি সেবা সহায়তা কেন্দ্র"
+                className="block w-full h-auto object-cover"
+              />
             </div>
           </div>
         </div>
