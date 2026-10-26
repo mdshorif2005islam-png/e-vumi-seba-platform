@@ -44,6 +44,7 @@ const menuItems = [
 
 export default function UserMenu() {
   const router = useRouter();
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -81,15 +82,21 @@ export default function UserMenu() {
 
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
     }
 
     window.addEventListener("keydown", handleEscape);
 
-    return () => window.removeEventListener("keydown", handleEscape);
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
   }, []);
 
   async function handleLogout() {
+    if (loggingOut) return;
+
     setLoggingOut(true);
 
     const supabase = createClient();
@@ -116,7 +123,7 @@ export default function UserMenu() {
 
   if (loading) {
     return (
-      <div className="flex h-10 items-center px-3">
+      <div className="flex h-10 items-center justify-center px-3">
         <LoaderCircle className="h-5 w-5 animate-spin text-purple-800" />
       </div>
     );
@@ -182,6 +189,7 @@ export default function UserMenu() {
               <p className="truncate text-sm font-bold text-gray-900">
                 {displayName}
               </p>
+
               <p className="mt-1 truncate text-xs text-gray-500">
                 {user.email}
               </p>
@@ -209,7 +217,12 @@ export default function UserMenu() {
                 onClick={handleLogout}
                 className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-60"
               >
-                <LogOut size={18} />
+                {loggingOut ? (
+                  <LoaderCircle size={18} className="animate-spin" />
+                ) : (
+                  <LogOut size={18} />
+                )}
+
                 {loggingOut ? "লগআউট হচ্ছে..." : "লগআউট"}
               </button>
             </div>
