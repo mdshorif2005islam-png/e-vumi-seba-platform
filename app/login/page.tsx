@@ -1,12 +1,13 @@
 
 "use client";
 
-import { FormEvent, useState } from "react";
+import { Suspense, useState } from "react";
+import type { FormEvent } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -17,6 +18,9 @@ export default function LoginPage() {
 
   async function handleLogin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (loading) return;
+
     setMessage("");
     setLoading(true);
 
@@ -42,7 +46,7 @@ export default function LoginPage() {
         return;
       }
 
-      // Login সফল হলে Home page-এ ফেরত যাবে
+      // লগইন সফল হলে Home page-এ ফিরে যাবে
       router.replace("/");
       router.refresh();
     } catch {
@@ -159,5 +163,19 @@ export default function LoginPage() {
         </p>
       </form>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-slate-100">
+          <p className="text-sm text-gray-600">লোড হচ্ছে...</p>
+        </main>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
