@@ -1,4 +1,24 @@
 "use client";
+const heroSlides = [
+  {
+    image: "এখানে প্রথম ছবির লিংক দিন", 
+    badge: "এখানে প্রথম ব্যাজ দিন",
+    caption: "এখানে প্রথম শিরোনাম দিন",
+    subtext: "এখানে বিবরণ দিন",
+  },
+  {
+    image: "এখানে দ্বিতীয় ছবির লিংক দিন",
+    badge: "এখানে দ্বিতীয় ব্যাজ দিন",
+    caption: "এখানে দ্বিতীয় শিরোনাম দিন",
+    subtext: "এখানে বিবরণ দিন",
+  },
+  {
+    image: "এখানে তৃতীয় ছবির লিংক দিন",
+    badge: "এখানে তৃতীয় ব্যাজ দিন",
+    caption: "এখানে তৃতীয় শিরোনাম দিন",
+    subtext: "এখানে বিবরণ দিন",
+  },
+];
 
 import React, { useState } from "react";
 import Link from "next/link";
