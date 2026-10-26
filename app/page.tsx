@@ -1,5 +1,5 @@
 "use client";
-
+import UserMenu from "@/components/UserMenu";
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -644,26 +644,9 @@ export default function HomePage() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-2">
-            <Link
-              href="/login"
-              className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700 transition hover:border-purple-200 hover:bg-purple-50"
-            >
-              লগইন
-            </Link>
-
-            <UserMenu />
-          </div>
-
-          <button
-            type="button"
-            aria-label="Menu"
-            className="lg:hidden rounded-xl border border-slate-200 p-2 text-slate-700"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X size={21} /> : <Menu size={21} />}
-          </button>
-        </div>
+          <div className="flex items-center gap-3">
+  <UserMenu />
+</div>
 
         {mobileOpen && (
           <div className="border-t border-slate-100 bg-white px-4 pb-4 lg:hidden">
