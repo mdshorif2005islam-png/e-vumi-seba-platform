@@ -611,11 +611,14 @@ export default function HomePage() {
           NAVBAR
       ====================================================== */}
     
+
 <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl">
   <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+    {/* Logo */}
     <Link href="/" className="flex shrink-0 items-center gap-3">
       <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#6b1d57] to-[#3e1237] shadow-lg">
         <Landmark className="text-white" size={23} />
+
         <div className="absolute bottom-1 left-1/2 h-1 w-5 -translate-x-1/2 rounded-full bg-amber-300" />
       </div>
 
@@ -623,12 +626,14 @@ export default function HomePage() {
         <div className="text-lg font-black leading-none text-[#6b1d57]">
           E-Vumi Seba
         </div>
+
         <div className="mt-1 text-[9px] font-medium tracking-wider text-slate-400">
           DIGITAL LAND SERVICE PLATFORM
         </div>
       </div>
     </Link>
 
+    {/* Desktop Navigation */}
     <nav className="hidden items-center gap-1 lg:flex">
       {[
         ["হোম", "/"],
@@ -648,23 +653,24 @@ export default function HomePage() {
       ))}
     </nav>
 
-    <div className="flex shrink-0 items-center gap-2">
-      <div className="hidden sm:block">
-        <UserMenu />
-      </div>
-
-      <button
-        type="button"
-        onClick={() => setMobileOpen((current) => !current)}
-        aria-label={mobileOpen ? "মেনু বন্ধ করুন" : "মেনু খুলুন"}
-        aria-expanded={mobileOpen}
-        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-[#6b1d57] lg:hidden"
-      >
-        {mobileOpen ? <X size={21} /> : <Menu size={21} />}
-      </button>
+    {/* Desktop User Menu */}
+    <div className="hidden shrink-0 items-center sm:flex">
+      <UserMenu />
     </div>
+
+    {/* Mobile Menu Button */}
+    <button
+      type="button"
+      onClick={() => setMobileOpen((current) => !current)}
+      aria-label={mobileOpen ? "মেনু বন্ধ করুন" : "মেনু খুলুন"}
+      aria-expanded={mobileOpen}
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 text-[#6b1d57] lg:hidden"
+    >
+      {mobileOpen ? <X size={21} /> : <Menu size={21} />}
+    </button>
   </div>
 
+  {/* Mobile Navigation */}
   {mobileOpen && (
     <div className="border-t border-slate-100 bg-white px-4 pb-4 lg:hidden">
       <div className="flex flex-col gap-1 pt-3">
@@ -680,12 +686,13 @@ export default function HomePage() {
             key={label}
             href={href}
             onClick={() => setMobileOpen(false)}
-            className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-purple-50"
+            className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-purple-50"
           >
             {label}
           </Link>
         ))}
 
+        {/* Mobile User Menu */}
         <div className="mt-3 border-t border-slate-100 pt-3">
           <UserMenu />
         </div>
@@ -693,6 +700,8 @@ export default function HomePage() {
     </div>
   )}
 </header>
+
+{/* তোমার আগের Hero section এখান থেকে শুরু হবে */}
 
       {/* =====================================================
           HERO
