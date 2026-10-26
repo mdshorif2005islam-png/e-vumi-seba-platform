@@ -1,11 +1,11 @@
-```tsx
+
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  UserRound,
+  ChevronDown,
   LayoutDashboard,
   FilePlus2,
   ClipboardList,
@@ -15,13 +15,14 @@ import {
   Store,
   Megaphone,
   House,
+  HandCoins,
   Bookmark,
   Bell,
+  UserRound,
   LogOut,
-  ChevronDown,
-  HandCoins,
-  UserCog,
+  LoaderCircle,
 } from "lucide-react";
+import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 
 const menuItems = [
@@ -38,118 +39,95 @@ const menuItems = [
   { label: "সংরক্ষিত জমি", href: "/dashboard/saved-land", icon: Bookmark },
   { label: "আমার সম্পত্তি", href: "/dashboard/properties", icon: House },
   { label: "বিজ্ঞপ্তি", href: "/dashboard/notifications", icon: Bell },
-  { label: "প্রোফাইল", href: "/dashboard/profile", icon: UserCog },
+  { label: "প্রোফাইল", href: "/dashboard/profile", icon: UserRound },
 ];
 
 export default function UserMenu() {
   const router = useRouter();
-  const menuRef = useRef<HTMLDivElement>(null);
+  const supabase = createClient();
 
-  const [userName, setUserName] = useState("");
-  const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
-    const supabase = createClient();
     let mounted = true;
 
-    async function loadUser() {
-      const { data } = await supabase.auth.getUser();
-
+    supabase.auth.getUser().then(({ data, error }) => {
       if (!mounted) return;
-
-      if (data.user) {
-        setUserName(
-          data.user.user_metadata?.full_name ||
-          data.user.email?.split("@")[0] ||
-          "আমার অ্যাকাউন্ট"
-        );
-      } else {
-        setUserName("");
-      }
-
+      setUser(error ? null : data.user);
       setLoading(false);
-    }
-
-    loadUser();
+    });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!mounted) return;
-
-      setUserName(
-        session?.user?.user_metadata?.full_name ||
-        session?.user?.email?.split("@")[0] ||
-        ""
-      );
+      setUser(session?.user ?? null);
       setLoading(false);
     });
-
-    function handleOutsideClick(event: MouseEvent) {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
-    }
-
-    document.addEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("keydown", handleEscape);
 
     return () => {
       mounted = false;
       subscription.unsubscribe();
-      document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("keydown", handleEscape);
     };
+  }, [supabase]);
+
+  useEffect(() => {
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
   }, []);
 
   async function handleLogout() {
     setLoggingOut(true);
 
-    try {
-      const supabase = createClient();
-      const { error } = await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
 
-      if (error) {
-        alert(error.message);
-        return;
-      }
+    setLoggingOut(false);
 
-      setOpen(false);
-      router.replace("/");
-      router.refresh();
-    } finally {
-      setLoggingOut(false);
+    if (error) {
+      alert("লগআউট করা যায়নি। আবার চেষ্টা করুন।");
+      return;
     }
+
+    setOpen(false);
+    setUser(null);
+    router.replace("/");
+    router.refresh();
   }
+
+  const displayName =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    user?.email?.split("@")[0] ||
+    "আমার অ্যাকাউন্ট";
 
   if (loading) {
     return (
-      <div className="h-10 w-24 animate-pulse rounded-full bg-gray-100" />
+      <div className="flex h-10 items-center justify-center px-3">
+        <LoaderCircle className="h-5 w-5 animate-spin text-purple-800" />
+      </div>
     );
   }
 
-  if (!userName) {
+  if (!user) {
     return (
       <div className="flex items-center gap-2">
         <Link
           href="/login"
-          className="rounded-xl border border-purple-200 px-4 py-2 text-sm font-semibold text-purple-900 hover:bg-purple-50"
+          className="rounded-xl border border-purple-800 px-4 py-2 text-xs font-bold text-purple-900 transition hover:bg-purple-50"
         >
           লগইন
         </Link>
 
         <Link
           href="/register"
-          className="rounded-xl bg-purple-900 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-purple-800"
+          className="rounded-xl bg-[#6b1d57] px-4 py-2 text-xs font-bold text-white shadow-lg shadow-purple-900/15 transition hover:bg-[#551645]"
         >
           অ্যাকাউন্ট খুলুন
         </Link>
@@ -158,72 +136,77 @@ export default function UserMenu() {
   }
 
   return (
-    <div ref={menuRef} className="relative">
+    <div className="relative">
       <button
         type="button"
+        onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-haspopup="menu"
-        onClick={() => setOpen((value) => !value)}
-        className="flex max-w-52 items-center gap-2 rounded-full border border-purple-100 bg-purple-50 px-3 py-2 text-sm font-semibold text-purple-950 transition hover:bg-purple-100"
+        className="flex max-w-[230px] items-center gap-2 rounded-xl border border-purple-100 bg-white px-3 py-2 text-sm font-bold text-purple-950 shadow-sm transition hover:bg-purple-50"
       >
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-pink-600 text-white">
-          <UserRound size={17} />
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-100 text-purple-900">
+          <UserRound size={18} />
         </span>
 
-        <span className="max-w-28 truncate">{userName}</span>
+        <span className="max-w-[125px] truncate">{displayName}</span>
 
         <ChevronDown
-          size={16}
-          className={`transition-transform ${open ? "rotate-180" : ""}`}
+          size={17}
+          className={`shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
 
       {open && (
-        <div
-          role="menu"
-          className="absolute right-0 top-full z-50 mt-3 max-h-[75vh] w-72 overflow-y-auto rounded-2xl border border-gray-100 bg-white p-2 shadow-2xl"
-        >
-          <div className="border-b border-gray-100 px-3 py-3">
-            <p className="text-xs text-gray-500">নাগরিক প্যানেল</p>
-            <p className="mt-1 truncate font-bold text-purple-950">
-              {userName}
-            </p>
-          </div>
+        <>
+          <button
+            type="button"
+            aria-label="মেনু বন্ধ করুন"
+            className="fixed inset-0 z-40 cursor-default"
+            onClick={() => setOpen(false)}
+          />
 
-          <nav className="py-2">
-            {menuItems.map((item) => {
-              const Icon = item.icon;
+          <div
+            role="menu"
+            className="absolute right-0 top-full z-50 mt-3 max-h-[75vh] w-72 max-w-[calc(100vw-2rem)] overflow-y-auto rounded-2xl border border-gray-100 bg-white p-2 shadow-2xl"
+          >
+            <div className="border-b border-gray-100 px-3 py-3">
+              <p className="truncate text-sm font-bold text-gray-900">
+                {displayName}
+              </p>
+              <p className="mt-1 truncate text-xs text-gray-500">
+                {user.email}
+              </p>
+            </div>
 
-              return (
+            <div className="py-2">
+              {menuItems.map(({ label, href, icon: Icon }) => (
                 <Link
-                  key={item.label}
-                  href={item.href}
+                  key={label}
+                  href={href}
                   role="menuitem"
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-gray-700 transition hover:bg-purple-50 hover:text-purple-900"
                 >
-                  <Icon size={18} className="shrink-0 text-purple-700" />
-                  <span>{item.label}</span>
+                  <Icon size={18} className="shrink-0" />
+                  <span>{label}</span>
                 </Link>
-              );
-            })}
-          </nav>
+              ))}
+            </div>
 
-          <div className="border-t border-gray-100 pt-2">
-            <button
-              type="button"
-              role="menuitem"
-              disabled={loggingOut}
-              onClick={handleLogout}
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 disabled:opacity-50"
-            >
-              <LogOut size={18} />
-              {loggingOut ? "লগআউট হচ্ছে..." : "লগআউট"}
-            </button>
+            <div className="border-t border-gray-100 pt-2">
+              <button
+                type="button"
+                disabled={loggingOut}
+                onClick={handleLogout}
+                className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-60"
+              >
+                <LogOut size={18} />
+                {loggingOut ? "লগআউট হচ্ছে..." : "লগআউট"}
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
 }
-```
