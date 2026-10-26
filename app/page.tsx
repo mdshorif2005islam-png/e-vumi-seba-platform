@@ -1,121 +1,83 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-
-// ================= হিরো ব্যানারের ৩টি সুন্দর স্লাইডার ছবি =================
-const heroSlides = [
-  {
-    image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=85",
-    badge: "ভূমি সেবা সহায়তা কেন্দ্র",
-    caption: "ভূমি সেবা এখন আপনার দোরগোড়ায়",
-    subtext: "নিবন্ধিত প্রতিনিধির মাধ্যমে ঘরে বসেই ই-নামজারি ও খাজনা পরিশোধ করুন",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=85",
-    badge: "ডিজিটাল রেকর্ড ও মৌজা ম্যাপ",
-    caption: "খতিয়ান, পর্চা ও নকশা সংগ্রহ করুন সহজেই",
-    subtext: "সিএস, এসএ, আরএস ও বিএস খতিয়ান এবং মৌজা ম্যাপের দ্রুততম অনলাইন সেবা",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=85",
-    badge: "নিরাপদ ও স্বচ্ছ ভূমি ব্যবস্থাপনা",
-    caption: "জমি রেজিস্ট্রেশন, দলিল যাচাই ও আইনি সহায়তা",
-    subtext: "সারাদেশে ৬৪ জেলায় আমাদের প্রশিক্ষিত ভূমি সেবা সহায়তাকারী নেটওয়ার্ক",
-  },
-];
-
-import { useState } from "react";
-import Link from "next/link";
-
 import {
   ArrowLeftRight,
+  BadgeCheck,
+  Banknote,
+  BarChart3,
+  BookOpen,
+  Building2,
   Calculator,
+  CalendarDays,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
   CircleDollarSign,
-  CreditCard,
+  ClipboardCheck,
+  Clock3,
   FileCheck2,
   FileSearch,
   FileText,
-  FolderOpen,
+  FolderSearch,
   Gavel,
+  Globe2,
+  HandCoins,
   Handshake,
-  House,
+  Headphones,
+  Home,
+  IdCard,
   Landmark,
-  Link2,
+  LayoutDashboard,
+  Mail,
   Map,
   MapPinned,
   Menu,
-  PenLine,
+  MessageCircle,
+  Newspaper,
   Plane,
   Ruler,
   Scale,
   Search,
   SearchCheck,
-  ScrollText,
+  Send,
+  Settings2,
   ShieldCheck,
   Sprout,
   Tag,
+  Trees,
   TriangleAlert,
+  UserCheck,
   Users,
   Waves,
   X,
-  Building2,
-  Construction,
-  Trees,
-  ClipboardCheck,
-  Headphones,
-  BadgeCheck,
-  LockKeyhole,
-  Globe2,
-  BookOpen,
-  MessageCircle,
-  Newspaper,
-  Mail,
-  Phone,
-  Clock3,
-  ChevronDown,
-  ChevronUp,
-  ExternalLink,
-  CheckCircle2,
-  Database,
-  FileDigit,
-  Banknote,
-  BriefcaseBusiness,
-  IdCard,
-  Settings2,
 } from "lucide-react";
 
 /* =========================================================
    TYPES
 ========================================================= */
 
+type IconType = React.ComponentType<{
+  size?: number;
+  strokeWidth?: number;
+  className?: string;
+}>;
+
 type Service = {
   title: string;
   serviceFee: string;
   govtFee: string;
   slug: string;
-  icon: React.ElementType;
+  icon: IconType;
+  accent: string;
 };
 
 type LandTool = {
   name: string;
   desc: string;
-  icon: React.ElementType;
+  icon: IconType;
   link: string;
-};
-
-type MarketplaceItem = {
-  price: string;
-  size: string;
-  location: string;
-  type: string;
-};
-
-type BlogPost = {
-  title: string;
-  date: string;
-  category: string;
-  excerpt: string;
 };
 
 type ForumTopic = {
@@ -125,13 +87,8 @@ type ForumTopic = {
   replies: string;
 };
 
-type Guide = {
-  title: string;
-  steps: string[];
-};
-
 /* =========================================================
-   SERVICES
+   DATA
 ========================================================= */
 
 const services: Service[] = [
@@ -141,13 +98,15 @@ const services: Service[] = [
     govtFee: "৳১১৭০",
     slug: "mutation",
     icon: ArrowLeftRight,
+    accent: "from-violet-500 to-purple-700",
   },
   {
-    title: "অনলাইন ভূমি উন্নয়ন কর (খাজনা)",
+    title: "অনলাইন ভূমি উন্নয়ন কর",
     serviceFee: "৳৫০",
     govtFee: "নির্ধারিত",
     slug: "tax",
-    icon: CreditCard,
+    icon: CircleDollarSign,
+    accent: "from-emerald-500 to-green-700",
   },
   {
     title: "খতিয়ান / পরচা সহায়তা",
@@ -155,6 +114,7 @@ const services: Service[] = [
     govtFee: "৳১০০",
     slug: "khatian",
     icon: FileText,
+    accent: "from-blue-500 to-indigo-700",
   },
   {
     title: "মৌজা ম্যাপ সংগ্রহ",
@@ -162,6 +122,7 @@ const services: Service[] = [
     govtFee: "৳৫২০",
     slug: "mouza-map",
     icon: Map,
+    accent: "from-cyan-500 to-blue-700",
   },
   {
     title: "সরকারি লিজ নবায়ন",
@@ -169,13 +130,15 @@ const services: Service[] = [
     govtFee: "নির্ধারিত",
     slug: "lease",
     icon: Landmark,
+    accent: "from-amber-500 to-orange-700",
   },
   {
     title: "বন্দোবস্ত সনদ",
     serviceFee: "৳১০০",
     govtFee: "৳২০০",
     slug: "bondobosto",
-    icon: ScrollText,
+    icon: ClipboardCheck,
+    accent: "from-orange-500 to-red-700",
   },
   {
     title: "জমির শ্রেণী পরিবর্তন",
@@ -183,6 +146,7 @@ const services: Service[] = [
     govtFee: "নির্ধারিত",
     slug: "class-change",
     icon: ArrowLeftRight,
+    accent: "from-indigo-500 to-blue-700",
   },
   {
     title: "অর্পিত সম্পত্তি অবমুক্তকরণ",
@@ -190,13 +154,15 @@ const services: Service[] = [
     govtFee: "৳২০০",
     slug: "vested-property",
     icon: Building2,
+    accent: "from-slate-500 to-slate-800",
   },
   {
-    title: "খতিয়ান সংশোধনের আবেদন (মিস কেস)",
+    title: "খতিয়ান সংশোধনের আবেদন",
     serviceFee: "৳১২০",
     govtFee: "৳২০০",
     slug: "khatian-correction",
-    icon: Gavel,
+    icon: FileCheck2,
+    accent: "from-rose-500 to-pink-700",
   },
   {
     title: "খাস জমি বরাদ্দ আবেদন",
@@ -204,20 +170,23 @@ const services: Service[] = [
     govtFee: "বিনামূল্যে",
     slug: "khas-land",
     icon: Sprout,
+    accent: "from-green-500 to-emerald-700",
   },
   {
     title: "হুকুমদখল ও অধিগ্রহণ সনদ",
     serviceFee: "৳২০০",
     govtFee: "৳১০০",
     slug: "acquisition",
-    icon: Construction,
+    icon: Building2,
+    accent: "from-yellow-500 to-amber-700",
   },
   {
     title: "দলিল যাচাই ও সার্টিফাইড কপি",
     serviceFee: "৳১০০",
     govtFee: "নির্ধারিত",
     slug: "deed-check",
-    icon: SearchCheck,
+    icon: FileSearch,
+    accent: "from-purple-500 to-fuchsia-700",
   },
   {
     title: "ওয়ারিশান সনদ আবেদন",
@@ -225,6 +194,7 @@ const services: Service[] = [
     govtFee: "বিনামূল্যে",
     slug: "succession",
     icon: Users,
+    accent: "from-pink-500 to-rose-700",
   },
   {
     title: "ভূমি সীমানা নির্ধারণ ও জরিপ",
@@ -232,13 +202,15 @@ const services: Service[] = [
     govtFee: "নির্ধারিত",
     slug: "survey",
     icon: Ruler,
+    accent: "from-teal-500 to-cyan-700",
   },
   {
-    title: "বাস্তুভিটা ও আশ্রয়ণ পোর্টাল",
+    title: "বাস্তুভিটা ও আশ্রয়ণ সেবা",
     serviceFee: "৳৫০",
     govtFee: "বিনামূল্যে",
     slug: "housing",
-    icon: House,
+    icon: Home,
+    accent: "from-sky-500 to-blue-700",
   },
   {
     title: "জলমহাল ও বালুমহাল ইজারা",
@@ -246,13 +218,15 @@ const services: Service[] = [
     govtFee: "নির্ধারিত",
     slug: "waterbody",
     icon: Waves,
+    accent: "from-blue-500 to-cyan-700",
   },
   {
     title: "বিআরএস রেকর্ড অনলাইন",
     serviceFee: "৳৮০",
     govtFee: "৳১২০",
     slug: "brs-record",
-    icon: Database,
+    icon: FolderSearch,
+    accent: "from-violet-500 to-indigo-700",
   },
   {
     title: "চা বাগান ও বাগানবাড়ি লিজ",
@@ -260,13 +234,15 @@ const services: Service[] = [
     govtFee: "৳২০০",
     slug: "tea-estate",
     icon: Trees,
+    accent: "from-green-500 to-teal-700",
   },
   {
     title: "দেওয়ানি ও রাজস্ব মামলা নথি",
     serviceFee: "৳১৫০",
     govtFee: "৳২০০",
     slug: "court-copy",
-    icon: Scale,
+    icon: Gavel,
+    accent: "from-red-500 to-rose-700",
   },
   {
     title: "রেজিস্ট্রেশন ফি ক্যালকুলেটর",
@@ -274,13 +250,15 @@ const services: Service[] = [
     govtFee: "",
     slug: "calculator",
     icon: Calculator,
+    accent: "from-indigo-500 to-violet-700",
   },
   {
     title: "পাওয়ার অফ অ্যাটর্নি সেবা",
     serviceFee: "৳৫০০",
     govtFee: "নির্ধারিত",
     slug: "power-of-attorney",
-    icon: PenLine,
+    icon: FileCheck2,
+    accent: "from-purple-500 to-indigo-700",
   },
   {
     title: "বণ্টননামা দলিল সহায়তা",
@@ -288,6 +266,7 @@ const services: Service[] = [
     govtFee: "নির্ধারিত",
     slug: "partition",
     icon: Handshake,
+    accent: "from-orange-500 to-amber-700",
   },
   {
     title: "ভূমি জরিপ আপত্তি আবেদন",
@@ -295,6 +274,7 @@ const services: Service[] = [
     govtFee: "৳১০০",
     slug: "survey-objection",
     icon: TriangleAlert,
+    accent: "from-amber-500 to-orange-700",
   },
   {
     title: "প্রবাসী ভূমি সেবা",
@@ -302,6 +282,7 @@ const services: Service[] = [
     govtFee: "নির্ধারিত",
     slug: "expatriate",
     icon: Plane,
+    accent: "from-cyan-500 to-blue-700",
   },
   {
     title: "ই-পাসপোর্টের ভূমি যাচাই",
@@ -309,19 +290,17 @@ const services: Service[] = [
     govtFee: "বিনামূল্যে",
     slug: "passport-verification",
     icon: IdCard,
+    accent: "from-blue-500 to-indigo-700",
   },
   {
     title: "আইনি পরামর্শ ও ল্যান্ড অ্যাটর্নি",
     serviceFee: "৳৩০০",
     govtFee: "",
     slug: "legal-counsel",
-    icon: Gavel,
+    icon: Scale,
+    accent: "from-rose-500 to-red-700",
   },
 ];
-
-/* =========================================================
-   LAND TOOLS
-========================================================= */
 
 const landTools: LandTool[] = [
   {
@@ -350,37 +329,37 @@ const landTools: LandTool[] = [
   },
   {
     name: "নিবন্ধন ব্যয়",
-    desc: "দলিল রেজিস্ট্রেশন সরকারি ফি হিসাব",
+    desc: "দলিল রেজিস্ট্রেশনের সম্ভাব্য ব্যয় হিসাব",
     icon: FileText,
     link: "/services/calculator",
   },
   {
     name: "খাজনা হিসাব",
-    desc: "কৃষি ও অকৃষি জমির কর নির্ধারণ",
+    desc: "কৃষি ও অকৃষি জমির কর হিসাব",
     icon: Banknote,
     link: "/services/tax",
   },
   {
     name: "নকল ও তল্লাশ ফি",
-    desc: "সার্টিফাইড কপি তোলার খরচ",
-    icon: FileSearch,
+    desc: "সার্টিফাইড কপি তোলার সম্ভাব্য খরচ",
+    icon: SearchCheck,
     link: "/services/deed-check",
   },
   {
     name: "উত্তরাধিকার বণ্টন",
-    desc: "ফারায়েজ অনুযায়ী ওয়ারিশদের অংশ",
+    desc: "ওয়ারিশদের অংশ হিসাব",
     icon: Scale,
     link: "/services/succession",
   },
   {
     name: "হিস্যা বণ্টন",
-    desc: "একাধিক মালিকের জমির অংশীদারিত্ব",
-    icon: Users,
+    desc: "একাধিক মালিকের অংশীদারিত্ব হিসাব",
+    icon: BarChart3,
     link: "/services/partition",
   },
   {
     name: "মৌজা রেট",
-    desc: "এলাকাভিত্তিক জমির সরকারি সর্বনিম্ন মূল্য",
+    desc: "এলাকাভিত্তিক মূল্য তথ্য",
     icon: Tag,
     link: "/services/calculator",
   },
@@ -392,228 +371,145 @@ const landTools: LandTool[] = [
   },
   {
     name: "দাগ ও খতিয়ান সার্চ",
-    desc: "অনলাইনে জমির রেকর্ড অনুসন্ধান",
-    icon: FolderOpen,
+    desc: "জমির রেকর্ড অনুসন্ধানের সহায়তা",
+    icon: FolderSearch,
     link: "/services/khatian",
   },
 ];
 
-/* =========================================================
-   MARKETPLACE
-========================================================= */
-
-const marketplaceItems: MarketplaceItem[] = [
-  {
-    price: "৳৩৫,০০,০০০",
-    size: "৫.৫ শতক",
-    type: "আবাসিক",
-    location: "সাভার, ঢাকা",
-  },
-  {
-    price: "৳১২,৫০,০০০",
-    size: "১০ শতক",
-    type: "ভিটা জমি",
-    location: "সৈয়দপুর, নীলফামারী",
-  },
-  {
-    price: "৳১৮,০০,০০০",
-    size: "১২.৫ শতক",
-    type: "কৃষি জমি",
-    location: "সদর, রংপুর",
-  },
-  {
-    price: "৳৪৫,০০,০০০",
-    size: "৩ কাঠা",
-    type: "বাণিজ্যিক",
-    location: "গাজীপুর সদর, গাজীপুর",
-  },
-];
-
-/* =========================================================
-   BLOG
-========================================================= */
-
-const blogPosts: BlogPost[] = [
-  {
-    title:
-      "ই-নামজারি আবেদনের সম্পূর্ণ প্রক্রিয়া: কাগজপত্র, ফি, শুনানি ও প্রতিকার",
-    date: "২৫ অক্টোবর, ২০২৬",
-    category: "নামজারি গাইড",
-    excerpt:
-      "জমি ক্রয়ের পর বা ওয়ারিশ সূত্রে মালিকানা পরিবর্তনের জন্য অনলাইনে কিভাবে নির্ভুলভাবে ই-নামজারি আবেদন করবেন...",
-  },
-  {
-    title:
-      "জমি ক্রয়-বিক্রয়ের পূর্বে খতিয়ান, দাগ ও দলিল যাচাইয়ের অপরিহার্য নিয়ম",
-    date: "২০ অক্টোবর, ২০২৬",
-    category: "ভূমি সচেতনতা",
-    excerpt:
-      "প্রতারণা এড়াতে জমি কেনার আগে সিএস, এসএ, আরএস ও বিএস খতিয়ান এবং সাব-রেজিস্ট্রি অফিসের রেকর্ড যেভাবে মিলাবেন...",
-  },
-  {
-    title:
-      "ভূমি উন্নয়ন কর (খাজনা) প্রদানের নিয়ম, ছাড়, জরিমানা ও দাখিলা ডাউনলোড",
-    date: "১৫ অক্টোবর, ২০২৬",
-    category: "ভূমি কর",
-    excerpt:
-      "এখন ঘরে বসেই মোবাইল ব্যাংকিংয়ের মাধ্যমে জমির খাজনা পরিশোধ করে তাৎক্ষণিক কিউআর কোডযুক্ত দাখিলা সংগ্রহ করুন...",
-  },
-];
-
-/* =========================================================
-   FORUM
-========================================================= */
-
 const forumTopics: ForumTopic[] = [
   {
-    title: "নামজারি খতিয়ানে নামের বানান ভুল হলে করণীয় কী?",
-    author: "মোঃ রাশেদুল ইসলাম",
-    time: "২ ঘন্টা আগে",
-    replies: "৫ উত্তর",
+    title: "নামজারি আবেদন কতদিনে সম্পন্ন হয়?",
+    author: "রহিম আহমেদ",
+    time: "১২ মিনিট আগে",
+    replies: "১৮ উত্তর",
   },
   {
-    title: "অনলাইনে মৌজা ম্যাপ অর্ডার করার কত দিন পর ডেলিভারি পাওয়া যায়?",
-    author: "আব্দুল করিম",
-    time: "৫ ঘন্টা আগে",
-    replies: "৩ উত্তর",
+    title: "পুরাতন খতিয়ানে দাগ নম্বর খুঁজে পাওয়ার উপায়",
+    author: "সুমাইয়া ইসলাম",
+    time: "৩২ মিনিট আগে",
+    replies: "১১ উত্তর",
   },
   {
-    title: "হোল্ডিং নম্বর অনুমোদন হতে কত সময় লাগে?",
-    author: "সাদিয়া আফরিন",
-    time: "১ দিন আগে",
-    replies: "৭ উত্তর",
+    title: "ওয়ারিশদের মধ্যে জমি বণ্টনের নিয়ম কী?",
+    author: "মোঃ হাসান",
+    time: "১ ঘণ্টা আগে",
+    replies: "২৪ উত্তর",
   },
   {
-    title: "ই-নামজারি ও ভূমি উন্নয়ন কর সংক্রান্ত জরুরি প্রশ্ন",
-    author: "ভূমি সেবা সহায়তা ডেস্ক",
-    time: "২ দিন আগে",
-    replies: "১২ উত্তর",
-  },
-  {
-    title: "ওয়ারিশ সনদ দিয়ে কি সরাসরি যৌথ নামজারি করা যাবে?",
-    author: "মাহমুদুল হাসান",
-    time: "৩ দিন আগে",
-    replies: "৪ উত্তর",
+    title: "মৌজা ম্যাপ অনলাইনে কোথায় পাওয়া যায়?",
+    author: "আব্দুল্লাহ",
+    time: "২ ঘণ্টা আগে",
+    replies: "৯ উত্তর",
   },
 ];
 
-/* =========================================================
-   GUIDES
-========================================================= */
-
-const guides: Guide[] = [
+const marketplaceItems = [
   {
-    title: "কিভাবে অনলাইনে ই-নামজারি আবেদন করবেন?",
-    steps: [
-      "১. আমাদের প্ল্যাটফর্ম থেকে 'ই-নামজারি সহায়তা' নির্বাচন করুন অথবা mutation.land.gov.bd ওয়েবসাইটে যান।",
-      "২. 'নতুন আবেদন' অপশনে ক্লিক করুন এবং মোবাইল নম্বর দিয়ে নিবন্ধন সম্পন্ন করুন।",
-      "৩. প্রয়োজনীয় তথ্য পূরণ করুন — বিভাগ, জেলা, উপজেলা, মৌজা, খতিয়ান নং ও দাগ নং।",
-      "৪. আবেদনকারীর ছবি, এনআইডি ও দলিলের স্ক্যান কপি আপলোড করুন।",
-      "৫. প্রযোজ্য সরকারি ফি অনলাইনে পরিশোধ করুন।",
-      "৬. আবেদন সাবমিট করুন এবং ট্র্যাকিং নম্বর সংরক্ষণ করুন।",
-    ],
+    title: "ধানী জমি",
+    location: "গাজীপুর সদর",
+    size: "১২ শতক",
+    price: "৳১৮,৫০,০০০",
+    icon: Sprout,
   },
   {
-    title: "অনলাইনে ভূমি উন্নয়ন কর (খাজনা) কিভাবে দিবেন?",
-    steps: [
-      "১. 'অনলাইন ভূমি উন্নয়ন কর' সেবায় ক্লিক করুন বা ldtax.gov.bd পোর্টালে যান।",
-      "২. এনআইডি ও মোবাইল নম্বর দিয়ে নাগরিক নিবন্ধন করুন।",
-      "৩. খতিয়ান ও হোল্ডিং তথ্য যুক্ত করে বকেয়া ও হাল সনের কর যাচাই করুন।",
-      "৪. অনুমোদিত পেমেন্ট মাধ্যমের মাধ্যমে কর পরিশোধ করে ডিজিটাল দাখিলা ডাউনলোড করুন।",
-    ],
+    title: "আবাসিক প্লট",
+    location: "উত্তরা, ঢাকা",
+    size: "৫ কাঠা",
+    price: "৳৭৫,০০,০০০",
+    icon: Home,
   },
   {
-    title: "কিভাবে অনলাইনে পর্চা/খতিয়ান সংগ্রহ করবেন?",
-    steps: [
-      "১. বিভাগ, জেলা, উপজেলা ও মৌজা নির্বাচন করুন।",
-      "২. সার্ভে টাইপ — CS, SA, RS, BRS/BS — নির্বাচন করে খতিয়ান বা দাগ নম্বর দিয়ে খুঁজুন।",
-      "৩. নির্ধারিত সরকারি ফি ও প্রযোজ্য সেবা ফি পরিশোধ করে অনলাইন বা সার্টিফাইড কপির আবেদন করুন।",
-    ],
-  },
-  {
-    title: "জমি কেনার আগে যা যা অবশ্যই যাচাই করবেন",
-    steps: [
-      "১. বিক্রেতার নামে সর্বশেষ খতিয়ান ও নামজারি সঠিক আছে কিনা যাচাই করুন।",
-      "২. দাগ নম্বর ও মৌজা ম্যাপের সাথে বাস্তবে জমির অবস্থান ও দখল মিলিয়ে দেখুন।",
-      "৩. হাল সন পর্যন্ত খাজনা পরিশোধের দাখিলা এবং বায়া দলিল যাচাই করুন।",
-    ],
+    title: "বাণিজ্যিক জমি",
+    location: "টঙ্গী",
+    size: "৮ শতক",
+    price: "৳৪২,০০,০০০",
+    icon: Building2,
   },
 ];
 
-/* =========================================================
-   GOVERNMENT LINKS
-========================================================= */
-
-const govtLinks = [
+const blogPosts = [
   {
-    title: "ভূমি মন্ত্রণালয়",
-    url: "https://minland.gov.bd",
-    domain: "minland.gov.bd",
-    icon: Landmark,
-  },
-  {
-    title: "আর.এস খতিয়ান ব্যবস্থাপনা",
-    url: "http://settlement.gov.bd",
-    domain: "settlement.gov.bd",
-    icon: FileText,
-  },
-  {
-    title: "ই-নামজারি সিস্টেম",
-    url: "https://mutation.land.gov.bd",
-    domain: "mutation.land.gov.bd",
+    title: "নামজারি করার সম্পূর্ণ প্রক্রিয়া",
+    category: "ভূমি সেবা",
+    date: "২৬ অক্টোবর ২০২৬",
     icon: FileCheck2,
   },
   {
-    title: "ভূমি রেকর্ড ও ম্যাপ",
-    url: "https://dlrms.land.gov.bd",
-    domain: "dlrms.land.gov.bd",
-    icon: Map,
+    title: "খতিয়ান, দাগ ও মৌজা ম্যাপ কীভাবে বুঝবেন",
+    category: "ভূমি শিক্ষা",
+    date: "২৪ অক্টোবর ২০২৬",
+    icon: BookOpen,
   },
   {
-    title: "জাতীয় ভূমি পোর্টাল",
-    url: "https://land.gov.bd",
-    domain: "land.gov.bd",
-    icon: Globe2,
+    title: "জমি কেনার আগে যে বিষয়গুলো যাচাই করবেন",
+    category: "সচেতনতা",
+    date: "২১ অক্টোবর ২০২৬",
+    icon: ShieldCheck,
+  },
+];
+
+const stats = [
+  {
+    value: "৮৯৮",
+    label: "তালিকাভুক্ত সহায়তাকারী",
+    icon: Users,
   },
   {
-    title: "ভূমি উন্নয়ন কর পোর্টাল",
-    url: "https://portal.ldtax.gov.bd",
-    domain: "portal.ldtax.gov.bd",
-    icon: CreditCard,
+    value: "৬১",
+    label: "জেলায় বিস্তৃত",
+    icon: MapPinned,
+  },
+  {
+    value: "৮৭",
+    label: "নিবন্ধিত সহায়তাকারী",
+    icon: BadgeCheck,
+  },
+  {
+    value: "১,০৩১",
+    label: "নিবন্ধিত নাগরিক",
+    icon: UserCheck,
+  },
+  {
+    value: "১২",
+    label: "ডিজিটাল ভূমি টুল",
+    icon: Calculator,
+  },
+  {
+    value: "২৬",
+    label: "ডিজিটাল সেবা",
+    icon: LayoutDashboard,
   },
 ];
 
 /* =========================================================
-   SMALL REUSABLE COMPONENTS
+   SMALL COMPONENTS
 ========================================================= */
 
-function SectionHeading({
-  icon: Icon,
+function SectionHeader({
+  eyebrow,
   title,
   description,
 }: {
-  icon?: React.ElementType;
+  eyebrow?: string;
   title: string;
   description?: string;
 }) {
   return (
-    <div className="text-center mb-8">
-      <div className="inline-flex items-center gap-2 text-[#6b1d57]">
-        {Icon && (
-          <div className="w-9 h-9 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center">
-            <Icon size={18} strokeWidth={1.8} />
-          </div>
-        )}
+    <div className="mb-8">
+      {eyebrow && (
+        <div className="inline-flex items-center gap-2 rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-[10px] font-bold text-[#6b1d57] mb-3">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#6b1d57]" />
+          {eyebrow}
+        </div>
+      )}
 
-        <h2 className="text-xl sm:text-2xl font-extrabold">
-          {title}
-        </h2>
-      </div>
-
-      <div className="w-12 h-1 bg-gradient-to-r from-[#6b1d57] to-amber-400 rounded-full mx-auto mt-3" />
+      <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+        {title}
+      </h2>
 
       {description && (
-        <p className="text-xs text-slate-500 mt-3 leading-relaxed">
+        <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-500">
           {description}
         </p>
       )}
@@ -621,1408 +517,1023 @@ function SectionHeading({
   );
 }
 
+function ArrowButton() {
+  return (
+    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-purple-50 text-[#6b1d57] transition-all group-hover:translate-x-1 group-hover:bg-[#6b1d57] group-hover:text-white">
+      →
+    </span>
+  );
+}
+
 /* =========================================================
-   HOME PAGE
+   MAIN PAGE
 ========================================================= */
 
 export default function HomePage() {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedDivision, setSelectedDivision] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [openGuideIndex, setOpenGuideIndex] = useState<number>(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openGuideIndex, setOpenGuideIndex] = useState(0);
+
+  const divisions = [
+    "ঢাকা",
+    "চট্টগ্রাম",
+    "রাজশাহী",
+    "খুলনা",
+    "বরিশাল",
+    "সিলেট",
+    "রংপুর",
+    "ময়মনসিংহ",
+  ];
+
+  const districts = selectedDivision
+    ? ["গাজীপুর", "ঢাকা", "নারায়ণগঞ্জ", "নরসিংদী", "মানিকগঞ্জ"]
+    : [];
+
+  const guides = [
+    {
+      title: "জমির তথ্য খুঁজে বের করুন",
+      description:
+        "দাগ, খতিয়ান, মৌজা এবং অন্যান্য প্রাথমিক তথ্য সংগ্রহ করে আপনার জমির রেকর্ড সম্পর্কে ধারণা নিন।",
+      icon: Search,
+    },
+    {
+      title: "প্রয়োজনীয় সেবা নির্বাচন করুন",
+      description:
+        "নামজারি, খতিয়ান, ম্যাপ, কর, দলিল যাচাইসহ প্রয়োজনীয় সেবাটি নির্বাচন করুন।",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "তথ্য ও কাগজপত্র প্রস্তুত করুন",
+      description:
+        "প্রয়োজনীয় কাগজপত্র এবং তথ্য প্রস্তুত করে আবেদন প্রক্রিয়ার জন্য এগিয়ে যান।",
+      icon: ClipboardCheck,
+    },
+    {
+      title: "আবেদনের অগ্রগতি অনুসরণ করুন",
+      description:
+        "আপনার আবেদন বা সেবার অগ্রগতি নিয়মিত পর্যবেক্ষণ করুন এবং প্রয়োজনীয় নির্দেশনা অনুসরণ করুন।",
+      icon: CheckCircle2,
+    },
+  ];
 
   return (
-    <main className="min-h-screen bg-[#f8f9fa] text-slate-800 font-sans">
+    <main className="min-h-screen bg-[#f8f7fa] text-slate-800">
+      {/* =====================================================
+          TOP BAR
+      ====================================================== */}
+      <div className="hidden lg:block bg-[#3e1237] text-purple-100">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2 text-[11px]">
+          <div className="flex items-center gap-5">
+            <span className="inline-flex items-center gap-2">
+              <Headphones size={13} />
+              সহায়তা: ১৬১২৩
+            </span>
+
+            <span className="inline-flex items-center gap-2">
+              <Mail size={13} />
+              support@e-vumiseba.com
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span>বাংলা</span>
+            <span className="opacity-40">|</span>
+            <span>English</span>
+          </div>
+        </div>
+      </div>
 
       {/* =====================================================
           NAVBAR
-      ===================================================== */}
+      ====================================================== */}
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-3">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#6b1d57] to-[#3e1237] shadow-lg">
+              <Landmark className="text-white" size={23} />
+              <div className="absolute bottom-1 left-1/2 h-1 w-5 -translate-x-1/2 rounded-full bg-amber-300" />
+            </div>
 
-      <header className="sticky top-0 z-50 bg-[#4a154b]/95 backdrop-blur-xl text-white shadow-lg border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
-          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-lg font-black leading-none text-[#6b1d57]">
+                E-Vumi Seba
+              </div>
+              <div className="mt-1 text-[9px] font-medium tracking-wider text-slate-400">
+                DIGITAL LAND SERVICE PLATFORM
+              </div>
+            </div>
+          </Link>
 
-            {/* Logo */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {[
+              ["হোম", "/"],
+              ["সেবাসমূহ", "#services"],
+              ["টুলস", "#tools"],
+              ["মার্কেটপ্লেস", "#marketplace"],
+              ["ফোরাম", "#forum"],
+              ["গাইড", "#guide"],
+            ].map(([label, href]) => (
+              <Link
+                key={label}
+                href={href}
+                className="rounded-lg px-3 py-2 text-xs font-semibold text-slate-600 transition hover:bg-purple-50 hover:text-[#6b1d57]"
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden lg:flex items-center gap-2">
             <Link
-              href="/"
-              className="flex items-center gap-2.5 shrink-0"
+              href="/login"
+              className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700 transition hover:border-purple-200 hover:bg-purple-50"
             >
-              <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center overflow-hidden">
-                <img
-                  src="/logo-mark.png"
-                  alt="E-Vumi Seba"
-                  className="w-8 h-8 object-contain"
-                />
-              </div>
-
-              <div className="hidden sm:block">
-                <p className="font-extrabold text-sm leading-none">
-                  E-Vumi Seba
-                </p>
-                <p className="text-[9px] text-purple-200 mt-1">
-                  ডিজিটাল ভূমি সেবা
-                </p>
-              </div>
+              লগইন
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-5 text-xs font-semibold text-purple-100">
-              <Link
-                href="/"
-                className="text-amber-400"
-              >
-                হোম
-              </Link>
-
-              <Link
-                href="#services"
-                className="hover:text-amber-300 transition"
-              >
-                সেবা সমূহ
-              </Link>
-
-              <Link
-                href="#tools"
-                className="hover:text-amber-300 transition"
-              >
-                টুলস
-              </Link>
-
-              <Link
-                href="#find-agent"
-                className="hover:text-amber-300 transition"
-              >
-                সহায়তাকারী খুঁজুন
-              </Link>
-
-              <Link
-                href="#marketplace"
-                className="hover:text-amber-300 transition"
-              >
-                জমি কিনুন
-              </Link>
-
-              <Link
-                href="#forum"
-                className="hover:text-amber-300 transition"
-              >
-                কমিউনিটি
-              </Link>
-
-              <Link
-                href="/track"
-                className="hover:text-amber-300 transition"
-              >
-                ট্র্যাকিং
-              </Link>
-
-              <Link
-                href="/dashboard/support"
-                className="hover:text-amber-300 transition"
-              >
-                সাপোর্ট
-              </Link>
-            </nav>
-
-            {/* Right */}
-            <div className="flex items-center gap-2">
-
-              <Link
-                href="/track"
-                className="hidden sm:flex bg-white text-[#6b1d57] hover:bg-purple-50 font-bold text-xs px-5 py-2.5 rounded-full shadow-sm items-center gap-2 transition"
-              >
-                <Users size={14} />
-                লগইন
-              </Link>
-
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center"
-                aria-label="Menu"
-              >
-                {mobileMenuOpen ? (
-                  <X size={19} />
-                ) : (
-                  <Menu size={19} />
-                )}
-              </button>
-            </div>
+            <Link
+              href="/register"
+              className="rounded-xl bg-[#6b1d57] px-4 py-2 text-xs font-bold text-white shadow-lg shadow-purple-900/15 transition hover:bg-[#551645]"
+            >
+              অ্যাকাউন্ট খুলুন
+            </Link>
           </div>
 
-          {/* Mobile menu */}
-          {mobileMenuOpen && (
-            <nav className="lg:hidden pt-4 pb-2 border-t border-white/10 mt-3 space-y-1">
+          <button
+            type="button"
+            aria-label="Menu"
+            className="lg:hidden rounded-xl border border-slate-200 p-2 text-slate-700"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X size={21} /> : <Menu size={21} />}
+          </button>
+        </div>
+
+        {mobileOpen && (
+          <div className="border-t border-slate-100 bg-white px-4 pb-4 lg:hidden">
+            <div className="flex flex-col gap-1 pt-3">
               {[
                 ["হোম", "/"],
-                ["সেবা সমূহ", "#services"],
+                ["সেবাসমূহ", "#services"],
                 ["টুলস", "#tools"],
-                ["সহায়তাকারী খুঁজুন", "#find-agent"],
-                ["জমি কিনুন", "#marketplace"],
-                ["কমিউনিটি", "#forum"],
-                ["ট্র্যাকিং", "/track"],
-                ["সাপোর্ট", "/dashboard/support"],
+                ["মার্কেটপ্লেস", "#marketplace"],
+                ["ফোরাম", "#forum"],
+                ["গাইড", "#guide"],
               ].map(([label, href]) => (
                 <Link
                   key={label}
                   href={href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2.5 rounded-lg hover:bg-white/10 text-sm"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-purple-50"
                 >
                   {label}
                 </Link>
               ))}
-            </nav>
-          )}
-        </div>
+
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <Link
+                  href="/login"
+                  className="rounded-xl border border-slate-200 py-3 text-center text-xs font-bold"
+                >
+                  লগইন
+                </Link>
+
+                <Link
+                  href="/register"
+                  className="rounded-xl bg-[#6b1d57] py-3 text-center text-xs font-bold text-white"
+                >
+                  রেজিস্টার
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* =====================================================
           HERO
-      ===================================================== */}
+      ====================================================== */}
+      <section className="relative overflow-hidden bg-[#421437]">
+        <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
+        <div className="absolute -right-20 top-20 h-96 w-96 rounded-full bg-fuchsia-400/10 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-56 w-56 rounded-full bg-amber-300/10 blur-3xl" />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#6b1d57] via-[#591849] to-[#32102c] text-white">
-
-        {/* Decorative shapes */}
-        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-purple-400/10 blur-3xl" />
-        <div className="absolute -bottom-32 -left-20 w-80 h-80 rounded-full bg-amber-400/10 blur-3xl" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-14 lg:py-20 grid lg:grid-cols-12 gap-10 items-center">
-
-          {/* Left */}
-          <div className="lg:col-span-6">
-
-            <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-300/30 text-amber-300 text-[11px] font-bold px-3.5 py-1.5 rounded-full mb-5">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              ২৬ অক্টোবর ২০২৬ • ডিজিটাল ভূমি সেবা
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-24">
+          <div className="relative z-10">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-[10px] font-bold text-purple-100 backdrop-blur">
+              <ShieldCheck size={14} className="text-amber-300" />
+              ডিজিটাল ভূমি সেবা প্ল্যাটফর্ম
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
-              বাংলাদেশের
-              <span className="block text-amber-300">
-                ভূমি সেবা প্ল্যাটফর্ম
+            <h1 className="max-w-3xl text-4xl font-black leading-[1.15] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              আপনার জমি,
+              <br />
+              <span className="bg-gradient-to-r from-amber-200 to-yellow-400 bg-clip-text text-transparent">
+                আপনার নিয়ন্ত্রণে
               </span>
             </h1>
 
-            <p className="mt-5 max-w-xl text-purple-100 text-sm leading-7">
-              নামজারি, ভূমি উন্নয়ন কর, খতিয়ান, পর্চা, মৌজা ম্যাপ,
-              জমির হিসাব এবং ভূমি সংক্রান্ত বিভিন্ন সেবা—
-              সবকিছু এক প্ল্যাটফর্মে সহজ ও স্বচ্ছভাবে।
+            <p className="mt-6 max-w-xl text-sm leading-7 text-purple-100 sm:text-base">
+              ভূমি সংক্রান্ত তথ্য, সেবা, আবেদন সহায়তা, হিসাব ও প্রয়োজনীয়
+              রিসোর্স একটি আধুনিক ডিজিটাল প্ল্যাটফর্মে সহজভাবে ব্যবহার করুন।
             </p>
 
-            <div className="flex flex-wrap gap-3 mt-7">
-
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="#services"
-                className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm px-6 py-3 rounded-full shadow-xl shadow-black/10 flex items-center gap-2 transition hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-xs font-black text-[#6b1d57] shadow-xl transition hover:-translate-y-0.5"
               >
+                সেবা খুঁজুন
                 <ArrowLeftRight size={16} />
-                সেবা নিন
               </Link>
 
               <Link
-                href="#find-agent"
-                className="bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-sm px-6 py-3 rounded-full flex items-center gap-2 transition"
+                href="#tools"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-bold text-white backdrop-blur transition hover:bg-white/15"
               >
-                <Search size={16} />
-                সহায়তাকারী খুঁজুন
+                <Calculator size={16} />
+                ভূমি টুল ব্যবহার করুন
               </Link>
-
             </div>
 
-            <div className="flex flex-wrap gap-2.5 mt-7">
+            <div className="mt-8 flex flex-wrap gap-5 text-[10px] text-purple-200">
+              <span className="inline-flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-emerald-300" />
+                সহজ প্রক্রিয়া
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-emerald-300" />
+                তথ্যভিত্তিক সহায়তা
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-emerald-300" />
+                আধুনিক ডিজাইন
+              </span>
+            </div>
+          </div>
 
-              {[
-                [ShieldCheck, "নিরাপদ সেবা"],
-                [BadgeCheck, "নিবন্ধিত কেন্দ্র"],
-                [Headphones, "সাপোর্ট সুবিধা"],
-              ].map(([Icon, label]) => {
-                const I = Icon as React.ElementType;
+          <div className="relative z-10">
+            <div className="relative mx-auto max-w-lg">
+              <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-purple-500/20 to-amber-300/10 blur-3xl" />
 
-                return (
-                  <div
-                    key={String(label)}
-                    className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2 rounded-full text-[11px] text-purple-100"
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/10 p-5 shadow-2xl backdrop-blur-xl">
+                <div className="mb-5 flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] font-bold text-purple-200">
+                      QUICK LAND SEARCH
+                    </p>
+                    <h3 className="mt-1 text-lg font-black text-white">
+                      জমির তথ্য খুঁজুন
+                    </h3>
+                  </div>
+
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
+                    <Search size={20} className="text-amber-300" />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <label className="mb-1.5 block text-[10px] font-semibold text-purple-200">
+                      বিভাগ
+                    </label>
+
+                    <select
+                      value={selectedDivision}
+                      onChange={(e) => {
+                        setSelectedDivision(e.target.value);
+                        setSelectedDistrict("");
+                      }}
+                      className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-xs text-white outline-none"
+                    >
+                      <option value="" className="text-slate-900">
+                        বিভাগ নির্বাচন করুন
+                      </option>
+
+                      {divisions.map((division) => (
+                        <option
+                          key={division}
+                          value={division}
+                          className="text-slate-900"
+                        >
+                          {division}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="mb-1.5 block text-[10px] font-semibold text-purple-200">
+                      জেলা
+                    </label>
+
+                    <select
+                      value={selectedDistrict}
+                      disabled={!selectedDivision}
+                      onChange={(e) => setSelectedDistrict(e.target.value)}
+                      className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-xs text-white outline-none disabled:opacity-40"
+                    >
+                      <option value="" className="text-slate-900">
+                        জেলা নির্বাচন করুন
+                      </option>
+
+                      {districts.map((district) => (
+                        <option
+                          key={district}
+                          value={district}
+                          className="text-slate-900"
+                        >
+                          {district}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <Link
+                    href="/services/khatian"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-300 to-yellow-400 py-3.5 text-xs font-black text-[#3e1237] shadow-lg"
                   >
-                    <I size={13} className="text-emerald-300" />
-                    {label}
-                  </div>
-                );
-              })}
+                    <Search size={15} />
+                    অনুসন্ধান শুরু করুন
+                  </Link>
+                </div>
 
+                <div className="mt-5 grid grid-cols-3 gap-2">
+                  {[
+                    ["২৬+", "সেবা"],
+                    ["১২", "টুল"],
+                    ["২৪/৭", "অ্যাক্সেস"],
+                  ].map(([value, label]) => (
+                    <div
+                      key={label}
+                      className="rounded-xl border border-white/10 bg-white/5 p-3 text-center"
+                    >
+                      <div className="text-sm font-black text-white">
+                        {value}
+                      </div>
+                      <div className="mt-0.5 text-[9px] text-purple-200">
+                        {label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-
-          {/* Right */}
-          <div className="lg:col-span-6">
-
-            <div className="relative rounded-3xl overflow-hidden border border-white/20 bg-white/10 backdrop-blur-sm p-2 shadow-2xl">
-
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-
-              <img
-                src="/hero-banner.png"
-                alt="ভূমি সেবা সহায়তা কেন্দ্র"
-                className="relative block w-full h-auto rounded-2xl object-cover"
-              />
-
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          SERVICES
-      ===================================================== */}
-
-      <section
-        id="services"
-        className="py-16 max-w-7xl mx-auto px-4 sm:px-6"
-      >
-
-        <SectionHeading
-          icon={BriefcaseBusiness}
-          title="ভূমি সংক্রান্ত সেবা সমূহ"
-          description="আপনার প্রয়োজনীয় ভূমি সেবা নির্বাচন করুন — সুনির্দিষ্ট ফি ও স্বচ্ছ প্রক্রিয়ায়।"
-        />
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-
-          {services.map((service) => {
-            const Icon = service.icon;
-
-            return (
-              <Link
-                href={`/services/${service.slug}`}
-                key={service.slug}
-                className="
-                  group relative overflow-hidden
-                  bg-white rounded-2xl
-                  border border-slate-200
-                  p-4
-                  text-center
-                  transition-all duration-300
-                  hover:-translate-y-1
-                  hover:border-[#6b1d57]/30
-                  hover:shadow-[0_15px_35px_rgba(107,29,87,0.10)]
-                "
-              >
-
-                {/* Glow */}
-                <div className="
-                  absolute -top-10 -right-10
-                  w-24 h-24
-                  rounded-full
-                  bg-purple-100/50
-                  blur-2xl
-                  group-hover:bg-amber-100/60
-                  transition
-                />
-
-                {/* Icon */}
-                <div className="
-                  relative mx-auto mb-3
-                  w-12 h-12
-                  rounded-xl
-                  bg-gradient-to-br from-purple-50 to-amber-50
-                  border border-purple-100
-                  flex items-center justify-center
-                  text-[#6b1d57]
-                  shadow-sm
-                  group-hover:scale-110
-                  group-hover:shadow-md
-                  transition-all duration-300
-                ">
-                  <Icon size={22} strokeWidth={1.8} />
-                </div>
-
-                <h3 className="
-                  relative
-                  font-bold text-slate-800
-                  text-xs sm:text-[13px]
-                  leading-5
-                  min-h-[40px]
-                  flex items-center justify-center
-                  mb-3
-                  group-hover:text-[#6b1d57]
-                  transition
-                ">
-                  {service.title}
-                </h3>
-
-                <div className="relative flex flex-wrap justify-center gap-1.5">
-
-                  <span className="
-                    bg-emerald-50
-                    text-emerald-700
-                    border border-emerald-100
-                    text-[9px]
-                    font-bold
-                    px-2 py-1
-                    rounded-md
-                  ">
-                    সেবা {service.serviceFee}
-                  </span>
-
-                  {service.govtFee && (
-                    <span className="
-                      bg-amber-50
-                      text-amber-700
-                      border border-amber-100
-                      text-[9px]
-                      font-bold
-                      px-2 py-1
-                      rounded-md
-                    ">
-                      সরকারি {service.govtFee}
-                    </span>
-                  )}
-
-                </div>
-              </Link>
-            );
-          })}
-
-        </div>
-
-        <div className="flex justify-center gap-3 mt-10 flex-wrap">
-
-          <Link
-            href="#guides"
-            className="border border-[#6b1d57] text-[#6b1d57] hover:bg-purple-50 text-xs font-bold px-6 py-2.5 rounded-full transition"
-          >
-            সেবার বিস্তারিত →
-          </Link>
-
-          <Link
-            href="/track"
-            className="bg-[#6b1d57] hover:bg-[#521542] text-white text-xs font-bold px-6 py-2.5 rounded-full shadow transition"
-          >
-            একটি সেবা নিন
-          </Link>
-
-        </div>
-      </section>
-
-      {/* =====================================================
-          WHY US
-      ===================================================== */}
-
-      <section className="py-16 bg-[#f3eff5] border-y border-purple-100">
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
-          <SectionHeading
-            icon={ShieldCheck}
-            title="কেন ভূমি সেবা সহায়তাকারী?"
-            description="নিরাপদ, স্বচ্ছ ও সময় সাশ্রয়ী ভূমি সেবা সহায়তা।"
-          />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
-            {[
-              {
-                icon: Landmark,
-                title: "সরকারি কাঠামোর সাথে সামঞ্জস্যপূর্ণ",
-                text: "ভূমি সেবার প্রচলিত নিয়ম ও প্রক্রিয়া অনুসরণ করে সহায়তা প্রদান।",
-              },
-              {
-                icon: LockKeyhole,
-                title: "নিরাপদ লেনদেন",
-                text: "সেবা গ্রহণের প্রতিটি ধাপে স্বচ্ছতা ও নিরাপত্তাকে অগ্রাধিকার।",
-              },
-              {
-                icon: MapPinned,
-                title: "সারাদেশে সেবা নেটওয়ার্ক",
-                text: "বিভিন্ন জেলা ও এলাকায় ভূমি সেবা সহায়তার সুযোগ।",
-              },
-              {
-                icon: Headphones,
-                title: "অভিযোগ ও সাপোর্ট",
-                text: "আবেদনের অগ্রগতি ও সমস্যার জন্য সরাসরি সাপোর্ট ব্যবস্থা।",
-              },
-            ].map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <div
-                  key={item.title}
-                  className="
-                    bg-white rounded-2xl
-                    p-6 text-center
-                    border border-slate-200
-                    shadow-sm
-                    hover:-translate-y-1
-                    hover:shadow-xl
-                    transition-all duration-300
-                  "
-                >
-
-                  <div className="
-                    mx-auto w-14 h-14
-                    rounded-2xl
-                    bg-gradient-to-br from-purple-50 to-amber-50
-                    text-[#6b1d57]
-                    border border-purple-100
-                    flex items-center justify-center
-                    mb-4
-                  ">
-                    <Icon size={25} strokeWidth={1.7} />
-                  </div>
-
-                  <h3 className="font-bold text-sm mb-2">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-xs text-slate-500 leading-6">
-                    {item.text}
-                  </p>
-
-                </div>
-              );
-            })}
-
-          </div>
-
-          <div className="text-center mt-8">
-
-            <Link
-              href="#find-agent"
-              className="inline-flex items-center gap-2 bg-[#6b1d57] hover:bg-[#521542] text-white text-xs font-bold px-6 py-3 rounded-full shadow-lg transition"
-            >
-              <Settings2 size={15} />
-              আমরা কীভাবে কাজ করি?
-            </Link>
-
           </div>
         </div>
       </section>
 
       {/* =====================================================
           STATS
-      ===================================================== */}
-
-      <section className="relative overflow-hidden bg-[#6b1d57] text-white py-14">
-
-        <div className="absolute inset-0 bg-gradient-to-r from-[#6b1d57] via-[#591849] to-[#3d1035]" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-
-          <div className="text-center mb-10">
-
-            <h3 className="text-xl font-extrabold">
-              এক নজরে E-Vumi Seba
-            </h3>
-
-            <div className="w-12 h-1 bg-amber-400 rounded-full mx-auto mt-3" />
-
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-
-            {[
-              [Users, "৮৯৮", "তালিকাভুক্ত সহায়তাকারী"],
-              [MapPinned, "৬১", "জেলায় বিস্তৃত"],
-              [BadgeCheck, "৮৭", "নিবন্ধিত সহায়তাকারী"],
-              [Users, "১,০৩১", "নিবন্ধিত নাগরিক"],
-              [Calculator, "১২", "বিনামূল্যে ভূমি টুল"],
-              [FileCheck2, "২৬", "সক্রিয় ডিজিটাল সেবা"],
-            ].map(([Icon, number, label]) => {
-              const I = Icon as React.ElementType;
+      ====================================================== */}
+      <section className="bg-[#3e1237] pb-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {stats.map((stat) => {
+              const Icon = stat.icon;
 
               return (
                 <div
-                  key={String(label)}
-                  className="text-center group"
+                  key={stat.label}
+                  className="group rounded-2xl border border-white/10 bg-white/5 p-4 text-center backdrop-blur transition hover:bg-white/10"
                 >
-                  <div className="w-12 h-12 mx-auto rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center mb-3 group-hover:bg-white/15 transition">
-                    <I size={21} />
+                  <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 transition group-hover:bg-amber-300/20">
+                    <Icon
+                      size={20}
+                      className="text-amber-300"
+                      strokeWidth={1.8}
+                    />
                   </div>
 
-                  <p className="text-3xl font-black">
-                    {number}
-                  </p>
+                  <div className="text-xl font-black text-white">
+                    {stat.value}
+                  </div>
 
-                  <p className="text-[10px] sm:text-xs text-purple-200 mt-1">
-                    {label}
-                  </p>
+                  <div className="mt-1 text-[9px] text-purple-200">
+                    {stat.label}
+                  </div>
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
 
+      {/* =====================================================
+          SERVICES
+      ====================================================== */}
+      <section id="services" className="scroll-mt-24 py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <SectionHeader
+            eyebrow="DIGITAL SERVICES"
+            title="জনপ্রিয় ভূমি সেবাসমূহ"
+            description="ভূমি সংক্রান্ত বিভিন্ন কাজের জন্য প্রয়োজনীয় সেবা ও তথ্য এক জায়গায় খুঁজে নিন।"
+          />
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
+            {services.map((service) => {
+              const Icon = service.icon;
+
+              return (
+                <Link
+                  href={`/services/${service.slug}`}
+                  key={service.slug}
+                  className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-4 transition-all duration-300 hover:-translate-y-1.5 hover:border-purple-300 hover:shadow-[0_18px_45px_rgba(107,29,87,0.12)]"
+                >
+                  <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-purple-100/50 blur-2xl opacity-0 transition group-hover:opacity-100" />
+
+                  <div className="relative mb-4 flex justify-center">
+                    <div
+                      className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${service.accent} shadow-lg transition duration-300 group-hover:scale-110 group-hover:rotate-2`}
+                    >
+                      <Icon size={24} className="text-white" strokeWidth={1.8} />
+                    </div>
+
+                    <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full border-2 border-white bg-emerald-500 shadow-sm" />
+                  </div>
+
+                  <h3 className="relative min-h-[42px] text-center text-xs font-bold leading-relaxed text-slate-800 transition group-hover:text-[#6b1d57] sm:text-[13px]">
+                    {service.title}
+                  </h3>
+
+                  <div className="my-3 h-px bg-slate-100 transition group-hover:bg-purple-100" />
+
+                  <div className="relative flex flex-wrap justify-center gap-1.5">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2 py-1 text-[9px] font-bold text-emerald-700">
+                      <Banknote size={10} />
+                      {service.serviceFee}
+                    </span>
+
+                    {service.govtFee && (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-amber-100 bg-amber-50 px-2 py-1 text-[9px] font-bold text-amber-700">
+                        <Landmark size={10} />
+                        {service.govtFee}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-center gap-1 text-[10px] font-semibold text-slate-400 transition group-hover:text-[#6b1d57]">
+                    বিস্তারিত দেখুন
+                    <span className="transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#6b1d57] px-5 py-3 text-xs font-bold text-[#6b1d57] transition hover:bg-[#6b1d57] hover:text-white"
+            >
+              সব সেবা দেখুন
+              <ArrowLeftRight size={15} />
+            </Link>
           </div>
         </div>
       </section>
 
       {/* =====================================================
           TOOLS
-      ===================================================== */}
-
-      <section
-        id="tools"
-        className="py-16 max-w-7xl mx-auto px-4 sm:px-6"
-      >
-
-        <SectionHeading
-          icon={Calculator}
-          title="ভূমি সংক্রান্ত টুল ও ক্যালকুলেটর"
-          description="জমির হিসাব, কর, মূল্য ও উত্তরাধিকার বণ্টন — দরকারি ১২টি টুল।"
-        />
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-
-          {landTools.map((tool) => {
-            const Icon = tool.icon;
-
-            return (
-              <Link
-                href={tool.link}
-                key={tool.name}
-                className="
-                  group
-                  bg-white
-                  rounded-2xl
-                  border border-slate-200
-                  p-4
-                  flex items-center gap-3
-                  hover:-translate-y-1
-                  hover:border-[#6b1d57]/30
-                  hover:shadow-lg
-                  transition-all duration-300
-                "
-              >
-
-                <div className="
-                  shrink-0
-                  w-11 h-11
-                  rounded-xl
-                  bg-purple-50
-                  border border-purple-100
-                  text-[#6b1d57]
-                  flex items-center justify-center
-                  group-hover:bg-[#6b1d57]
-                  group-hover:text-white
-                  transition
-                ">
-                  <Icon size={20} strokeWidth={1.8} />
-                </div>
-
-                <div className="min-w-0">
-                  <h3 className="font-bold text-xs text-slate-800 group-hover:text-[#6b1d57]">
-                    {tool.name}
-                  </h3>
-
-                  <p className="text-[10px] text-slate-500 mt-1 line-clamp-2 leading-4">
-                    {tool.desc}
-                  </p>
-                </div>
-
-              </Link>
-            );
-          })}
-
-        </div>
-
-        <div className="text-center mt-8">
-
-          <Link
-            href="/services/calculator"
-            className="inline-flex items-center gap-2 bg-[#6b1d57] hover:bg-[#521542] text-white text-xs font-bold px-6 py-3 rounded-full shadow transition"
-          >
-            <Calculator size={15} />
-            সকল টুল বিস্তারিত দেখুন
-          </Link>
-
-        </div>
-      </section>
-
-      {/* =====================================================
-          FIND AGENT
-      ===================================================== */}
-
-      <section
-        id="find-agent"
-        className="py-16 bg-white border-y border-slate-200"
-      >
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-
-          <SectionHeading
-            icon={Search}
-            title="ভূমি সেবা সহায়তাকারী খুঁজুন"
-            description="আপনার এলাকার ভূমি সেবা সহায়তা কেন্দ্র খুঁজে বের করুন।"
+      ====================================================== */}
+      <section id="tools" className="scroll-mt-24 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <SectionHeader
+            eyebrow="SMART LAND TOOLS"
+            title="ভূমি হিসাব ও অনুসন্ধান টুল"
+            description="জমির পরিমাণ, মূল্য, নিবন্ধন ব্যয়, উত্তরাধিকার এবং রেকর্ড সংক্রান্ত হিসাব সহজে করুন।"
           />
 
-          <div className="bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-sm">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {landTools.map((tool) => {
+              const Icon = tool.icon;
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              return (
+                <Link
+                  key={tool.name}
+                  href={tool.link}
+                  className="group relative flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:border-purple-300 hover:shadow-lg"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-purple-100 bg-gradient-to-br from-purple-50 to-fuchsia-50 transition-all duration-300 group-hover:from-[#6b1d57] group-hover:to-[#8b3d78]">
+                    <Icon
+                      size={21}
+                      className="text-[#6b1d57] transition-colors group-hover:text-white"
+                    />
+                  </div>
 
-              <select
-                value={selectedDivision}
-                onChange={(e) => setSelectedDivision(e.target.value)}
-                className="
-                  px-4 py-3
-                  rounded-xl
-                  border border-slate-300
-                  text-xs
-                  bg-white
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-purple-100
-                  focus:border-[#6b1d57]
-                "
-              >
-                <option value="">-- বিভাগ নির্বাচন --</option>
-                <option value="dhaka">ঢাকা</option>
-                <option value="chattogram">চট্টগ্রাম</option>
-                <option value="rajshahi">রাজশাহী</option>
-                <option value="khulna">খুলনা</option>
-                <option value="barishal">বরিশাল</option>
-                <option value="sylhet">সিলেট</option>
-                <option value="rangpur">রংপুর</option>
-                <option value="mymensingh">ময়মনসিংহ</option>
-              </select>
+                  <div className="min-w-0">
+                    <h3 className="text-xs font-bold text-slate-800 transition group-hover:text-[#6b1d57]">
+                      {tool.name}
+                    </h3>
 
-              <select
-                value={selectedDistrict}
-                onChange={(e) => setSelectedDistrict(e.target.value)}
-                className="
-                  px-4 py-3
-                  rounded-xl
-                  border border-slate-300
-                  text-xs
-                  bg-white
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-purple-100
-                  focus:border-[#6b1d57]
-                "
-              >
-                <option value="">-- জেলা নির্বাচন --</option>
-                <option value="dhaka">ঢাকা</option>
-                <option value="gazipur">গাজীপুর</option>
-                <option value="nilphamari">নীলফামারী</option>
-                <option value="rangpur">রংপুর</option>
-                <option value="chattogram">চট্টগ্রাম</option>
-              </select>
+                    <p className="mt-1 line-clamp-2 text-[10px] leading-5 text-slate-500">
+                      {tool.desc}
+                    </p>
+                  </div>
 
-              <Link
-                href="#services"
-                className="
-                  bg-[#6b1d57]
-                  hover:bg-[#521542]
-                  text-white
-                  font-bold
-                  py-3 px-5
-                  rounded-xl
-                  text-xs
-                  flex items-center
-                  justify-center gap-2
-                  transition
-                "
-              >
-                <Search size={15} />
-                খুঁজুন
-              </Link>
-
-            </div>
+                  <span className="absolute right-3 top-3 opacity-0 transition group-hover:opacity-100">
+                    <ArrowLeftRight size={12} className="text-[#6b1d57]" />
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* =====================================================
           MARKETPLACE
-      ===================================================== */}
-
+      ====================================================== */}
       <section
         id="marketplace"
-        className="py-16 max-w-7xl mx-auto px-4 sm:px-6"
+        className="scroll-mt-24 bg-[#f7f4f7] py-16 sm:py-20"
       >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <SectionHeader
+              eyebrow="LAND MARKETPLACE"
+              title="জমি মার্কেটপ্লেস"
+              description="জমি খোঁজা, তথ্য যাচাই এবং সম্ভাব্য সম্পত্তি সম্পর্কে প্রাথমিক ধারণা নেওয়ার জন্য একটি সংগঠিত তালিকা।"
+            />
 
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-7">
-
-          <div>
-            <div className="flex items-center gap-2 text-[#6b1d57]">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center">
-                <House size={20} />
-              </div>
-
-              <h2 className="text-xl font-extrabold">
-                জমি মার্কেটপ্লেস
-              </h2>
-            </div>
-
-            <p className="text-xs text-slate-500 mt-2">
-              জমি ক্রয়-বিক্রয়ের তথ্য দেখুন
-            </p>
+            <Link
+              href="/marketplace"
+              className="mb-8 inline-flex items-center gap-2 text-xs font-bold text-[#6b1d57]"
+            >
+              সব তালিকা
+              <ArrowLeftRight size={15} />
+            </Link>
           </div>
 
-          <Link
-            href="#services"
-            className="self-start sm:self-auto border border-[#6b1d57] text-[#6b1d57] hover:bg-purple-50 text-xs font-bold px-4 py-2 rounded-full"
-          >
-            সব জমি দেখুন →
-          </Link>
+          <div className="grid gap-5 md:grid-cols-3">
+            {marketplaceItems.map((item) => {
+              const Icon = item.icon;
 
-        </div>
+              return (
+                <Link
+                  key={item.title}
+                  href="/marketplace"
+                  className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <div className="relative h-40 overflow-hidden bg-gradient-to-br from-[#6b1d57] via-[#7b2d68] to-[#32102d]">
+                    <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+                    <div className="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-amber-300/10 blur-2xl" />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="flex h-20 w-20 items-center justify-center rounded-3xl border border-white/10 bg-white/10 backdrop-blur transition group-hover:scale-110">
+                        <Icon size={36} className="text-white" strokeWidth={1.4} />
+                      </div>
+                    </div>
 
-          {marketplaceItems.map((item) => (
-            <div
-              key={item.location}
-              className="
-                bg-white
-                rounded-2xl
-                border border-slate-200
-                overflow-hidden
-                shadow-sm
-                hover:-translate-y-1
-                hover:shadow-xl
-                transition-all duration-300
-              "
-            >
+                    <span className="absolute right-4 top-4 rounded-full bg-emerald-400 px-3 py-1 text-[9px] font-black text-emerald-950">
+                      ACTIVE
+                    </span>
+                  </div>
 
-              <div className="h-36 bg-gradient-to-br from-slate-100 via-purple-50 to-amber-50 relative flex items-center justify-center">
+                  <div className="p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h3 className="font-black text-slate-900">
+                          {item.title}
+                        </h3>
 
-                <MapPinned
-                  size={42}
-                  strokeWidth={1.4}
-                  className="text-[#6b1d57]/40"
-                />
+                        <p className="mt-1 text-xs text-slate-500">
+                          {item.location}
+                        </p>
+                      </div>
 
-                <span className="
-                  absolute top-3 left-3
-                  bg-[#6b1d57]
-                  text-white
-                  text-[9px]
-                  font-bold
-                  px-2.5 py-1
-                  rounded-full
-                ">
-                  বিক্রয়ের জন্য
-                </span>
+                      <ArrowButton />
+                    </div>
 
-              </div>
+                    <div className="mt-5 grid grid-cols-2 gap-2">
+                      <div className="rounded-xl bg-slate-50 p-3">
+                        <div className="text-[9px] text-slate-400">
+                          জমির পরিমাণ
+                        </div>
+                        <div className="mt-1 text-xs font-black text-slate-800">
+                          {item.size}
+                        </div>
+                      </div>
 
-              <div className="p-4">
-
-                <p className="font-black text-emerald-700 text-base">
-                  {item.price}
-                </p>
-
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="text-[11px] font-bold text-slate-700">
-                    {item.size}
-                  </span>
-
-                  <span className="text-[9px] bg-purple-50 text-[#6b1d57] px-2 py-1 rounded-full">
-                    {item.type}
-                  </span>
-                </div>
-
-                <p className="text-[10px] text-slate-400 mt-2 flex items-center gap-1">
-                  <MapPinned size={12} />
-                  {item.location}
-                </p>
-
-              </div>
-            </div>
-          ))}
-
+                      <div className="rounded-xl bg-purple-50 p-3">
+                        <div className="text-[9px] text-purple-400">
+                          চাহিদা মূল্য
+                        </div>
+                        <div className="mt-1 text-xs font-black text-[#6b1d57]">
+                          {item.price}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* =====================================================
-          BLOG
-      ===================================================== */}
-
-      <section className="py-16 bg-[#f8f9fa]">
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
-          <SectionHeading
-            icon={Newspaper}
-            title="সাম্প্রতিক ব্লগ পোস্ট"
-            description="ভূমি সংক্রান্ত গুরুত্বপূর্ণ তথ্য, গাইড ও সচেতনতা বিষয়ক লেখা।"
+          GUIDE
+      ====================================================== */}
+      <section id="guide" className="scroll-mt-24 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <SectionHeader
+            eyebrow="HOW IT WORKS"
+            title="ভূমি সেবা নেওয়ার সহজ ধাপ"
+            description="প্রয়োজনীয় তথ্য খুঁজে বের করা থেকে শুরু করে আবেদন অনুসরণ করা পর্যন্ত ধাপে ধাপে নির্দেশনা।"
           />
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="rounded-3xl bg-gradient-to-br from-[#4b163f] to-[#6b1d57] p-6 sm:p-8 text-white">
+              <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
+                <Globe2 size={27} className="text-amber-300" />
+              </div>
 
-            {blogPosts.map((post, index) => (
-              <article
-                key={post.title}
-                className="
-                  bg-white
-                  rounded-2xl
-                  border border-slate-200
-                  overflow-hidden
-                  shadow-sm
-                  hover:-translate-y-1
-                  hover:shadow-xl
-                  transition-all duration-300
-                "
+              <h3 className="text-2xl font-black">
+                ডিজিটালভাবে শুরু করুন
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-purple-100">
+                সঠিক তথ্য, প্রয়োজনীয় কাগজপত্র এবং উপযুক্ত সেবা নির্বাচন করে
+                আপনার ভূমি-সংক্রান্ত কাজকে আরও সংগঠিত করুন।
+              </p>
+
+              <Link
+                href="/services"
+                className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-xs font-black text-[#6b1d57]"
               >
+                সেবা ব্রাউজ করুন
+                <ArrowLeftRight size={15} />
+              </Link>
+            </div>
 
-                <div className="h-40 bg-gradient-to-br from-[#6b1d57] via-purple-600 to-amber-400 relative flex items-center justify-center">
+            <div className="space-y-3">
+              {guides.map((guide, index) => {
+                const Icon = guide.icon;
+                const isOpen = openGuideIndex === index;
 
-                  <div className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white">
-                    {index === 0 ? (
-                      <FileCheck2 size={30} />
-                    ) : index === 1 ? (
-                      <SearchCheck size={30} />
-                    ) : (
-                      <CreditCard size={30} />
-                    )}
-                  </div>
-
-                </div>
-
-                <div className="p-5">
-
-                  <div className="flex items-center gap-2 text-[9px] text-slate-400 mb-3">
-                    <span>{post.date}</span>
-                    <span>•</span>
-                    <span className="text-[#6b1d57] font-bold">
-                      {post.category}
-                    </span>
-                  </div>
-
-                  <h3 className="font-extrabold text-sm leading-6 mb-2">
-                    {post.title}
-                  </h3>
-
-                  <p className="text-xs text-slate-500 leading-6">
-                    {post.excerpt}
-                  </p>
-
-                  <Link
-                    href="#guides"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-[#6b1d57] mt-4 hover:gap-2 transition-all"
+                return (
+                  <div
+                    key={guide.title}
+                    className={`overflow-hidden rounded-2xl border transition ${
+                      isOpen
+                        ? "border-purple-200 bg-purple-50/60"
+                        : "border-slate-200 bg-white"
+                    }`}
                   >
-                    বিস্তারিত পড়ুন
-                    <ExternalLink size={12} />
-                  </Link>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenGuideIndex(isOpen ? -1 : index)
+                      }
+                      className="flex w-full items-center gap-4 p-4 text-left"
+                    >
+                      <div
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition ${
+                          isOpen
+                            ? "bg-[#6b1d57] text-white"
+                            : "bg-purple-50 text-[#6b1d57]"
+                        }`}
+                      >
+                        <Icon size={20} />
+                      </div>
 
-                </div>
-              </article>
-            ))}
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs font-black text-slate-900 sm:text-sm">
+                          {index + 1}. {guide.title}
+                        </div>
 
+                        {isOpen && (
+                          <p className="mt-2 text-[11px] leading-6 text-slate-500">
+                            {guide.description}
+                          </p>
+                        )}
+                      </div>
+
+                      {isOpen ? (
+                        <ChevronUp size={17} className="text-[#6b1d57]" />
+                      ) : (
+                        <ChevronDown size={17} className="text-slate-400" />
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
 
       {/* =====================================================
           FORUM
-      ===================================================== */}
-
-      <section
-        id="forum"
-        className="py-16 max-w-5xl mx-auto px-4 sm:px-6"
-      >
-
-        <SectionHeading
-          icon={MessageCircle}
-          title="ফোরাম আলোচনা"
-          description="ভূমি সংক্রান্ত প্রশ্ন করুন, অভিজ্ঞতা শেয়ার করুন এবং উত্তর পান।"
-        />
-
-        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-
-          {forumTopics.map((topic) => (
-            <div
-              key={topic.title}
-              className="
-                p-4 sm:p-5
-                flex items-center justify-between gap-4
-                border-b last:border-b-0 border-slate-100
-                hover:bg-slate-50
-                transition
-              "
-            >
-
-              <div className="min-w-0">
-
-                <h4 className="font-bold text-xs sm:text-sm text-slate-800">
-                  {topic.title}
-                </h4>
-
-                <p className="text-[10px] text-slate-400 mt-1.5 flex flex-wrap gap-2">
-                  <span>👤 {topic.author}</span>
-                  <span>•</span>
-                  <span>{topic.time}</span>
-                </p>
-
+      ====================================================== */}
+      <section id="forum" className="scroll-mt-24 py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#6b1d57] to-[#8b3d78] shadow-lg shadow-purple-900/10">
+                <MessageCircle
+                  size={22}
+                  className="text-white"
+                  strokeWidth={1.8}
+                />
               </div>
 
-              <span className="
-                shrink-0
-                bg-purple-50
-                text-[#6b1d57]
-                border border-purple-100
-                text-[9px]
-                font-bold
-                px-2.5 py-1.5
-                rounded-full
-              ">
-                {topic.replies}
-              </span>
+              <div>
+                <h2 className="text-xl font-black text-[#6b1d57] sm:text-2xl">
+                  ফোরাম আলোচনা
+                </h2>
 
+                <p className="mt-1 text-[11px] text-slate-500">
+                  ভূমি সংক্রান্ত প্রশ্ন ও অভিজ্ঞতা শেয়ার করুন
+                </p>
+              </div>
             </div>
-          ))}
 
-        </div>
+            <Link
+              href="/dashboard/support"
+              className="inline-flex items-center gap-2 text-xs font-bold text-[#6b1d57]"
+            >
+              ফোরামে যান
+              <ArrowLeftRight size={15} />
+            </Link>
+          </div>
 
-        <div className="text-center mt-6">
+          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            {forumTopics.map((topic, index) => (
+              <div
+                key={topic.title}
+                className={`group flex items-center justify-between gap-4 p-4 transition hover:bg-purple-50/40 sm:px-5 ${
+                  index !== forumTopics.length - 1
+                    ? "border-b border-slate-100"
+                    : ""
+                }`}
+              >
+                <div className="flex min-w-0 items-start gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-purple-100 bg-purple-50 transition group-hover:bg-[#6b1d57]">
+                    <MessageCircle
+                      size={17}
+                      className="text-[#6b1d57] transition group-hover:text-white"
+                    />
+                  </div>
 
-          <Link
-            href="/dashboard/support"
-            className="inline-flex items-center gap-2 border border-[#6b1d57] text-[#6b1d57] hover:bg-purple-50 text-xs font-bold px-6 py-2.5 rounded-full transition"
-          >
-            <MessageCircle size={14} />
-            ফোরামে যান
-          </Link>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-slate-800 sm:text-sm">
+                      {topic.title}
+                    </h4>
 
-        </div>
-
-      </section>
-
-      {/* =====================================================
-          GUIDES
-      ===================================================== */}
-
-      <section
-        id="guides"
-        className="py-16 bg-[#f3eff5] border-y border-purple-100"
-      >
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-
-          <SectionHeading
-            icon={BookOpen}
-            title="ভূমি সেবা গাইড"
-            description="প্রচলিত ভূমি সেবা সম্পর্কে ধাপে ধাপে জানুন।"
-          />
-
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-
-            {guides.map((guide, index) => {
-
-              const isOpen = openGuideIndex === index;
-
-              return (
-                <div
-                  key={guide.title}
-                  className="border-b last:border-b-0 border-slate-200"
-                >
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setOpenGuideIndex(isOpen ? -1 : index)
-                    }
-                    className={`
-                      w-full
-                      text-left
-                      px-5 py-4
-                      flex items-center justify-between gap-4
-                      text-xs sm:text-sm
-                      font-bold
-                      transition
-                      ${
-                        isOpen
-                          ? "bg-purple-50 text-[#6b1d57]"
-                          : "text-slate-800 hover:bg-slate-50"
-                      }
-                    `}
-                  >
-
-                    <span>{guide.title}</span>
-
-                    <span className="shrink-0">
-                      {isOpen ? (
-                        <ChevronUp size={17} />
-                      ) : (
-                        <ChevronDown size={17} />
-                      )}
-                    </span>
-
-                  </button>
-
-                  {isOpen && (
-                    <div className="px-5 sm:px-7 py-5 bg-white">
-
-                      <div className="space-y-3">
-
-                        {guide.steps.map((step) => (
-                          <div
-                            key={step}
-                            className="flex gap-3 text-xs text-slate-600 leading-6"
-                          >
-
-                            <CheckCircle2
-                              size={16}
-                              className="shrink-0 text-emerald-600 mt-1"
-                            />
-
-                            <p>{step}</p>
-
-                          </div>
-                        ))}
-
-                      </div>
-                    </div>
-                  )}
-
+                    <p className="mt-1 flex items-center gap-1 text-[10px] text-slate-400">
+                      <UserCheck size={11} />
+                      {topic.author}
+                      <span>•</span>
+                      <Clock3 size={11} />
+                      {topic.time}
+                    </p>
+                  </div>
                 </div>
-              );
-            })}
 
+                <span className="shrink-0 rounded-full bg-[#6b1d57] px-3 py-1.5 text-[10px] font-bold text-white shadow-sm">
+                  {topic.replies}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* =====================================================
-          GOVERNMENT LINKS
-      ===================================================== */}
-
-      <section className="py-16 bg-slate-100/70">
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
-          <SectionHeading
-            icon={Link2}
-            title="গুরুত্বপূর্ণ লিংক সমূহ"
-            description="সরকারি ও ভূমি সংক্রান্ত গুরুত্বপূর্ণ অনলাইন পোর্টাল।"
-          />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-            {govtLinks.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <a
-                  key={item.url}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-                    group
-                    bg-white
-                    p-4
-                    rounded-2xl
-                    border border-slate-200
-                    flex items-center gap-4
-                    hover:-translate-y-1
-                    hover:border-[#6b1d57]/30
-                    hover:shadow-lg
-                    transition-all duration-300
-                  "
-                >
-
-                  <div className="
-                    w-11 h-11
-                    shrink-0
-                    rounded-xl
-                    bg-purple-50
-                    border border-purple-100
-                    text-[#6b1d57]
-                    flex items-center justify-center
-                    group-hover:bg-[#6b1d57]
-                    group-hover:text-white
-                    transition
-                  ">
-                    <Icon size={20} />
-                  </div>
-
-                  <div className="min-w-0 flex-1">
-
-                    <p className="font-bold text-xs text-slate-800 group-hover:text-[#6b1d57]">
-                      {item.title}
-                    </p>
-
-                    <p className="text-[10px] text-slate-400 font-mono mt-1 truncate">
-                      {item.domain}
-                    </p>
-
-                  </div>
-
-                  <ExternalLink
-                    size={14}
-                    className="text-slate-300 group-hover:text-[#6b1d57]"
-                  />
-
-                </a>
-              );
-            })}
-
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          NEWSLETTER
-      ===================================================== */}
-
-      <section className="relative overflow-hidden bg-[#6b1d57] text-white py-14">
-
-        <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-400/10 rounded-full blur-3xl" />
-
-        <div className="relative max-w-xl mx-auto px-4 text-center">
-
-          <div className="w-14 h-14 mx-auto rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center mb-4">
-            <Mail size={24} />
-          </div>
-
-          <h3 className="text-xl font-extrabold">
-            নিউজলেটার সাবস্ক্রাইব করুন
-          </h3>
-
-          <p className="text-xs text-purple-200 mt-2 mb-6 leading-6">
-            ভূমি সংক্রান্ত সর্বশেষ তথ্য ও আপডেট পেতে আমাদের নিউজলেটারে
-            সাবস্ক্রাইব করুন।
-          </p>
-
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="
-              flex
-              items-center
-              bg-white/10
-              border border-white/20
-              rounded-full
-              p-1
-              max-w-md
-              mx-auto
-              backdrop-blur
-            "
-          >
-
-            <input
-              type="email"
-              placeholder="আপনার ইমেইল দিন..."
-              className="
-                flex-1
-                min-w-0
-                bg-transparent
-                px-4 py-2.5
-                text-xs
-                text-white
-                placeholder-purple-200
-                focus:outline-none
-              "
+          BLOG
+      ====================================================== */}
+      <section className="bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex items-end justify-between gap-4">
+            <SectionHeader
+              eyebrow="KNOWLEDGE CENTER"
+              title="ভূমি বিষয়ক তথ্য ও গাইড"
+              description="ভূমি ব্যবস্থাপনা ও সেবা সম্পর্কে সহজ ভাষায় প্রয়োজনীয় তথ্য।"
             />
 
-            <button
-              type="submit"
-              className="
-                shrink-0
-                bg-amber-400
-                hover:bg-amber-300
-                text-slate-950
-                font-bold
-                text-xs
-                px-5 py-2.5
-                rounded-full
-                transition
-              "
+            <Link
+              href="/blog"
+              className="mb-8 hidden items-center gap-2 text-xs font-bold text-[#6b1d57] sm:inline-flex"
             >
-              সাবস্ক্রাইব
-            </button>
+              সব লেখা
+              <ArrowLeftRight size={15} />
+            </Link>
+          </div>
 
-          </form>
+          <div className="grid gap-5 md:grid-cols-3">
+            {blogPosts.map((post) => {
+              const Icon = post.icon;
+
+              return (
+                <Link
+                  key={post.title}
+                  href="/blog"
+                  className="group rounded-3xl border border-slate-200 bg-white p-5 transition hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <div className="mb-5 flex h-40 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-purple-50 to-slate-100">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm transition group-hover:scale-110">
+                      <Icon size={30} className="text-[#6b1d57]" />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-[9px] font-bold text-[#6b1d57]">
+                    <Newspaper size={12} />
+                    {post.category}
+                  </div>
+
+                  <h3 className="mt-3 text-sm font-black leading-6 text-slate-900 transition group-hover:text-[#6b1d57]">
+                    {post.title}
+                  </h3>
+
+                  <div className="mt-4 flex items-center justify-between text-[10px] text-slate-400">
+                    <span className="inline-flex items-center gap-1">
+                      <CalendarDays size={12} />
+                      {post.date}
+                    </span>
+
+                    <span className="font-bold text-[#6b1d57]">
+                      পড়ুন →
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================
+          CTA
+      ====================================================== */}
+      <section className="px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-gradient-to-r from-[#421437] via-[#6b1d57] to-[#421437] p-7 shadow-2xl sm:p-10">
+          <div className="flex flex-col items-start justify-between gap-7 lg:flex-row lg:items-center">
+            <div>
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-[9px] font-bold text-purple-100">
+                <Headphones size={13} />
+                DIGITAL SUPPORT
+              </div>
+
+              <h2 className="text-2xl font-black text-white sm:text-3xl">
+                ভূমি সংক্রান্ত সহায়তা দরকার?
+              </h2>
+
+              <p className="mt-2 max-w-xl text-xs leading-6 text-purple-100">
+                প্রয়োজনীয় সেবা খুঁজে পেতে, তথ্য বুঝতে অথবা পরবর্তী ধাপ
+                নির্ধারণ করতে আমাদের ডিজিটাল রিসোর্স ব্যবহার করুন।
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/services"
+                className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-xs font-black text-[#6b1d57]"
+              >
+                সেবা দেখুন
+                <ArrowLeftRight size={15} />
+              </Link>
+
+              <Link
+                href="/dashboard/support"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-3 text-xs font-bold text-white"
+              >
+                <MessageCircle size={15} />
+                সহায়তা
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* =====================================================
           FOOTER
-      ===================================================== */}
-
-      <footer className="bg-[#3d1035] text-purple-100 pt-14 pb-6">
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
-
-            {/* About */}
+      ====================================================== */}
+      <footer className="bg-[#281020] text-white">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             <div>
-
-              <div className="flex items-center gap-3 mb-4">
-
-                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center">
-                  <img
-                    src="/logo-mark.png"
-                    alt=""
-                    className="w-7 h-7 object-contain"
-                  />
+              <Link href="/" className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
+                  <Landmark size={22} className="text-amber-300" />
                 </div>
 
                 <div>
-                  <h3 className="font-extrabold text-sm text-white">
-                    ভূমি সেবা সহায়তা কেন্দ্র
-                  </h3>
-
-                  <p className="text-[9px] text-purple-300 mt-0.5">
-                    E-Vumi Seba
-                  </p>
+                  <div className="font-black">E-Vumi Seba</div>
+                  <div className="mt-1 text-[8px] tracking-widest text-purple-300">
+                    DIGITAL LAND PLATFORM
+                  </div>
                 </div>
+              </Link>
 
-              </div>
-
-              <p className="text-[11px] text-purple-200 leading-6">
-                বাংলাদেশের ভূমি সংক্রান্ত বিভিন্ন সেবা, তথ্য,
-                হিসাব ও সহায়তা এক প্ল্যাটফর্মে।
+              <p className="mt-5 max-w-sm text-xs leading-7 text-purple-200">
+                ভূমি সংক্রান্ত তথ্য, সেবা, টুল এবং জ্ঞানভিত্তিক রিসোর্সকে
+                একটি আধুনিক ডিজিটাল অভিজ্ঞতার মধ্যে নিয়ে আসার উদ্যোগ।
               </p>
 
-              <div className="mt-4 inline-flex items-center gap-2 bg-emerald-600 text-white text-[10px] font-bold px-3 py-2 rounded-full">
-                <Phone size={12} />
-                হটলাইন: 01332052506
+              <div className="mt-5 flex gap-2">
+                {[Globe2, Mail, Headphones].map((Icon, index) => (
+                  <div
+                    key={index}
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-purple-200"
+                  >
+                    <Icon size={16} />
+                  </div>
+                ))}
               </div>
-
             </div>
 
-            {/* Quick Links */}
             <div>
-
-              <h4 className="text-sm font-bold text-amber-400 mb-4">
+              <h3 className="text-xs font-black uppercase tracking-wider text-white">
                 দ্রুত লিংক
-              </h4>
+              </h3>
 
-              <ul className="space-y-2.5 text-xs text-purple-200">
-
-                {[
-                  ["হোম", "/"],
-                  ["সেবা সমূহ", "#services"],
-                  ["ভূমি ক্যালকুলেটর", "#tools"],
-                  ["ফোরাম", "#forum"],
-                  ["আবেদন ট্র্যাকিং", "/track"],
-                  ["সহায়তাকারী খুঁজুন", "#find-agent"],
-                  ["সাপোর্ট সেন্টার", "/dashboard/support"],
-                ].map(([label, href]) => (
-                  <li key={label}>
-                    <Link
-                      href={href}
-                      className="hover:text-white transition"
-                    >
-                      › {label}
-                    </Link>
-                  </li>
-                ))}
-
-              </ul>
+              <div className="mt-5 space-y-3 text-xs text-purple-200">
+                <Link href="/services" className="block hover:text-white">
+                  সকল সেবা
+                </Link>
+                <Link href="/marketplace" className="block hover:text-white">
+                  মার্কেটপ্লেস
+                </Link>
+                <Link href="/blog" className="block hover:text-white">
+                  তথ্য ও গাইড
+                </Link>
+                <Link href="/dashboard/support" className="block hover:text-white">
+                  সহায়তা
+                </Link>
+              </div>
             </div>
 
-            {/* Services */}
             <div>
+              <h3 className="text-xs font-black uppercase tracking-wider text-white">
+                গুরুত্বপূর্ণ রিসোর্স
+              </h3>
 
-              <h4 className="text-sm font-bold text-amber-400 mb-4">
-                প্রধান সেবা
-              </h4>
-
-              <ul className="space-y-2.5 text-xs text-purple-200">
-
-                {[
-                  ["ই-নামজারি", "/services/mutation"],
-                  ["ভূমি উন্নয়ন কর", "/services/tax"],
-                  ["ভূমি রেকর্ড ও পর্চা", "/services/khatian"],
-                  ["মৌজা ম্যাপ", "/services/mouza-map"],
-                  ["মিস কেস আবেদন", "/services/khatian-correction"],
-                  ["উত্তরাধিকার ক্যালকুলেটর", "/services/calculator"],
-                ].map(([label, href]) => (
-                  <li key={label}>
-                    <Link
-                      href={href}
-                      className="hover:text-white transition"
-                    >
-                      › {label}
-                    </Link>
-                  </li>
-                ))}
-
-              </ul>
+              <div className="mt-5 space-y-3 text-xs text-purple-200">
+                <Link href="/services/khatian" className="block hover:text-white">
+                  খতিয়ান অনুসন্ধান
+                </Link>
+                <Link href="/services/tax" className="block hover:text-white">
+                  ভূমি উন্নয়ন কর
+                </Link>
+                <Link href="/services/mouza-map" className="block hover:text-white">
+                  মৌজা ম্যাপ
+                </Link>
+                <Link href="/services/calculator" className="block hover:text-white">
+                  ভূমি ক্যালকুলেটর
+                </Link>
+              </div>
             </div>
 
-            {/* Contact */}
             <div>
-
-              <h4 className="text-sm font-bold text-amber-400 mb-4">
+              <h3 className="text-xs font-black uppercase tracking-wider text-white">
                 যোগাযোগ
-              </h4>
+              </h3>
 
-              <ul className="space-y-3 text-[11px] text-purple-200">
+              <div className="mt-5 space-y-4 text-xs text-purple-200">
+                <div className="flex items-center gap-3">
+                  <Headphones size={15} className="text-amber-300" />
+                  <span>১৬১২৩</span>
+                </div>
 
-                <li className="flex gap-2">
-                  <MapPinned size={14} className="shrink-0" />
-                  <span>
-                    ভূমি সেবা সহায়তা কেন্দ্র, বাংলাদেশ
-                  </span>
-                </li>
+                <div className="flex items-center gap-3">
+                  <Mail size={15} className="text-amber-300" />
+                  <span>support@e-vumiseba.com</span>
+                </div>
 
-                <li className="flex gap-2">
-                  <Phone size={14} className="shrink-0" />
-                  <span>+880 1700-000000</span>
-                </li>
-
-                <li className="flex gap-2">
-                  <Mail size={14} className="shrink-0" />
-                  <span>support@evumiseba.com</span>
-                </li>
-
-                <li className="flex gap-2">
-                  <Clock3 size={14} className="shrink-0" />
-                  <span>
-                    রবিবার - বৃহস্পতিবার
-                    <br />
-                    সকাল ৯:০০ - বিকাল ৫:০০
-                  </span>
-                </li>
-
-              </ul>
-
+                <div className="flex items-center gap-3">
+                  <Globe2 size={15} className="text-amber-300" />
+                  <span>Online Digital Support</span>
+                </div>
+              </div>
             </div>
-
           </div>
 
-          {/* Bottom */}
-          <div className="
-            pt-5
-            border-t border-white/10
-            flex flex-col sm:flex-row
-            justify-between
-            items-center
-            gap-3
-            text-[10px]
-            text-purple-300
-          ">
+          <div className="mt-10 border-t border-white/10 pt-6">
+            <div className="flex flex-col justify-between gap-3 text-[10px] text-purple-300 sm:flex-row">
+              <p>
+                © {new Date().getFullYear()} E-Vumi Seba. All rights reserved.
+              </p>
 
-            <p className="text-center sm:text-left">
-              © ২০২৬ সর্বস্বত্ব সংরক্ষিত • E-Vumi Seba
-            </p>
-
-            <div className="flex items-center gap-4">
-
-              <Link
-                href="/privacy"
-                className="hover:text-white transition"
-              >
-                গোপনীয়তা নীতিমালা
-              </Link>
-
-              <Link
-                href="/terms"
-                className="hover:text-white transition"
-              >
-                শর্তাবলী
-              </Link>
-
+              <div className="flex gap-5">
+                <Link href="/privacy" className="hover:text-white">
+                  Privacy
+                </Link>
+                <Link href="/terms" className="hover:text-white">
+                  Terms
+                </Link>
+                <Link href="/contact" className="hover:text-white">
+                  Contact
+                </Link>
+              </div>
             </div>
-
           </div>
-
         </div>
       </footer>
-
     </main>
   );
 }
