@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import type { User } from "@supabase/supabase-js";
 import {
   ChevronDown,
   LayoutDashboard,
@@ -22,7 +23,6 @@ import {
   LogOut,
   LoaderCircle,
 } from "lucide-react";
-import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 
 const menuItems = [
@@ -44,26 +44,31 @@ const menuItems = [
 
 export default function UserMenu() {
   const router = useRouter();
-  const supabase = createClient();
-
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
+    const supabase = createClient();
     let mounted = true;
 
-    supabase.auth.getUser().then(({ data, error }) => {
+    async function loadUser() {
+      const { data, error } = await supabase.auth.getUser();
+
       if (!mounted) return;
+
       setUser(error ? null : data.user);
       setLoading(false);
-    });
+    }
+
+    void loadUser();
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!mounted) return;
+
       setUser(session?.user ?? null);
       setLoading(false);
     });
@@ -72,31 +77,33 @@ export default function UserMenu() {
       mounted = false;
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
 
   useEffect(() => {
-    function closeOnEscape(event: KeyboardEvent) {
+    function handleEscape(event: KeyboardEvent) {
       if (event.key === "Escape") setOpen(false);
     }
 
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", handleEscape);
+
+    return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
   async function handleLogout() {
     setLoggingOut(true);
 
+    const supabase = createClient();
     const { error } = await supabase.auth.signOut();
 
     setLoggingOut(false);
 
     if (error) {
-      alert("লগআউট করা যায়নি। আবার চেষ্টা করুন।");
+      window.alert("লগআউট করা যায়নি। আবার চেষ্টা করুন।");
       return;
     }
 
-    setOpen(false);
     setUser(null);
+    setOpen(false);
     router.replace("/");
     router.refresh();
   }
@@ -109,7 +116,7 @@ export default function UserMenu() {
 
   if (loading) {
     return (
-      <div className="flex h-10 items-center justify-center px-3">
+      <div className="flex h-10 items-center px-3">
         <LoaderCircle className="h-5 w-5 animate-spin text-purple-800" />
       </div>
     );
@@ -117,17 +124,17 @@ export default function UserMenu() {
 
   if (!user) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <Link
           href="/login"
-          className="rounded-xl border border-purple-800 px-4 py-2 text-xs font-bold text-purple-900 transition hover:bg-purple-50"
+          className="rounded-xl border border-purple-800 px-4 py-2.5 text-xs font-bold text-purple-900 transition hover:bg-purple-50"
         >
           লগইন
         </Link>
 
         <Link
           href="/register"
-          className="rounded-xl bg-[#6b1d57] px-4 py-2 text-xs font-bold text-white shadow-lg shadow-purple-900/15 transition hover:bg-[#551645]"
+          className="rounded-xl bg-[#6b1d57] px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-purple-900/15 transition hover:bg-[#551645]"
         >
           অ্যাকাউন্ট খুলুন
         </Link>
@@ -139,7 +146,7 @@ export default function UserMenu() {
     <div className="relative">
       <button
         type="button"
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => setOpen((current) => !current)}
         aria-expanded={open}
         aria-haspopup="menu"
         className="flex max-w-[230px] items-center gap-2 rounded-xl border border-purple-100 bg-white px-3 py-2 text-sm font-bold text-purple-950 shadow-sm transition hover:bg-purple-50"
@@ -148,11 +155,13 @@ export default function UserMenu() {
           <UserRound size={18} />
         </span>
 
-        <span className="max-w-[125px] truncate">{displayName}</span>
+        <span className="max-w-[130px] truncate">{displayName}</span>
 
         <ChevronDown
           size={17}
-          className={`shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`shrink-0 transition-transform ${
+            open ? "rotate-180" : ""
+          }`}
         />
       </button>
 
