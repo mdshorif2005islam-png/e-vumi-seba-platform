@@ -652,12 +652,7 @@ export default function HomePage() {
               লগইন
             </Link>
 
-            <Link
-              href="/register"
-              className="rounded-xl bg-[#6b1d57] px-4 py-2 text-xs font-bold text-white shadow-lg shadow-purple-900/15 transition hover:bg-[#551645]"
-            >
-              অ্যাকাউন্ট খুলুন
-            </Link>
+            <UserMenu />
           </div>
 
           <button
