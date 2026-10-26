@@ -1,3 +1,4 @@
+
 "use client";
 
 import { FormEvent, useState } from "react";
@@ -6,8 +7,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
-  router.replace("/dashboard");
-router.refresh();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -21,26 +23,32 @@ router.refresh();
     try {
       const supabase = createClient();
 
-      const { data, error } =
-        await supabase.auth.signInWithPassword({
-          email: email.trim(),
-          password,
-        });
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
 
       if (error) {
-        setMessage(error.message);
+        setMessage(
+          error.message === "Invalid login credentials"
+            ? "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়। আবার চেষ্টা করুন।"
+            : error.message
+        );
         return;
       }
 
-      if (!data.session) {
+      if (!data.session || !data.user) {
         setMessage("লগইন session পাওয়া যায়নি। আবার চেষ্টা করুন।");
         return;
       }
 
-      router.replace("/dashboard");
+      // Login সফল হলে Home page-এ ফেরত যাবে
+      router.replace("/");
       router.refresh();
     } catch {
-      setMessage("লগইন করা যায়নি। ইন্টারনেট ও Supabase সেটিংস পরীক্ষা করুন।");
+      setMessage(
+        "লগইন করা যায়নি। ইন্টারনেট ও Supabase সেটিংস পরীক্ষা করুন।"
+      );
     } finally {
       setLoading(false);
     }
@@ -56,9 +64,11 @@ router.refresh();
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-900 text-2xl text-white">
             🏛
           </div>
+
           <h1 className="text-2xl font-bold text-purple-900">
             E-Vumi Seba
           </h1>
+
           <p className="mt-2 text-sm text-gray-600">
             আপনার অ্যাকাউন্টে লগইন করুন
           </p>
@@ -71,10 +81,16 @@ router.refresh();
         )}
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
             ইমেইল ঠিকানা
           </label>
+
           <input
+            id="email"
+            name="email"
             type="email"
             autoComplete="email"
             value={email}
@@ -86,10 +102,16 @@ router.refresh();
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="password"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
             পাসওয়ার্ড
           </label>
+
           <input
+            id="password"
+            name="password"
             type="password"
             autoComplete="current-password"
             value={password}
@@ -101,7 +123,10 @@ router.refresh();
         </div>
 
         {message && (
-          <p role="alert" className="break-words text-sm text-red-600">
+          <p
+            role="alert"
+            className="break-words rounded-lg bg-red-50 p-3 text-sm text-red-600"
+          >
             {message}
           </p>
         )}
