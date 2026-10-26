@@ -49,7 +49,7 @@ const landTools = [
   { name: "দাগ ও খতিয়ান সার্চ", desc: "অনলাইনে জমির রেকর্ড অনুসন্ধান", icon: "📂", link: "/services/khatian" },
 ];
 
-// জমি মার্কেটপ্লেস ডেমো ডাটা (ছবি ২ অনুযায়ী)
+// জমি মার্কেটপ্লেস ডেমো ডাটা
 const marketplaceItems = [
   { price: "৳৩৫,০০,০০০", size: "৫.৫ শতক | আবাসিক", location: "সাভার, ঢাকা" },
   { price: "৳১২,৫০,০০০", size: "১০ শতক | ভিটা জমি", location: "সৈয়দপুর, নীলফামারী" },
@@ -57,7 +57,7 @@ const marketplaceItems = [
   { price: "৳৪৫,০০,০০০", size: "৩ কাঠা | বাণিজ্যিক", location: "গাজীপুর সদর, গাজীপুর" },
 ];
 
-// সাম্প্রতিক ব্লগ পোস্ট (ছবি ২ অনুযায়ী)
+// সাম্প্রতিক ব্লগ পোস্ট
 const blogPosts = [
   {
     title: "ই-নামজারি আবেদনের সম্পূর্ণ প্রক্রিয়া: কাগজপত্র, ফি, শুনানি ও প্রতিকার",
@@ -79,7 +79,7 @@ const blogPosts = [
   },
 ];
 
-// ফোরাম আলোচনা (ছবি ৩ অনুযায়ী)
+// ফোরাম আলোচনা
 const forumTopics = [
   { title: "নামজারি খতিয়ানে নামের বানান ভুল হলে করণীয় কী?", author: "মোঃ রাশেদুল ইসলাম", time: "২ ঘন্টা আগে", replies: "৫ উত্তর" },
   { title: "অনলাইনে মৌজা ম্যাপ অর্ডার করার কত দিন পর ডেলিভারি পাওয়া যায়?", author: "আব্দুল করিম", time: "৫ ঘন্টা আগে", replies: "৩ উত্তর" },
@@ -88,7 +88,7 @@ const forumTopics = [
   { title: "ওয়ারিশ সনদ দিয়ে কি সরাসরি যৌথ নামজারি করা যাবে?", author: "মাহমুদুল হাসান", time: "৩ দিন আগে", replies: "৪ উত্তর" },
 ];
 
-// ভূমি সেবা গাইড (অ্যাকর্ডিয়ন স্টাইল - ছবি ৩ অনুযায়ী)
+// ভূমি সেবা গাইড
 const guides = [
   {
     title: "কিভাবে অনলাইনে ই-নামজারি আবেদন করবেন?",
@@ -128,7 +128,7 @@ const guides = [
   },
 ];
 
-// গুরুত্বপূর্ণ সরকারি লিংক (ছবি ৩ অনুযায়ী)
+// গুরুত্বপূর্ণ সরকারি লিংক
 const govtLinks = [
   { title: "ভূমি মন্ত্রণালয়", url: "https://minland.gov.bd", domain: "minland.gov.bd", icon: "🏛️" },
   { title: "আর.এস খতিয়ান ব্যবস্থাপনা", url: "http://settlement.gov.bd", domain: "settlement.gov.bd", icon: "📄" },
@@ -145,107 +145,205 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-slate-800 font-sans">
-      {/* ================= ১. TOP NAVBAR (হুবহু ছবির ডার্ক পার্পল হেডার) ================= */}
-      <header className="sticky top-0 z-50 bg-[#4a154b] text-white shadow-md border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-          {/* Logo — target screenshot style */}
-          <Link href="/" className="flex items-center shrink-0" aria-label="E-Vumi Seba">
-            <img
-              src="/logo-mark.png"
-              alt="E-Vumi Seba"
-              className="w-9 h-9 object-contain"
-            />
+      {/* ================= ১. TOP NAVBAR (হুবহু ছবি ১ এর মতো ফিক্সড) ================= */}
+      <header className="sticky top-0 z-50 bg-[#52154e] text-white shadow-md border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-4 py-2.5 flex justify-between items-center">
+          {/* FIX 1: ঘর আইকন সহ SVG লোগো (কোনো বাহ্যিক ইমেজ ফাইল লাগবে না) */}
+          <Link href="/" className="flex items-center shrink-0 group" aria-label="ভূমি সেবা সহায়তা কেন্দ্র">
+            <div className="flex flex-col items-center justify-center">
+              <svg
+                className="w-10 h-10 text-white"
+                viewBox="0 0 64 56"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* ঘরের চাল */}
+                <path
+                  d="M8 26L32 6L56 26"
+                  stroke="white"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16 25L32 12L48 25"
+                  stroke="white"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* ঘরের বডি */}
+                <rect x="15" y="25" width="34" height="24" rx="2" fill="white" />
+                <text
+                  x="32"
+                  y="35"
+                  textAnchor="middle"
+                  fill="#52154e"
+                  fontSize="6.5"
+                  fontWeight="bold"
+                >
+                  ভূমি সেবা
+                </text>
+                <text
+                  x="32"
+                  y="43"
+                  textAnchor="middle"
+                  fill="#52154e"
+                  fontSize="5.2"
+                  fontWeight="bold"
+                >
+                  সহায়তা কেন্দ্র
+                </text>
+              </svg>
+            </div>
           </Link>
 
-          {/* Menu Items */}
-          <nav className="hidden lg:flex items-center gap-5 text-xs font-medium text-purple-100">
+          {/* Menu Items (হুবহু ছবি ১ অনুযায়ী) */}
+          <nav className="hidden lg:flex items-center gap-6 text-xs font-medium text-purple-100">
             <Link href="/" className="text-amber-400 font-bold">হোম</Link>
             <Link href="#services" className="hover:text-amber-300 transition">সেবা সমূহ ▾</Link>
             <Link href="#tools" className="hover:text-amber-300 transition">টুলস ▾</Link>
             <Link href="#find-agent" className="hover:text-amber-300 transition">সহায়তাকারী খুঁজুন</Link>
             <Link href="#marketplace" className="hover:text-amber-300 transition">জমি কিনুন</Link>
             <Link href="#forum" className="hover:text-amber-300 transition">কমিউনিটি ▾</Link>
-            <Link href="/track" className="hover:text-amber-300 transition">ট্র্যাকিং</Link>
-            <Link href="/dashboard/support" className="hover:text-amber-300 transition">সাপোর্ট</Link>
+            <Link href="/track" className="hover:text-amber-300 transition">যোগাযোগ</Link>
+            <Link href="/dashboard/support" className="hover:text-amber-300 transition">সম্পর্কে</Link>
           </nav>
 
-          {/* White Pill Login Button — target screenshot style */}
+          {/* FIX 2: White Pill Login Button (লেখা ও আইকন স্পষ্টভাবে দেখা যাবে) */}
           <div className="flex items-center">
             <Link
               href="/track"
-              className="bg-white text-[#6b1d57] hover:bg-purple-50 font-bold text-xs px-4 py-2 rounded-full shadow-sm flex items-center justify-center gap-1.5 min-w-[92px] transition"
+              style={{ backgroundColor: "#ffffff", color: "#52154e" }}
+              className="hover:opacity-95 font-bold text-xs px-5 py-2 rounded-full shadow flex items-center justify-center gap-1.5 transition"
             >
-              <span className="text-[11px]">◉</span>
-              লগইন
+              <span className="w-4 h-4 rounded-full bg-[#52154e] text-white flex items-center justify-center text-[9px]">
+                👤
+              </span>
+              <span style={{ color: "#52154e", fontWeight: 700 }}>লগইন</span>
             </Link>
           </div>
         </div>
       </header>
 
-      {/* ================= ২. HERO SECTION (হুবহু ছবি ১ এর মতো) ================= */}
-      <section className="bg-gradient-to-br from-[#6b1d57] via-[#591849] to-[#3d1035] text-white py-12 lg:py-16 border-b border-purple-900">
+      {/* ================= ২. HERO SECTION (হুবহু ছবি ১ এর মতো ফিক্সড) ================= */}
+      <section className="bg-gradient-to-br from-[#691b60] via-[#581650] to-[#42103c] text-white py-12 lg:py-16 border-b border-purple-900">
         <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-12 gap-8 items-center">
           {/* Left Column */}
           <div className="lg:col-span-6 space-y-5">
-            <div className="inline-block bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-semibold px-3.5 py-1 rounded-full">
-              রবিবার, ২৫ অক্টোবর ২০২৬
+            {/* FIX 3: তারিখের ব্যাজ হুবহু ছবি ১ এর মতো */}
+            <div className="inline-block bg-[#6b344c]/70 border border-amber-400/50 text-amber-300 text-xs font-medium px-4 py-1.5 rounded-full shadow-sm">
+              সোমবার, ২৬ অক্টোবর ২০২৬
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-extrabold leading-snug">
+            <h1 className="text-3xl sm:text-4xl font-extrabold leading-snug tracking-tight">
               বাংলাদেশের ভূমি সেবা প্ল্যাটফর্ম
             </h1>
 
+            {/* FIX 4: প্যারাগ্রাফ ও সাদা পিল বাটন "বৃত্তান্ত জানুন" */}
             <p className="text-purple-100 text-xs sm:text-sm leading-relaxed">
-              সর্বোচ্চসংখ্যক তালিকাভুক্ত ভূমি সেবা সহায়তাকারী আর অনলাইনে জমি সংক্রান্ত সকল তথ্যের সবচেয়ে বড় নেটওয়ার্ক।{" "}
-              <span className="inline-flex items-center gap-1 bg-blue-600 text-white text-[11px] px-2 py-0.5 rounded ml-1 cursor-pointer">
-                🔊 শুনুন নতুন
-              </span>
+              সারাদেশে আমাদের ভূমি সেবা সহায়তাকারী দল আপনার জমি সংক্রান্ত সকল কাজে সহায়তার জন্য প্রস্তুত{" "}
+              <button
+                type="button"
+                style={{ backgroundColor: "#ffffff", color: "#1d4ed8" }}
+                className="inline-flex items-center gap-1 font-bold text-[11px] px-3 py-0.5 rounded-full ml-1.5 shadow-sm align-middle"
+              >
+                <span>📰</span> বৃত্তান্ত জানুন
+              </button>
             </p>
 
-            {/* Buttons */}
+            {/* FIX 5: প্রধান ২টি বাটন ও নিচের ৩টি পিল ব্যাজ হুবহু ছবি ১ এর মতো */}
             <div className="flex flex-wrap items-center gap-3 pt-1">
               <Link
                 href="#services"
-                className="bg-[#eab308] hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 transition"
+                style={{ backgroundColor: "#fbbf24", color: "#1e1b4b" }}
+                className="hover:bg-amber-400 font-bold text-xs sm:text-sm px-6 py-2.5 rounded-full shadow-md flex items-center gap-2 transition"
               >
                 <span>👉</span> সেবা নিন
               </Link>
               <Link
                 href="#find-agent"
-                className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-full flex items-center gap-1.5 transition"
+                className="bg-white/10 hover:bg-white/20 border border-white/35 text-white font-semibold text-xs sm:text-sm px-6 py-2.5 rounded-full flex items-center gap-2 transition"
               >
                 <span>🔍</span> সহায়তাকারী খুঁজুন
               </Link>
             </div>
 
             {/* 3 Small Feature Pills */}
-            <div className="flex flex-wrap gap-2.5 pt-2 text-[11px]">
-              <span className="bg-white/10 border border-white/15 px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span> নিবন্ধিত কেন্দ্র
+            <div className="flex flex-wrap gap-2.5 pt-1 text-[11px] text-purple-100">
+              <span className="bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
+                <span className="text-emerald-400">🛡️</span> নিরাপদ সেবা
               </span>
-              <span className="bg-white/10 border border-white/15 px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-amber-400"></span> দ্রুত প্রক্রিয়া
+              <span className="bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
+                <span className="text-amber-400">⚡</span> দ্রুত প্রক্রিয়া
               </span>
-              <span className="bg-white/10 border border-white/15 px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-rose-400"></span> নিরাপদ লেনদেন
+              <span className="bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
+                <span className="text-rose-400">📍</span> সারাদেশে কার্যক্রম
               </span>
             </div>
           </div>
 
-          {/* Right Column: Exact hero image from target screenshot */}
+          {/* FIX 6: Right Column Banner Card (ছবি না থাকলেও কখনো ভাঙবে না, আর ছবি দিলে ছবির ওপরে টেক্সট ও স্লাইডার বাটন দেখাবে) */}
           <div className="lg:col-span-6">
-            <div className="relative rounded-lg overflow-hidden border-2 border-white/70 shadow-2xl bg-white">
+            <div className="relative rounded-2xl overflow-hidden border-[3px] border-white shadow-2xl bg-gradient-to-b from-sky-200 via-emerald-100 to-emerald-800 aspect-[16/10] flex flex-col justify-between">
+              {/* যদি আপনি public/hero-banner.png ফাইল রাখেন তবে সেটি অটোমেটিক দেখাবে, না থাকলেও নিচের গ্রাফিক কার্ডটি হুবহু ছবির মতো দেখাবে */}
               <img
                 src="/hero-banner.png"
                 alt="ভূমি সেবা সহায়তা কেন্দ্র"
-                className="block w-full h-auto object-cover"
+                className="absolute inset-0 w-full h-full object-cover z-10"
+                onError={(e) => {
+                  // যদি ফোল্ডারে ছবি না থাকে, তবে ভাঙা আইকন লুকিয়ে ফেলবে
+                  e.currentTarget.style.display = "none";
+                }}
               />
+
+              {/* Fallback Visual Illustration (যখন ফোল্ডারে hero-banner.png থাকবে না তখন এটি দেখাবে) */}
+              <div className="relative z-0 flex-1 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-sky-300/80 via-emerald-200/70 to-emerald-900/90">
+                <div className="bg-emerald-800 text-white font-extrabold text-sm sm:text-lg px-5 py-1.5 rounded shadow-md border-2 border-white/80 mb-2">
+                  ভূমি সেবা সহায়তা কেন্দ্র
+                </div>
+                <div className="bg-white/95 rounded-lg p-4 shadow-lg border border-slate-300 w-4/5 max-w-sm flex items-center justify-around text-3xl">
+                  <span>🌳</span>
+                  <span>🏢</span>
+                  <span>👨‍🌾</span>
+                  <span>👩‍💼</span>
+                  <span>🌳</span>
+                </div>
+              </div>
+
+              {/* বাম ও ডান পাশের স্লাইডার অ্যারো (ছবি ১ অনুযায়ী) */}
+              <button
+                type="button"
+                aria-label="Previous slide"
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/25 hover:bg-black/40 text-white flex items-center justify-center text-sm"
+              >
+                ❮
+              </button>
+              <button
+                type="button"
+                aria-label="Next slide"
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/25 hover:bg-black/40 text-white flex items-center justify-center text-sm"
+              >
+                ❯
+              </button>
+
+              {/* নিচের ডার্ক ওভারলে টেক্সট ও ডট ইন্ডিকেটর */}
+              <div className="relative z-20 bg-gradient-to-t from-black/85 via-black/50 to-transparent pt-8 pb-3 px-4 text-center">
+                <p className="text-white font-extrabold text-base sm:text-xl drop-shadow">
+                  ভূমি সেবা এখন আপনার দোরগোড়ায়
+                </p>
+                <div className="flex justify-center gap-1.5 mt-1.5">
+                  <span className="w-2 h-2 rounded-full bg-white"></span>
+                  <span className="w-2 h-2 rounded-full bg-white/50"></span>
+                  <span className="w-2 h-2 rounded-full bg-white/50"></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ================= ৩. ভূমি সংক্রান্ত সেবা সমূহ (২৬টি কার্ড - হুবহু ছবি ১ এর গ্রিড) ================= */}
+      {/* ================= ৩. ভূমি সংক্রান্ত সেবা সমূহ (২৬টি কার্ড) ================= */}
       <section id="services" className="py-12 max-w-5xl mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-[#6b1d57] inline-block border-b-2 border-[#6b1d57] pb-1">
@@ -259,7 +357,6 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 4-Column Centered Service Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
           {services.map((service, idx) => (
             <Link
@@ -287,7 +384,6 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Bottom 2 Pill Buttons under Services */}
         <div className="flex justify-center items-center gap-3 mt-8">
           <Link
             href="#guides"
@@ -304,7 +400,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ৪. কেন ভূমি সেবা সহায়তাকারী? (হুবহু ছবি ১ ও ২ এর ৪টি কার্ড) ================= */}
+      {/* ================= ৪. কেন ভূমি সেবা সহায়তাকারী? ================= */}
       <section className="py-12 bg-[#f3eff5] border-y border-purple-100">
         <div className="max-w-5xl mx-auto px-4">
           <div className="text-center mb-8">
@@ -357,19 +453,10 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-
-          <div className="text-center mt-6">
-            <Link
-              href="#find-agent"
-              className="inline-block bg-[#6b1d57] hover:bg-[#521542] text-white text-xs font-bold px-6 py-2 rounded-full shadow"
-            >
-              ⚙️ আমরা কি আলাদা — জেনে নিন
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* ================= ৫. এক নজরে (Stats Banner - হুবহু ছবি ২ এর ডার্ক পার্পল ব্যানার) ================= */}
+      {/* ================= ৫. এক নজরে (Stats Banner) ================= */}
       <section className="py-10 bg-[#6b1d57] text-white">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <h3 className="text-base sm:text-lg font-bold mb-1">
@@ -412,7 +499,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ৬. ভূমি সংক্রান্ত টুল ও ক্যালকুলেটর (১২টি টুল - ছবি ২ অনুযায়ী) ================= */}
+      {/* ================= ৬. ভূমি সংক্রান্ত টুল ও ক্যালকুলেটর ================= */}
       <section id="tools" className="py-12 max-w-5xl mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-[#6b1d57]">
@@ -442,28 +529,16 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-
-        <div className="text-center mt-6">
-          <Link
-            href="/services/calculator"
-            className="inline-block bg-[#6b1d57] hover:bg-[#521542] text-white text-xs font-bold px-6 py-2 rounded-full shadow"
-          >
-            ➜ সকল টুল বিস্তারিত দেখুন
-          </Link>
-        </div>
       </section>
 
-      {/* ================= ৭. ভূমি সেবা সহায়তাকারী খুঁজুন (ছবি ২ এর মতো সার্চ বার) ================= */}
+      {/* ================= ৭. ভূমি সেবা সহায়তাকারী খুঁজুন ================= */}
       <section id="find-agent" className="py-10 bg-white border-y border-slate-200">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-xl sm:text-2xl font-bold text-[#6b1d57]">
             🔍 ভূমি সেবা সহায়তাকারী খুঁজুন
           </h2>
           <p className="text-xs text-slate-500 mt-1 mb-6">
-            আপনার এলাকার ভূমি সেবা সহায়তা কেন্দ্র খুঁজে বের করুন{" "}
-            <span className="bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded text-[10px] border border-blue-200">
-              🔊 শুনুন নতুন
-            </span>
+            আপনার এলাকার ভূমি সেবা সহায়তা কেন্দ্র খুঁজে বের করুন
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -506,7 +581,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ৮. জমি মার্কেটপ্লেস (ছবি ২ অনুযায়ী) ================= */}
+      {/* ================= ৮. জমি মার্কেটপ্লেস ================= */}
       <section id="marketplace" className="py-10 max-w-5xl mx-auto px-4">
         <div className="flex justify-between items-center mb-6">
           <div className="border-l-4 border-[#6b1d57] pl-3">
@@ -542,9 +617,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ৯. সাম্প্রতিক ব্লগ পোস্ট ও ফোরাম আলোচনা (ছবি ২ ও ৩ অনুযায়ী) ================= */}
+      {/* ================= ৯. সাম্প্রতিক ব্লগ পোস্ট ও ফোরাম আলোচনা ================= */}
       <section className="py-8 max-w-5xl mx-auto px-4 space-y-12">
-        {/* সাম্প্রতিক ব্লগ পোস্ট */}
         <div>
           <div className="border-l-4 border-[#6b1d57] pl-3 mb-6">
             <h2 className="text-lg sm:text-xl font-bold text-[#6b1d57]">
@@ -575,7 +649,7 @@ export default function HomePage() {
                 </div>
                 <div className="px-4 pb-4">
                   <Link href="#guides" className="text-[11px] font-bold text-[#6b1d57] hover:underline">
-                    বিস্তারিত পড়ুন →
+                    বিস্তারিত পড়ুন →
                   </Link>
                 </div>
               </div>
@@ -583,7 +657,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ফোরাম আলোচনা */}
         <div id="forum">
           <div className="border-l-4 border-[#6b1d57] pl-3 mb-5">
             <h2 className="text-lg sm:text-xl font-bold text-[#6b1d57]">
@@ -606,30 +679,15 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-
-          <div className="text-center mt-5">
-            <Link
-              href="/dashboard/support"
-              className="inline-block border border-[#6b1d57] text-[#6b1d57] hover:bg-purple-50 text-xs font-bold px-5 py-1.5 rounded-full"
-            >
-              ফোরামে যান →
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* ================= ১০. ভূমি সেবা গাইড (অ্যাকর্ডিয়ন স্টাইল - হুবহু ছবি ৩ অনুযায়ী) ================= */}
+      {/* ================= ১০. ভূমি সেবা গাইড ================= */}
       <section id="guides" className="py-12 max-w-4xl mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-[#6b1d57]">
             📖 ভূমি সেবা গাইড
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
-            প্রচলিত ভূমি সেবা সম্পর্কে জানুন{" "}
-            <span className="bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded text-[10px] border border-blue-200">
-              🔊 শুনুন নতুন
-            </span>
-          </p>
         </div>
 
         <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-200 shadow-sm overflow-hidden">
@@ -661,7 +719,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ১১. গুরুত্বপূর্ণ লিংক সমূহ (ছবি ৩ অনুযায়ী) ================= */}
+      {/* ================= ১১. গুরুত্বপূর্ণ লিংক সমূহ ================= */}
       <section className="py-10 bg-slate-100/80 border-t border-slate-200">
         <div className="max-w-5xl mx-auto px-4">
           <div className="text-center mb-7">
@@ -694,108 +752,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ১২. নিউজলেটার সাবস্ক্রাইব ব্যানার (হুবহু ছবি ৩ এর মতো) ================= */}
-      <section className="py-10 bg-[#6b1d57] text-white text-center px-4">
-        <div className="max-w-xl mx-auto">
-          <h3 className="text-base sm:text-lg font-bold">
-            ✉️ নিউজলেটার সাবস্ক্রাইব করুন
-          </h3>
-          <p className="text-[11px] text-purple-200 mt-1 mb-5">
-            ভূমি সংক্রান্ত সর্বশেষ তথ্য ও আপডেট পেতে আমাদের নিউজলেটারে সাবস্ক্রাইব করুন
-          </p>
-
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="flex items-center bg-white/15 border border-white/30 rounded-full p-1 max-w-md mx-auto"
-          >
-            <input
-              type="email"
-              placeholder="আপনার ইমেইল দিন..."
-              className="flex-1 bg-transparent px-4 py-2 text-xs text-white placeholder-purple-200 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-[#eab308] hover:bg-amber-400 text-slate-950 font-bold text-xs px-5 py-2 rounded-full transition"
-            >
-              সাবস্ক্রাইব
-            </button>
-          </form>
-        </div>
-      </section>
-
-      {/* ================= ১৩. ৪-কলামের ডার্ক পার্পল ফুটার (হুবহু ছবি ৩ অনুযায়ী) ================= */}
-      <footer className="bg-[#591647] text-purple-100 pt-12 pb-6 border-t border-purple-800">
-        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Column 1 */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-bold text-amber-400">
-              ভূমি সেবা সহায়তা কেন্দ্র
-            </h3>
-            <p className="text-[11px] text-purple-200 leading-relaxed">
-              বাংলাদেশের ভূমি সংক্রান্ত সকল সেবা এক প্ল্যাটফর্মে। নামজারি, ভূমি উন্নয়ন কর, পর্চা, খতিয়ান এবং মৌজা ম্যাপের সেবা পান ঝামেলাহীনভাবে।
-            </p>
-            <div className="pt-1 space-y-2">
-              <div className="inline-flex items-center gap-1.5 bg-[#15803d] text-white text-xs font-bold px-3.5 py-1.5 rounded-full">
-                📞 হটলাইন: ১৬১২২
-              </div>
-              <div className="block">
-                <span className="inline-block border border-white/40 text-white text-[11px] px-3 py-1 rounded">
-                  📞 +880 1700-000000
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Column 2 */}
-          <div>
-            <h4 className="text-sm font-bold text-amber-400 mb-3">দ্রুত লিংক</h4>
-            <ul className="space-y-1.5 text-xs text-purple-200">
-              <li>› <Link href="/" className="hover:text-white">হোম</Link></li>
-              <li>› <Link href="#services" className="hover:text-white">সেবা সমূহ</Link></li>
-              <li>› <Link href="#tools" className="hover:text-white">ভূমি ক্যালকুলেটর</Link></li>
-              <li>› <Link href="#forum" className="hover:text-white">ফোরাম</Link></li>
-              <li>› <Link href="/track" className="hover:text-white">আবেদন ট্র্যাকিং</Link></li>
-              <li>› <Link href="#find-agent" className="hover:text-white">সহায়তাকারী খুঁজুন</Link></li>
-              <li>› <Link href="/dashboard/support" className="hover:text-white">সাপোর্ট সেন্টার</Link></li>
-            </ul>
-          </div>
-
-          {/* Column 3 */}
-          <div>
-            <h4 className="text-sm font-bold text-amber-400 mb-3">প্রধান সেবা সমূহ</h4>
-            <ul className="space-y-1.5 text-xs text-purple-200">
-              <li>› <Link href="/services/mutation" className="hover:text-white">ই-নামজারি</Link></li>
-              <li>› <Link href="/services/tax" className="hover:text-white">ভূমি উন্নয়ন কর</Link></li>
-              <li>› <Link href="/services/khatian" className="hover:text-white">ভূমি রেকর্ড ও পর্চা</Link></li>
-              <li>› <Link href="/services/mouza-map" className="hover:text-white">মৌজা ম্যাপ</Link></li>
-              <li>› <Link href="/services/khatian-correction" className="hover:text-white">মিস কেস আবেদন</Link></li>
-              <li>› <Link href="/services/calculator" className="hover:text-white">উত্তরাধিকার ক্যালকুলেটর</Link></li>
-            </ul>
-          </div>
-
-          {/* Column 4 */}
-          <div>
-            <h4 className="text-sm font-bold text-amber-400 mb-3">যোগাযোগ</h4>
-            <ul className="space-y-2 text-[11px] text-purple-200">
-              <li>📍 ভূমি সেবা সহায়তা কেন্দ্র, বাংলাদেশ</li>
-              <li>📞 +880 1700-000000</li>
-              <li>✉️ support@evumiseba.com</li>
-              <li>🕘 রবিবার - বৃহস্পতিবার, সকাল ৯:০০ - বিকাল ৫:০০</li>
-            </ul>
-
-            <h5 className="text-xs font-bold text-amber-400 mt-4 mb-2">সরকারি লিংক</h5>
-            <ul className="space-y-1 text-[11px] text-purple-200">
-              <li>↗ <a href="https://land.gov.bd" target="_blank" rel="noreferrer" className="hover:underline">land.gov.bd</a></li>
-              <li>↗ <a href="https://mutation.land.gov.bd" target="_blank" rel="noreferrer" className="hover:underline">mutation.land.gov.bd</a></li>
-              <li>↗ <a href="https://dlrms.land.gov.bd" target="_blank" rel="noreferrer" className="hover:underline">dlrms.land.gov.bd</a></li>
-              <li>↗ <a href="https://ldtax.gov.bd" target="_blank" rel="noreferrer" className="hover:underline">ldtax.gov.bd</a></li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom Copyright Bar */}
-        <div className="max-w-6xl mx-auto px-4 pt-4 border-t border-white/15 flex flex-col sm:flex-row justify-between items-center text-[11px] text-purple-300 gap-2">
-          <p>© ২০২৬ সর্বস্বত্ব সংরক্ষিত • E-Vumi Seba — নাগরিকের ডিজিটাল ভূমি সেবা সহায়তা প্ল্যাটফর্ম।</p>
+      {/* ================= ১২. ফুটার ================= */}
+      <footer className="bg-[#591647] text-purple-100 pt-10 pb-6 border-t border-purple-800">
+        <div className="max-w-6xl mx-auto px-4 pt-4 flex flex-col sm:flex-row justify-between items-center text-[11px] text-purple-300 gap-2">
+          <p>© ২০২৬ সর্বস্বত্ব সংরক্ষিত • E-Vumi Seba — নাগরিকের ডিজিটাল ভূমি সেবা সহায়তা প্ল্যাটফর্ম।</p>
           <div className="flex gap-3">
             <Link href="/privacy" className="hover:underline">গোপনীয়তা নীতিমালা</Link>
             <Link href="/terms" className="hover:underline">শর্তাবলী</Link>
