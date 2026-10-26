@@ -719,43 +719,80 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ১১. গুরুত্বপূর্ণ লিংক সমূহ ================= */}
-      <section className="py-10 bg-slate-100/80 border-t border-slate-200">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-7">
-            <h2 className="text-lg sm:text-xl font-bold text-[#6b1d57] inline-block border-b-2 border-[#6b1d57] pb-1">
-              🔗 গুরুত্বপূর্ণ লিংক সমূহ
-            </h2>
+      
+      {/* ================= ১৩. ৪-কলামের ডার্ক পার্পল ফুটার (হুবহু ছবি ৩ অনুযায়ী) ================= */}
+      <footer className="bg-[#591647] text-purple-100 pt-12 pb-6 border-t border-purple-800">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          {/* Column 1 */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-amber-400">
+              ভূমি সেবা সহায়তা কেন্দ্র
+            </h3>
+            <p className="text-[11px] text-purple-200 leading-relaxed">
+              বাংলাদেশের ভূমি সংক্রান্ত সকল সেবা এক প্ল্যাটফর্মে। নামজারি, ভূমি উন্নয়ন কর, পর্চা, খতিয়ান এবং মৌজা ম্যাপের সেবা পান ঝামেলাহীনভাবে।
+            </p>
+            <div className="pt-1 space-y-2">
+              <div className="inline-flex items-center gap-1.5 bg-[#15803d] text-white text-xs font-bold px-3.5 py-1.5 rounded-full">
+                📞 হটলাইন: 01332052506
+              </div>
+              <div className="block">
+                <span className="inline-block border border-white/40 text-white text-[11px] px-3 py-1 rounded">
+                  📞 +880 01332052506
+                </span>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-            {govtLinks.map((item, idx) => (
-              <a
-                key={idx}
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white p-3.5 rounded-lg border border-slate-200 hover:border-[#6b1d57] flex items-center gap-3 transition group"
-              >
-                <span className="text-lg bg-purple-50 text-[#6b1d57] w-9 h-9 rounded flex items-center justify-center shrink-0">
-                  {item.icon}
-                </span>
-                <div>
-                  <p className="font-bold text-slate-800 text-xs group-hover:text-[#6b1d57]">
-                    {item.title}
-                  </p>
-                  <p className="text-[10px] text-slate-400 font-mono">{item.domain}</p>
-                </div>
-              </a>
-            ))}
+          {/* Column 2 */}
+          <div>
+            <h4 className="text-sm font-bold text-amber-400 mb-3">দ্রুত লিংক</h4>
+            <ul className="space-y-1.5 text-xs text-purple-200">
+              <li>› <Link href="/" className="hover:text-white">হোম</Link></li>
+              <li>› <Link href="#services" className="hover:text-white">সেবা সমূহ</Link></li>
+              <li>› <Link href="#tools" className="hover:text-white">ভূমি ক্যালকুলেটর</Link></li>
+              <li>› <Link href="#forum" className="hover:text-white">ফোরাম</Link></li>
+              <li>› <Link href="/track" className="hover:text-white">আবেদন ট্র্যাকিং</Link></li>
+              <li>› <Link href="#find-agent" className="hover:text-white">সহায়তাকারী খুঁজুন</Link></li>
+              <li>› <Link href="/dashboard/support" className="hover:text-white">সাপোর্ট সেন্টার</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 3 */}
+          <div>
+            <h4 className="text-sm font-bold text-amber-400 mb-3">প্রধান সেবা সমূহ</h4>
+            <ul className="space-y-1.5 text-xs text-purple-200">
+              <li>› <Link href="/services/mutation" className="hover:text-white">ই-নামজারি</Link></li>
+              <li>› <Link href="/services/tax" className="hover:text-white">ভূমি উন্নয়ন কর</Link></li>
+              <li>› <Link href="/services/khatian" className="hover:text-white">ভূমি রেকর্ড ও পর্চা</Link></li>
+              <li>› <Link href="/services/mouza-map" className="hover:text-white">মৌজা ম্যাপ</Link></li>
+              <li>› <Link href="/services/khatian-correction" className="hover:text-white">মিস কেস আবেদন</Link></li>
+              <li>› <Link href="/services/calculator" className="hover:text-white">উত্তরাধিকার ক্যালকুলেটর</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 4 */}
+          <div>
+            <h4 className="text-sm font-bold text-amber-400 mb-3">যোগাযোগ</h4>
+            <ul className="space-y-2 text-[11px] text-purple-200">
+              <li>📍 ভূমি সেবা সহায়তা কেন্দ্র, বাংলাদেশ</li>
+              <li>📞 +880 1700-000000</li>
+              <li>✉️ support@evumiseba.com</li>
+              <li>🕘 রবিবার - বৃহস্পতিবার, সকাল ৯:০০ - বিকাল ৫:০০</li>
+            </ul>
+
+            <h5 className="text-xs font-bold text-amber-400 mt-4 mb-2">সরকারি লিংক</h5>
+            <ul className="space-y-1 text-[11px] text-purple-200">
+              <li>↗ <a href="https://land.gov.bd" target="_blank" rel="noreferrer" className="hover:underline">land.gov.bd</a></li>
+              <li>↗ <a href="https://mutation.land.gov.bd" target="_blank" rel="noreferrer" className="hover:underline">mutation.land.gov.bd</a></li>
+              <li>↗ <a href="https://dlrms.land.gov.bd" target="_blank" rel="noreferrer" className="hover:underline">dlrms.land.gov.bd</a></li>
+              <li>↗ <a href="https://ldtax.gov.bd" target="_blank" rel="noreferrer" className="hover:underline">ldtax.gov.bd</a></li>
+            </ul>
           </div>
         </div>
-      </section>
 
-      {/* ================= ১২. ফুটার ================= */}
-      <footer className="bg-[#591647] text-purple-100 pt-10 pb-6 border-t border-purple-800">
-        <div className="max-w-6xl mx-auto px-4 pt-4 flex flex-col sm:flex-row justify-between items-center text-[11px] text-purple-300 gap-2">
-          <p>© ২০২৬ সর্বস্বত্ব সংরক্ষিত • E-Vumi Seba — নাগরিকের ডিজিটাল ভূমি সেবা সহায়তা প্ল্যাটফর্ম।</p>
+        {/* Bottom Copyright Bar */}
+        <div className="max-w-6xl mx-auto px-4 pt-4 border-t border-white/15 flex flex-col sm:flex-row justify-between items-center text-[11px] text-purple-300 gap-2">
+          <p>© ২০২৬ সর্বস্বত্ব সংরক্ষিত • E-Vumi Seba — নাগরিকের ডিজিটাল ভূমি সেবা সহায়তা প্ল্যাটফর্ম।</p>
           <div className="flex gap-3">
             <Link href="/privacy" className="hover:underline">গোপনীয়তা নীতিমালা</Link>
             <Link href="/terms" className="hover:underline">শর্তাবলী</Link>
