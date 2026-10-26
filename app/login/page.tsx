@@ -1,14 +1,13 @@
-
 "use client";
 
 import { FormEvent, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
-  const supabase = createClient();
+  const searchParams = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,21 +20,28 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
-      });
+      const supabase = createClient();
 
-      if (error) throw error;
+      const { data, error } =
+        await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
+
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+
+      if (!data.session) {
+        setMessage("লগইন session পাওয়া যায়নি। আবার চেষ্টা করুন।");
+        return;
+      }
 
       router.replace("/dashboard");
       router.refresh();
-    } catch (error: unknown) {
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "লগইন করা যায়নি। আবার চেষ্টা করো।"
-      );
+    } catch {
+      setMessage("লগইন করা যায়নি। ইন্টারনেট ও Supabase সেটিংস পরীক্ষা করুন।");
     } finally {
       setLoading(false);
     }
@@ -45,34 +51,55 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10">
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-md space-y-4 rounded-2xl bg-white p-6 shadow-lg sm:p-8"
+        className="w-full max-w-md space-y-5 rounded-2xl bg-white p-6 shadow-xl sm:p-8"
       >
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-green-800">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-900 text-2xl text-white">
+            🏛
+          </div>
+          <h1 className="text-2xl font-bold text-purple-900">
             E-Vumi Seba
           </h1>
-          <p className="mt-2 text-gray-600">আপনার অ্যাকাউন্টে লগইন করুন</p>
+          <p className="mt-2 text-sm text-gray-600">
+            আপনার অ্যাকাউন্টে লগইন করুন
+          </p>
         </div>
 
-        <input
-          className="w-full rounded-lg border p-3"
-          placeholder="ইমেইল ঠিকানা"
-          type="email"
-          autoComplete="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        {searchParams.get("registered") === "1" && (
+          <p className="rounded-lg bg-green-50 p-3 text-sm text-green-700">
+            রেজিস্ট্রেশন সম্পন্ন হয়েছে। এখন লগইন করুন।
+          </p>
+        )}
 
-        <input
-          className="w-full rounded-lg border p-3"
-          placeholder="পাসওয়ার্ড"
-          type="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            ইমেইল ঠিকানা
+          </label>
+          <input
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="আপনার ইমেইল লিখুন"
+            className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            পাসওয়ার্ড
+          </label>
+          <input
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="আপনার পাসওয়ার্ড লিখুন"
+            className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-purple-700 focus:ring-2 focus:ring-purple-100"
+            required
+          />
+        </div>
 
         {message && (
           <p role="alert" className="break-words text-sm text-red-600">
@@ -83,15 +110,27 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-green-700 p-3 font-semibold text-white hover:bg-green-800 disabled:opacity-60"
+          className="w-full rounded-lg bg-purple-900 p-3 font-semibold text-white transition hover:bg-purple-800 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loading ? "লগইন হচ্ছে..." : "লগইন করুন"}
         </button>
 
         <p className="text-center text-sm text-gray-600">
-          অ্যাকাউন্ট নেই?{" "}
-          <Link className="font-semibold text-green-700" href="/register">
-            নতুন অ্যাকাউন্ট খুলুন
+          নতুন ব্যবহারকারী?{" "}
+          <Link
+            href="/register"
+            className="font-semibold text-purple-800 hover:underline"
+          >
+            অ্যাকাউন্ট তৈরি করুন
+          </Link>
+        </p>
+
+        <p className="text-center">
+          <Link
+            href="/"
+            className="text-sm text-gray-500 hover:text-purple-800"
+          >
+            ← হোম পেজে ফিরে যান
           </Link>
         </p>
       </form>
